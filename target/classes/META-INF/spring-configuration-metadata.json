@@ -1,0 +1,97 @@
+{
+  "groups": [
+    {
+      "name": "bank",
+      "type": "com.example.config.BankConfig",
+      "sourceType": "com.example.config.BankConfig"
+    },
+    {
+      "name": "database",
+      "type": "com.example.config.DatabaseConfig",
+      "sourceType": "com.example.config.DatabaseConfig"
+    }
+  ],
+  "properties": [
+    {
+      "name": "bank.all-properties",
+      "type": "java.util.Properties",
+      "sourceType": "com.example.config.BankConfig"
+    },
+    {
+      "name": "bank.code",
+      "type": "java.lang.String",
+      "sourceType": "com.example.config.BankConfig"
+    },
+    {
+      "name": "bank.country",
+      "type": "java.lang.String",
+      "sourceType": "com.example.config.BankConfig"
+    },
+    {
+      "name": "bank.currency",
+      "type": "java.lang.String",
+      "sourceType": "com.example.config.BankConfig"
+    },
+    {
+      "name": "bank.monto-maximo-credito",
+      "type": "java.lang.Double",
+      "sourceType": "com.example.config.BankConfig"
+    },
+    {
+      "name": "bank.name",
+      "type": "java.lang.String",
+      "sourceType": "com.example.config.BankConfig"
+    },
+    {
+      "name": "bank.ratio-endeudamiento-maximo",
+      "type": "java.lang.Double",
+      "sourceType": "com.example.config.BankConfig"
+    },
+    {
+      "name": "bank.score-minimo",
+      "type": "java.lang.Integer",
+      "sourceType": "com.example.config.BankConfig"
+    },
+    {
+      "name": "bank.tasa-interes-base",
+      "type": "java.lang.Double",
+      "sourceType": "com.example.config.BankConfig"
+    },
+    {
+      "name": "database.all-properties",
+      "type": "java.util.Properties",
+      "sourceType": "com.example.config.DatabaseConfig"
+    },
+    {
+      "name": "database.max-connections",
+      "type": "java.lang.Integer",
+      "sourceType": "com.example.config.DatabaseConfig"
+    },
+    {
+      "name": "database.password",
+      "type": "java.lang.String",
+      "sourceType": "com.example.config.DatabaseConfig"
+    },
+    {
+      "name": "database.pool-size",
+      "type": "java.lang.Integer",
+      "sourceType": "com.example.config.DatabaseConfig"
+    },
+    {
+      "name": "database.timeout",
+      "type": "java.lang.Integer",
+      "sourceType": "com.example.config.DatabaseConfig"
+    },
+    {
+      "name": "database.url",
+      "type": "java.lang.String",
+      "sourceType": "com.example.config.DatabaseConfig"
+    },
+    {
+      "name": "database.username",
+      "type": "java.lang.String",
+      "sourceType": "com.example.config.DatabaseConfig"
+    }
+  ],
+  "hints": []
+}

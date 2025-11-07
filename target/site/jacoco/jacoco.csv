@@ -1,0 +1,6 @@
+GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
+Java Testing Application,com.example.model,User,0,80,1,9,0,24,1,9,0,5
+Java Testing Application,com.example.service,UserService.UserServiceException,0,9,0,0,0,4,0,2,0,2
+Java Testing Application,com.example.service,UserService,102,325,15,45,20,77,13,34,1,16
+Java Testing Application,com.example.config,DatabaseConfig,3,198,7,15,0,48,7,20,0,16
+Java Testing Application,com.example.repository,UserRepository,56,219,15,23,15,50,17,23,4,17

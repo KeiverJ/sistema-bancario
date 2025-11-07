@@ -1,0 +1,142 @@
+package com.example.config;
+
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.context.annotation.Configuration;
+
+import java.util.Properties;
+
+/**
+ * DatabaseConfig - Configuración de base de datos.
+ * Spring Boot maneja automáticamente el Singleton.
+ */
+@Configuration
+@ConfigurationProperties(prefix = "database")
+public class DatabaseConfig {
+
+  private final Properties properties;
+  private String url;
+  private String username;
+  private String password;
+  private int maxConnections;
+  private int poolSize;
+  private int timeout;
+
+  public DatabaseConfig() {
+    this.properties = new Properties();
+    // Valores por defecto
+    this.url = "jdbc:h2:mem:bankdb";
+    this.username = "sa";
+    this.password = "";
+    this.maxConnections = 10;
+    this.poolSize = 20;
+    this.timeout = 30;
+
+    loadDefaultProperties();
+  }
+
+  private void loadDefaultProperties() {
+    properties.setProperty("database.driver", "org.h2.Driver");
+    properties.setProperty("database.url", url);
+    properties.setProperty("database.username", username);
+    properties.setProperty("database.password", password);
+    properties.setProperty("database.maxConnections", String.valueOf(maxConnections));
+    properties.setProperty("database.autoCommit", "true");
+    properties.setProperty("database.timeout", String.valueOf(timeout));
+    properties.setProperty("database.poolSize", String.valueOf(poolSize));
+  }
+
+  // Getters y Setters (Spring los usa para inyectar desde application.properties)
+
+  public String getUrl() {
+    return url;
+  }
+
+  public void setUrl(String url) {
+    this.url = url;
+    properties.setProperty("database.url", url);
+  }
+
+  public String getUsername() {
+    return username;
+  }
+
+  public void setUsername(String username) {
+    this.username = username;
+    properties.setProperty("database.username", username);
+  }
+
+  public String getPassword() {
+    return password;
+  }
+
+  public void setPassword(String password) {
+    this.password = password;
+    properties.setProperty("database.password", password);
+  }
+
+  public int getMaxConnections() {
+    return maxConnections;
+  }
+
+  public void setMaxConnections(int maxConnections) {
+    this.maxConnections = maxConnections;
+    properties.setProperty("database.maxConnections", String.valueOf(maxConnections));
+  }
+
+  public int getPoolSize() {
+    return poolSize;
+  }
+
+  public void setPoolSize(int poolSize) {
+    this.poolSize = poolSize;
+    properties.setProperty("database.poolSize", String.valueOf(poolSize));
+  }
+
+  public int getTimeout() {
+    return timeout;
+  }
+
+  public void setTimeout(int timeout) {
+    this.timeout = timeout;
+    properties.setProperty("database.timeout", String.valueOf(timeout));
+  }
+
+  public String getProperty(String key) {
+    return key == null ? null : properties.getProperty(key);
+  }
+
+  public Properties getAllProperties() {
+    return new Properties(properties);
+  }
+
+  public void setProperty(String key, String value) {
+    if (key != null) {
+      if (value != null) {
+        properties.setProperty(key, value);
+      } else {
+        properties.remove(key);
+      }
+    }
+  }
+
+  public boolean isProductionEnvironment() {
+    return !url.contains("h2:mem:");
+  }
+
+  public boolean isValidConfiguration() {
+    return url != null && !url.isEmpty() &&
+        username != null &&
+        maxConnections > 0;
+  }
+
+  public String getConnectionString() {
+    return String.format("%s;USER=%s;PASSWORD=%s;MAX_CONNECTIONS=%d",
+        url, username, password, maxConnections);
+  }
+
+  @Override
+  public String toString() {
+    return String.format("DatabaseConfig{url='%s', username='%s', maxConnections=%d, poolSize=%d}",
+        url, username, maxConnections, poolSize);
+  }
+}
