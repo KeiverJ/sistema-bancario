@@ -29,8 +29,7 @@ public class Credito extends ProductoFinanciero {
     @Id
     private String id;
     private String codigo;
-    // ⚠️ REMOVIDO: private String clienteId;
-    // Ya se hereda de ProductoFinanciero, no duplicar
+    // clienteId se hereda de ProductoFinanciero
 
     private TipoCredito tipoCredito;
     private double monto;
@@ -69,7 +68,6 @@ public class Credito extends ProductoFinanciero {
 
     // clienteId se hereda de ProductoFinanciero
     // No necesitamos redefinir getClienteId() y setClienteId()
-    // ya que la clase padre ya los provee
 
     public TipoCredito getTipoCredito() {
         return tipoCredito;
@@ -177,7 +175,6 @@ public class Credito extends ProductoFinanciero {
             if (this.state == null) {
                 this.state = StateFactory.from("SOLICITADO");
             }
-            this.estadoActual = EstadoCredito.valueOf(state.nombre());
         }
     }
 

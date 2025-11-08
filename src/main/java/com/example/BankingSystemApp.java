@@ -721,7 +721,15 @@ public class BankingSystemApp {
           cr.getEstadoActual())));
 
       System.out.println("-".repeat(75));
-      double totalSaldo = creditos.stream().mapToDouble(Credito::getSaldo).sum();
+
+      // ✅ CORRECCIÓN: Solo sumar créditos que tengan saldo real (APROBADO,
+      // DESEMBOLSADO, ACTIVO, EN_MORA)
+      double totalSaldo = creditos.stream()
+          .filter(cr -> cr.getEstadoActual() != Credito.EstadoCredito.RECHAZADO
+              && cr.getEstadoActual() != Credito.EstadoCredito.CANCELADO)
+          .mapToDouble(Credito::getSaldo)
+          .sum();
+
       System.out.println("Total adeudado: $" + String.format("%,.2f", totalSaldo));
     } catch (Exception e) {
       System.err.println("Error: " + e.getMessage());

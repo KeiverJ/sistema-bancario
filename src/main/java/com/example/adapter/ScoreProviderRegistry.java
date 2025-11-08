@@ -10,17 +10,19 @@ import java.util.Map;
 @Component
 public class ScoreProviderRegistry {
 
-    private final Map<String, ScoreProvider> providers = new HashMap<>();
+    private final Map<String, ScoreProvider> providers;
 
-    public ScoreProviderRegistry() {
-        providers.put("BURO", new BuroFinancieroAdapter());
-        providers.put("LEGACY", new LegacyRiskApiAdapter());
+    // ✅ Inyectar los providers como dependencias
+    public ScoreProviderRegistry(BuroFinancieroAdapter buroAdapter,
+            LegacyRiskApiAdapter legacyAdapter) {
+        this.providers = new HashMap<>();
+        providers.put("BURO", buroAdapter);
+        providers.put("LEGACY", legacyAdapter);
     }
 
     public Score obtenerScoreParaCliente(Cliente cliente) {
         ScoreProvider provider = providers.get("BURO");
         Score score = provider.obtenerScore(cliente.getId());
-
         return score;
     }
 }

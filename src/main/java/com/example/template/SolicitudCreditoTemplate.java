@@ -93,17 +93,15 @@ public abstract class SolicitudCreditoTemplate {
     protected abstract void configurarTasaYExtras(Credito credito, Cliente cliente);
 
     protected ApprovalContext evaluarAprobacion(Credito credito, Cliente cliente) {
-        // Usar el método correcto: obtenerScoreParaCliente en lugar de getProvider
         Score score = scoreProviderRegistry.obtenerScoreParaCliente(cliente);
         ApprovalContext context = new ApprovalContext(cliente, credito, score, bankConfig);
-        // El método build() requiere BankConfig como parámetro
         chainBuilder.build(bankConfig).handle(context);
         return context;
     }
 
     protected Credito persistir(Credito credito, Cliente cliente) {
         credito = creditoRepository.save(credito);
-        cliente.getCreditoIds().add(credito.getId());
+        cliente.agregarCredito(credito.getId());
         clienteRepository.save(cliente);
         return credito;
     }

@@ -6,9 +6,4 @@ public class AprobacionFinalHandler extends AbstractApprovalHandler {
         ctx.aprobar();
         return true;
     }
-
-    @Override
-    protected void procesar(ApprovalContext ctx) {
-        ctx.getCredito().aprobar(); // usar State
-    }
 }
