@@ -19,16 +19,16 @@ import java.util.Random;
 
     public int getRiskLevel(String clienteId) {
         // Simulación basada en hash del clienteId
-<span class="nc bnc" id="L22" title="All 4 branches missed.">        if (clienteId == null || clienteId.isEmpty()) {</span>
-<span class="nc" id="L23">            return 3; // riesgo medio por defecto</span>
+<span class="pc bpc" id="L22" title="1 of 4 branches missed.">        if (clienteId == null || clienteId.isEmpty()) {</span>
+<span class="fc" id="L23">            return 3; // riesgo medio por defecto</span>
         }
 
         // Usar hash para generar nivel consistente por cliente
-<span class="nc" id="L27">        int hash = Math.abs(clienteId.hashCode());</span>
-<span class="nc" id="L28">        int nivel = (hash % 5) + 1; // 1-5</span>
+<span class="fc" id="L27">        int hash = Math.abs(clienteId.hashCode());</span>
+<span class="fc" id="L28">        int nivel = (hash % 5) + 1; // 1-5</span>
 
         // Para testing, forzar nivel bajo (score alto)
-<span class="nc" id="L31">        return Math.min(nivel, 2); // retorna 1 o 2 máximo (scores altos)</span>
+<span class="fc" id="L31">        return Math.min(nivel, 2); // retorna 1 o 2 máximo (scores altos)</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

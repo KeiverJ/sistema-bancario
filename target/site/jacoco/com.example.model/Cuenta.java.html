@@ -22,7 +22,7 @@
     // Métodos getId/setId heredados directamente de ProductoFinanciero
 
     public String getCodigo() {
-<span class="nc" id="L25">        return codigo;</span>
+<span class="fc" id="L25">        return codigo;</span>
     }
 
     public void setCodigo(String codigo) {
@@ -46,7 +46,7 @@
 <span class="fc" id="L46">    }</span>
 
     public double getSaldo() {
-<span class="nc" id="L49">        return saldo;</span>
+<span class="fc" id="L49">        return saldo;</span>
     }
 
     public void setSaldo(double saldo) {
@@ -62,7 +62,7 @@
 <span class="fc" id="L62">    }</span>
 
     public EstadoCuenta getEstado() {
-<span class="nc" id="L65">        return estado;</span>
+<span class="fc" id="L65">        return estado;</span>
     }
 
     public void setEstado(EstadoCuenta estado) {
@@ -70,17 +70,17 @@
 <span class="fc" id="L70">    }</span>
 
     public boolean depositar(double monto) {
-<span class="nc bnc" id="L73" title="All 4 branches missed.">        if (monto &lt;= 0 || estado != EstadoCuenta.ACTIVA)</span>
+<span class="pc bpc" id="L73" title="2 of 4 branches missed.">        if (monto &lt;= 0 || estado != EstadoCuenta.ACTIVA)</span>
 <span class="nc" id="L74">            return false;</span>
-<span class="nc" id="L75">        this.saldo += monto;</span>
-<span class="nc" id="L76">        return true;</span>
+<span class="fc" id="L75">        this.saldo += monto;</span>
+<span class="fc" id="L76">        return true;</span>
     }
 
     public boolean retirar(double monto) {
-<span class="nc bnc" id="L80" title="All 6 branches missed.">        if (monto &lt;= 0 || estado != EstadoCuenta.ACTIVA || saldo &lt; monto)</span>
-<span class="nc" id="L81">            return false;</span>
-<span class="nc" id="L82">        this.saldo -= monto;</span>
-<span class="nc" id="L83">        return true;</span>
+<span class="pc bpc" id="L80" title="2 of 6 branches missed.">        if (monto &lt;= 0 || estado != EstadoCuenta.ACTIVA || saldo &lt; monto)</span>
+<span class="fc" id="L81">            return false;</span>
+<span class="fc" id="L82">        this.saldo -= monto;</span>
+<span class="fc" id="L83">        return true;</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

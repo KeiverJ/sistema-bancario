@@ -8,24 +8,24 @@ import com.example.model.Score;
 
     @Override
     public Score obtenerScore(String clienteId) { // ⭐ String, no Cliente
-<span class="nc" id="L11">        int riskLevel = legacyApi.getRiskLevel(clienteId);</span>
+<span class="fc" id="L11">        int riskLevel = legacyApi.getRiskLevel(clienteId);</span>
 
-<span class="nc" id="L13">        Score score = new Score();</span>
-<span class="nc" id="L14">        score.setClienteId(clienteId);</span>
+<span class="fc" id="L13">        Score score = new Score();</span>
+<span class="fc" id="L14">        score.setClienteId(clienteId);</span>
 
-<span class="nc bnc" id="L16" title="All 6 branches missed.">        int valorScore = switch (riskLevel) {</span>
-<span class="nc" id="L17">            case 1 -&gt; 800;</span>
-<span class="nc" id="L18">            case 2 -&gt; 700;</span>
-<span class="nc" id="L19">            case 3 -&gt; 600;</span>
+<span class="pc bpc" id="L16" title="3 of 6 branches missed.">        int valorScore = switch (riskLevel) {</span>
+<span class="fc" id="L17">            case 1 -&gt; 800;</span>
+<span class="fc" id="L18">            case 2 -&gt; 700;</span>
+<span class="fc" id="L19">            case 3 -&gt; 600;</span>
 <span class="nc" id="L20">            case 4 -&gt; 500;</span>
 <span class="nc" id="L21">            case 5 -&gt; 400;</span>
 <span class="nc" id="L22">            default -&gt; 600;</span>
         };
 
-<span class="nc" id="L25">        score.setValor(valorScore);</span>
-<span class="nc" id="L26">        score.setFuente(&quot;LEGACY_RISK_API&quot;);</span>
+<span class="fc" id="L25">        score.setValor(valorScore);</span>
+<span class="fc" id="L26">        score.setFuente(&quot;LEGACY_RISK_API&quot;);</span>
 
-<span class="nc" id="L28">        return score;</span>
+<span class="fc" id="L28">        return score;</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

@@ -5,12 +5,12 @@ import com.example.model.Cliente;
 <span class="fc" id="L5">public class FabricaProductosProvider {</span>
 
     public ProductoBancarioFactory getFactory(Cliente.TipoCliente tipo) {
-<span class="pc bpc" id="L8" title="1 of 2 branches missed.">        if (tipo == null)</span>
-<span class="nc" id="L9">            throw new IllegalArgumentException(&quot;Tipo de cliente requerido&quot;);</span>
-<span class="pc bpc" id="L10" title="2 of 3 branches missed.">        return switch (tipo) {</span>
+<span class="fc bfc" id="L8" title="All 2 branches covered.">        if (tipo == null)</span>
+<span class="fc" id="L9">            throw new IllegalArgumentException(&quot;Tipo de cliente requerido&quot;);</span>
+<span class="fc bfc" id="L10" title="All 3 branches covered.">        return switch (tipo) {</span>
 <span class="fc" id="L11">            case PERSONA_NATURAL -&gt; new FactoryPersonaNatural();</span>
-<span class="nc" id="L12">            case PERSONA_JURIDICA -&gt; new FactoryPersonaJuridica();</span>
-<span class="nc" id="L13">            case EXTRANJERO -&gt; new FactoryExtranjero();</span>
+<span class="fc" id="L12">            case PERSONA_JURIDICA -&gt; new FactoryPersonaJuridica();</span>
+<span class="fc" id="L13">            case EXTRANJERO -&gt; new FactoryExtranjero();</span>
         };
     }
 }

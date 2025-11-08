@@ -6,14 +6,14 @@ import java.time.LocalDateTime;
 /**
  * Transacción bancaria.
  */
-<span class="nc" id="L9">public class Transaccion {</span>
+<span class="fc" id="L9">public class Transaccion {</span>
 
-<span class="nc" id="L11">    public enum TipoTransaccion {</span>
-<span class="nc" id="L12">        TRANSFERENCIA, PAGO_SERVICIO, RETIRO, DEPOSITO</span>
+<span class="fc" id="L11">    public enum TipoTransaccion {</span>
+<span class="fc" id="L12">        TRANSFERENCIA, PAGO_SERVICIO, RETIRO, DEPOSITO</span>
     }
 
-<span class="nc" id="L15">    public enum EstadoTransaccion {</span>
-<span class="nc" id="L16">        PENDIENTE, EXITOSA, FALLIDA</span>
+<span class="fc" id="L15">    public enum EstadoTransaccion {</span>
+<span class="fc" id="L16">        PENDIENTE, EXITOSA, FALLIDA</span>
     }
 
     private TipoTransaccion tipo;
@@ -28,20 +28,20 @@ import java.time.LocalDateTime;
     private String codigo;
 
     public TipoTransaccion getTipo() {
-<span class="nc" id="L31">        return tipo;</span>
+<span class="fc" id="L31">        return tipo;</span>
     }
 
     public void setTipo(TipoTransaccion tipo) {
-<span class="nc" id="L35">        this.tipo = tipo;</span>
-<span class="nc" id="L36">    }</span>
+<span class="fc" id="L35">        this.tipo = tipo;</span>
+<span class="fc" id="L36">    }</span>
 
     public String getCuentaOrigenId() {
-<span class="nc" id="L39">        return cuentaOrigenId;</span>
+<span class="fc" id="L39">        return cuentaOrigenId;</span>
     }
 
     public void setCuentaOrigenId(String cuentaOrigenId) {
-<span class="nc" id="L43">        this.cuentaOrigenId = cuentaOrigenId;</span>
-<span class="nc" id="L44">    }</span>
+<span class="fc" id="L43">        this.cuentaOrigenId = cuentaOrigenId;</span>
+<span class="fc" id="L44">    }</span>
 
     public String getCuentaDestinoId() {
 <span class="nc" id="L47">        return cuentaDestinoId;</span>
@@ -52,64 +52,64 @@ import java.time.LocalDateTime;
 <span class="nc" id="L52">    }</span>
 
     public double getMonto() {
-<span class="nc" id="L55">        return monto;</span>
+<span class="fc" id="L55">        return monto;</span>
     }
 
     public void setMonto(double monto) {
-<span class="nc" id="L59">        this.monto = monto;</span>
-<span class="nc" id="L60">    }</span>
+<span class="fc" id="L59">        this.monto = monto;</span>
+<span class="fc" id="L60">    }</span>
 
     public String getDescripcion() {
-<span class="nc" id="L63">        return descripcion;</span>
+<span class="fc" id="L63">        return descripcion;</span>
     }
 
     public void setDescripcion(String descripcion) {
-<span class="nc" id="L67">        this.descripcion = descripcion;</span>
-<span class="nc" id="L68">    }</span>
+<span class="fc" id="L67">        this.descripcion = descripcion;</span>
+<span class="fc" id="L68">    }</span>
 
     public LocalDateTime getFecha() {
-<span class="nc" id="L71">        return fecha;</span>
+<span class="fc" id="L71">        return fecha;</span>
     }
 
     public void setFecha(LocalDateTime fecha) {
-<span class="nc" id="L75">        this.fecha = fecha;</span>
-<span class="nc" id="L76">    }</span>
+<span class="fc" id="L75">        this.fecha = fecha;</span>
+<span class="fc" id="L76">    }</span>
 
     public EstadoTransaccion getEstado() {
-<span class="nc" id="L79">        return estado;</span>
+<span class="fc" id="L79">        return estado;</span>
     }
 
     public void setEstado(EstadoTransaccion estado) {
-<span class="nc" id="L83">        this.estado = estado;</span>
-<span class="nc" id="L84">    }</span>
+<span class="fc" id="L83">        this.estado = estado;</span>
+<span class="fc" id="L84">    }</span>
 
     public boolean validar() {
-<span class="nc bnc" id="L87" title="All 2 branches missed.">        return monto &gt; 0;</span>
+<span class="fc bfc" id="L87" title="All 2 branches covered.">        return monto &gt; 0;</span>
     }
 
     public String getId() {
-<span class="nc" id="L91">        return id;</span>
+<span class="fc" id="L91">        return id;</span>
     }
 
     public void setId(String id) {
-<span class="nc" id="L95">        this.id = id;</span>
-<span class="nc" id="L96">    }</span>
+<span class="fc" id="L95">        this.id = id;</span>
+<span class="fc" id="L96">    }</span>
 
     public String getCodigo() {
 <span class="nc" id="L99">        return codigo;</span>
     }
 
     public void setCodigo(String codigo) {
-<span class="nc" id="L103">        this.codigo = codigo;</span>
-<span class="nc" id="L104">    }</span>
+<span class="fc" id="L103">        this.codigo = codigo;</span>
+<span class="fc" id="L104">    }</span>
 
     public void ejecutar() {
-<span class="nc bnc" id="L107" title="All 2 branches missed.">        if (!validar()) {</span>
-<span class="nc" id="L108">            estado = EstadoTransaccion.FALLIDA;</span>
-<span class="nc" id="L109">            return;</span>
+<span class="fc bfc" id="L107" title="All 2 branches covered.">        if (!validar()) {</span>
+<span class="fc" id="L108">            estado = EstadoTransaccion.FALLIDA;</span>
+<span class="fc" id="L109">            return;</span>
         }
-<span class="nc" id="L111">        estado = EstadoTransaccion.EXITOSA;</span>
-<span class="nc" id="L112">        fecha = LocalDateTime.now();</span>
-<span class="nc" id="L113">    }</span>
+<span class="fc" id="L111">        estado = EstadoTransaccion.EXITOSA;</span>
+<span class="fc" id="L112">        fecha = LocalDateTime.now();</span>
+<span class="fc" id="L113">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

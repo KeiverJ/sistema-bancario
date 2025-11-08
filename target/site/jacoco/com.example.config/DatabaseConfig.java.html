@@ -17,34 +17,34 @@ public class DatabaseConfig {
   private int poolSize;
   private int timeout;
 
-<span class="nc" id="L20">  public DatabaseConfig() {</span>
-<span class="nc" id="L21">    this.properties = new Properties();</span>
+<span class="fc" id="L20">  public DatabaseConfig() {</span>
+<span class="fc" id="L21">    this.properties = new Properties();</span>
     // Valores por defecto
-<span class="nc" id="L23">    this.url = &quot;jdbc:h2:mem:bankdb&quot;;</span>
-<span class="nc" id="L24">    this.username = &quot;sa&quot;;</span>
-<span class="nc" id="L25">    this.password = &quot;&quot;;</span>
-<span class="nc" id="L26">    this.maxConnections = 10;</span>
-<span class="nc" id="L27">    this.poolSize = 20;</span>
-<span class="nc" id="L28">    this.timeout = 30;</span>
+<span class="fc" id="L23">    this.url = &quot;jdbc:h2:mem:bankdb&quot;;</span>
+<span class="fc" id="L24">    this.username = &quot;sa&quot;;</span>
+<span class="fc" id="L25">    this.password = &quot;&quot;;</span>
+<span class="fc" id="L26">    this.maxConnections = 10;</span>
+<span class="fc" id="L27">    this.poolSize = 20;</span>
+<span class="fc" id="L28">    this.timeout = 30;</span>
 
-<span class="nc" id="L30">    loadDefaultProperties();</span>
-<span class="nc" id="L31">  }</span>
+<span class="fc" id="L30">    loadDefaultProperties();</span>
+<span class="fc" id="L31">  }</span>
 
   private void loadDefaultProperties() {
-<span class="nc" id="L34">    properties.setProperty(&quot;database.driver&quot;, &quot;org.h2.Driver&quot;);</span>
-<span class="nc" id="L35">    properties.setProperty(&quot;database.url&quot;, url);</span>
-<span class="nc" id="L36">    properties.setProperty(&quot;database.username&quot;, username);</span>
-<span class="nc" id="L37">    properties.setProperty(&quot;database.password&quot;, password);</span>
-<span class="nc" id="L38">    properties.setProperty(&quot;database.maxConnections&quot;, String.valueOf(maxConnections));</span>
-<span class="nc" id="L39">    properties.setProperty(&quot;database.autoCommit&quot;, &quot;true&quot;);</span>
-<span class="nc" id="L40">    properties.setProperty(&quot;database.timeout&quot;, String.valueOf(timeout));</span>
-<span class="nc" id="L41">    properties.setProperty(&quot;database.poolSize&quot;, String.valueOf(poolSize));</span>
-<span class="nc" id="L42">  }</span>
+<span class="fc" id="L34">    properties.setProperty(&quot;database.driver&quot;, &quot;org.h2.Driver&quot;);</span>
+<span class="fc" id="L35">    properties.setProperty(&quot;database.url&quot;, url);</span>
+<span class="fc" id="L36">    properties.setProperty(&quot;database.username&quot;, username);</span>
+<span class="fc" id="L37">    properties.setProperty(&quot;database.password&quot;, password);</span>
+<span class="fc" id="L38">    properties.setProperty(&quot;database.maxConnections&quot;, String.valueOf(maxConnections));</span>
+<span class="fc" id="L39">    properties.setProperty(&quot;database.autoCommit&quot;, &quot;true&quot;);</span>
+<span class="fc" id="L40">    properties.setProperty(&quot;database.timeout&quot;, String.valueOf(timeout));</span>
+<span class="fc" id="L41">    properties.setProperty(&quot;database.poolSize&quot;, String.valueOf(poolSize));</span>
+<span class="fc" id="L42">  }</span>
 
   // Getters y Setters (Spring los usa para inyectar desde application.properties)
 
   public String getUrl() {
-<span class="nc" id="L47">    return url;</span>
+<span class="fc" id="L47">    return url;</span>
   }
 
   public void setUrl(String url) {
@@ -53,7 +53,7 @@ public class DatabaseConfig {
 <span class="nc" id="L53">  }</span>
 
   public String getUsername() {
-<span class="nc" id="L56">    return username;</span>
+<span class="fc" id="L56">    return username;</span>
   }
 
   public void setUsername(String username) {
@@ -62,7 +62,7 @@ public class DatabaseConfig {
 <span class="nc" id="L62">  }</span>
 
   public String getPassword() {
-<span class="nc" id="L65">    return password;</span>
+<span class="fc" id="L65">    return password;</span>
   }
 
   public void setPassword(String password) {

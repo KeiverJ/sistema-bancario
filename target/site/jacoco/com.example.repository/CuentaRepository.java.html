@@ -22,15 +22,15 @@ public class CuentaRepository {
 <span class="pc bpc" id="L22" title="2 of 4 branches missed.">        if (cuenta.getId() == null || cuenta.getId().isEmpty()) {</span>
 <span class="nc" id="L23">            cuenta.setId(UUID.randomUUID().toString());</span>
         }
-<span class="pc bpc" id="L25" title="2 of 4 branches missed.">        if (cuenta.getNumeroCuenta() == null || cuenta.getNumeroCuenta().isEmpty()) {</span>
-<span class="nc" id="L26">            cuenta.setNumeroCuenta(generarNumeroCuenta());</span>
+<span class="pc bpc" id="L25" title="1 of 4 branches missed.">        if (cuenta.getNumeroCuenta() == null || cuenta.getNumeroCuenta().isEmpty()) {</span>
+<span class="fc" id="L26">            cuenta.setNumeroCuenta(generarNumeroCuenta());</span>
         }
 <span class="fc" id="L28">        cuentas.put(cuenta.getId(), cuenta);</span>
 <span class="fc" id="L29">        return cuenta;</span>
     }
 
     public Optional&lt;Cuenta&gt; findById(String id) {
-<span class="nc" id="L33">        return Optional.ofNullable(cuentas.get(id));</span>
+<span class="fc" id="L33">        return Optional.ofNullable(cuentas.get(id));</span>
     }
 
     public Optional&lt;Cuenta&gt; findByNumeroCuenta(String numeroCuenta) {
@@ -56,8 +56,8 @@ public class CuentaRepository {
     }
 
     public void delete(String id) {
-<span class="nc" id="L59">        cuentas.remove(id);</span>
-<span class="nc" id="L60">    }</span>
+<span class="fc" id="L59">        cuentas.remove(id);</span>
+<span class="fc" id="L60">    }</span>
 
     public void deleteAll() {
 <span class="nc" id="L63">        cuentas.clear();</span>
@@ -68,7 +68,7 @@ public class CuentaRepository {
     }
 
     private String generarNumeroCuenta() {
-<span class="nc" id="L71">        return &quot;CTA-&quot; + System.currentTimeMillis() + &quot;-&quot; + new Random().nextInt(1000);</span>
+<span class="fc" id="L71">        return &quot;CTA-&quot; + System.currentTimeMillis() + &quot;-&quot; + new Random().nextInt(1000);</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

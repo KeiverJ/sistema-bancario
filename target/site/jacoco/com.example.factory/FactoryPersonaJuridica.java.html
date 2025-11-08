@@ -8,21 +8,21 @@ import java.util.concurrent.atomic.AtomicLong;
 
 import com.example.model.Credito;
 
-<span class="nc" id="L11">public class FactoryPersonaJuridica implements ProductoBancarioFactory {</span>
-<span class="nc" id="L12">    private static final AtomicInteger contadorCuenta = new AtomicInteger(2001);</span>
-<span class="nc" id="L13">    private static final AtomicInteger contadorCredito = new AtomicInteger(2001);</span>
-<span class="nc" id="L14">    private static final AtomicLong contadorNumeroCuenta = new AtomicLong(2000000000L);</span>
+<span class="fc" id="L11">public class FactoryPersonaJuridica implements ProductoBancarioFactory {</span>
+<span class="fc" id="L12">    private static final AtomicInteger contadorCuenta = new AtomicInteger(2001);</span>
+<span class="fc" id="L13">    private static final AtomicInteger contadorCredito = new AtomicInteger(2001);</span>
+<span class="fc" id="L14">    private static final AtomicLong contadorNumeroCuenta = new AtomicLong(2000000000L);</span>
 
     @Override
     public Cuenta crearCuenta(String clienteId, Cuenta.TipoCuenta tipoCuenta, double saldoInicial) {
-<span class="nc" id="L18">        Cuenta c = new Cuenta();</span>
-<span class="nc" id="L19">        c.setId(UUID.randomUUID().toString());</span>
-<span class="nc" id="L20">        c.setCodigo(&quot;CTA-&quot; + String.format(&quot;%04d&quot;, contadorCuenta.getAndIncrement()));</span>
-<span class="nc" id="L21">        c.setClienteId(clienteId);</span>
-<span class="nc" id="L22">        c.setTipoCuenta(tipoCuenta);</span>
-<span class="nc" id="L23">        c.setSaldo(saldoInicial);</span>
-<span class="nc" id="L24">        c.setNumeroCuenta(generarNumeroCuenta());</span>
-<span class="nc" id="L25">        return c;</span>
+<span class="fc" id="L18">        Cuenta c = new Cuenta();</span>
+<span class="fc" id="L19">        c.setId(UUID.randomUUID().toString());</span>
+<span class="fc" id="L20">        c.setCodigo(&quot;CTA-&quot; + String.format(&quot;%04d&quot;, contadorCuenta.getAndIncrement()));</span>
+<span class="fc" id="L21">        c.setClienteId(clienteId);</span>
+<span class="fc" id="L22">        c.setTipoCuenta(tipoCuenta);</span>
+<span class="fc" id="L23">        c.setSaldo(saldoInicial);</span>
+<span class="fc" id="L24">        c.setNumeroCuenta(generarNumeroCuenta());</span>
+<span class="fc" id="L25">        return c;</span>
     }
 
     @Override
@@ -39,7 +39,7 @@ import com.example.model.Credito;
     }
 
     private String generarNumeroCuenta() {
-<span class="nc" id="L42">        return String.valueOf(contadorNumeroCuenta.getAndIncrement());</span>
+<span class="fc" id="L42">        return String.valueOf(contadorNumeroCuenta.getAndIncrement());</span>
     }
 
     @Override

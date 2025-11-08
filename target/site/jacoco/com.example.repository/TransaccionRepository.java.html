@@ -20,15 +20,15 @@ public class TransaccionRepository {
 <span class="fc" id="L20">    }</span>
 
     public Transaccion save(Transaccion transaccion) {
-<span class="nc bnc" id="L23" title="All 4 branches missed.">        if (transaccion.getId() == null || transaccion.getId().isEmpty()) {</span>
+<span class="pc bpc" id="L23" title="2 of 4 branches missed.">        if (transaccion.getId() == null || transaccion.getId().isEmpty()) {</span>
 <span class="nc" id="L24">            transaccion.setId(UUID.randomUUID().toString());</span>
         }
-<span class="nc" id="L26">        transacciones.put(transaccion.getId(), transaccion);</span>
-<span class="nc" id="L27">        return transaccion;</span>
+<span class="fc" id="L26">        transacciones.put(transaccion.getId(), transaccion);</span>
+<span class="fc" id="L27">        return transaccion;</span>
     }
 
     public Optional&lt;Transaccion&gt; findById(String id) {
-<span class="nc" id="L31">        return Optional.ofNullable(transacciones.get(id));</span>
+<span class="fc" id="L31">        return Optional.ofNullable(transacciones.get(id));</span>
     }
 
     public List&lt;Transaccion&gt; findByCuentaId(String cuentaId) {
@@ -61,8 +61,8 @@ public class TransaccionRepository {
     }
 
     public void delete(String id) {
-<span class="nc" id="L64">        transacciones.remove(id);</span>
-<span class="nc" id="L65">    }</span>
+<span class="fc" id="L64">        transacciones.remove(id);</span>
+<span class="fc" id="L65">    }</span>
 
     public void deleteAll() {
 <span class="nc" id="L68">        transacciones.clear();</span>

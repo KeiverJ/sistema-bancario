@@ -41,7 +41,7 @@ public class CuentaService {
 
     public Cuenta abrirCuenta(String clienteId, Cuenta.TipoCuenta tipoCuenta, double saldoInicial) {
 <span class="fc" id="L43">        Cliente cliente = clienteRepository.findById(clienteId)</span>
-<span class="pc" id="L44">                .orElseThrow(() -&gt; new IllegalArgumentException(&quot;Cliente no encontrado&quot;));</span>
+<span class="fc" id="L44">                .orElseThrow(() -&gt; new IllegalArgumentException(&quot;Cliente no encontrado&quot;));</span>
 
 <span class="fc" id="L46">        double saldoMinimo = bankConfig.getSaldoMinimo(tipoCuenta.name());</span>
 <span class="fc bfc" id="L47" title="All 2 branches covered.">        if (saldoInicial &lt; saldoMinimo) {</span>

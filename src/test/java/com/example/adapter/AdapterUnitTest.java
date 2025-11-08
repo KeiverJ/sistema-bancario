@@ -13,6 +13,30 @@ import static org.junit.jupiter.api.Assertions.*;
  * Prueba unitaria del adapter que obtiene score del repositorio de cliente.
  */
 class AdapterUnitTest {
+    @Test
+    @DisplayName("LegacyRiskApiAdapter retorna score por defecto si cliente es null")
+    void legacy_score_clienteNull() {
+        LegacyRiskApiAdapter adapter = new LegacyRiskApiAdapter();
+        Score score = adapter.obtenerScore(null);
+        assertNotNull(score);
+        assertEquals(600, score.getValor());
+    }
+
+    @Test
+    @DisplayName("LegacyRiskApiAdapter retorna score para cliente con id '2'")
+    void legacy_score_clienteId2() {
+        LegacyRiskApiAdapter adapter = new LegacyRiskApiAdapter();
+        Score score = adapter.obtenerScore("2");
+        assertTrue(score.getValor() == 800 || score.getValor() == 700);
+    }
+
+    @Test
+    @DisplayName("LegacyRiskApiAdapter retorna score para cliente con id '3'")
+    void legacy_score_clienteId3() {
+        LegacyRiskApiAdapter adapter = new LegacyRiskApiAdapter();
+        Score score = adapter.obtenerScore("3");
+        assertTrue(score.getValor() == 800 || score.getValor() == 700);
+    }
 
     @Test
     @DisplayName("Adapter obtiene score desde ClienteRepository")
