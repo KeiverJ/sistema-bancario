@@ -1,7 +1,5 @@
 package com.example.config;
 
-import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.context.annotation.Configuration;
 
 import java.util.Properties;
 
@@ -9,8 +7,6 @@ import java.util.Properties;
  * BankConfig - Configuración del banco.
  * Spring Boot maneja automáticamente el Singleton.
  */
-@Configuration
-@ConfigurationProperties(prefix = "bank")
 public class BankConfig {
 
     private final Properties properties;

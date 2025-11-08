@@ -1,177 +1,139 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DatabaseConfig.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Java Testing Application</a> &gt; <a href="index.source.html" class="el_package">com.example.config</a> &gt; <span class="el_source">DatabaseConfig.java</span></div><h1>DatabaseConfig.java</h1><pre class="source lang-java linenums">package com.example.config;
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DatabaseConfig.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Sistema Bancario</a> &gt; <a href="index.source.html" class="el_package">com.example.config</a> &gt; <span class="el_source">DatabaseConfig.java</span></div><h1>DatabaseConfig.java</h1><pre class="source lang-java linenums">package com.example.config;
+
 
 import java.util.Properties;
 
 /**
- * DatabaseConfig class implementing the Singleton pattern.
- * This class manages database configuration throughout the application.
- * 
- * Key Singleton characteristics demonstrated:
- * - Private constructor to prevent direct instantiation
- * - Static instance variable
- * - Thread-safe getInstance() method using synchronized keyword
- * - Lazy initialization
+ * DatabaseConfig - Configuración de base de datos.
+ * Spring Boot maneja automáticamente el Singleton.
  */
 public class DatabaseConfig {
 
-  // Static variable to hold the single instance
-  private static DatabaseConfig instance;
-
-  // Configuration properties
   private final Properties properties;
-  private final String databaseUrl;
-  private final String username;
-  private final String password;
-  private final int maxConnections;
+  private String url;
+  private String username;
+  private String password;
+  private int maxConnections;
+  private int poolSize;
+  private int timeout;
 
-  /**
-   * Private constructor to prevent direct instantiation.
-   * Initializes default database configuration.
-   */
-<span class="fc" id="L31">  private DatabaseConfig() {</span>
-<span class="fc" id="L32">    this.properties = new Properties();</span>
-<span class="fc" id="L33">    this.databaseUrl = &quot;jdbc:h2:mem:testdb&quot;;</span>
-<span class="fc" id="L34">    this.username = &quot;sa&quot;;</span>
-<span class="fc" id="L35">    this.password = &quot;&quot;;</span>
-<span class="fc" id="L36">    this.maxConnections = 10;</span>
+<span class="nc" id="L20">  public DatabaseConfig() {</span>
+<span class="nc" id="L21">    this.properties = new Properties();</span>
+    // Valores por defecto
+<span class="nc" id="L23">    this.url = &quot;jdbc:h2:mem:bankdb&quot;;</span>
+<span class="nc" id="L24">    this.username = &quot;sa&quot;;</span>
+<span class="nc" id="L25">    this.password = &quot;&quot;;</span>
+<span class="nc" id="L26">    this.maxConnections = 10;</span>
+<span class="nc" id="L27">    this.poolSize = 20;</span>
+<span class="nc" id="L28">    this.timeout = 30;</span>
 
-    // Load default properties
-<span class="fc" id="L39">    loadDefaultProperties();</span>
-<span class="fc" id="L40">  }</span>
+<span class="nc" id="L30">    loadDefaultProperties();</span>
+<span class="nc" id="L31">  }</span>
 
-  /**
-   * Thread-safe method to get the singleton instance.
-   * Uses synchronized keyword to ensure thread safety.
-   * 
-   * @return the single instance of DatabaseConfig
-   */
-  public static synchronized DatabaseConfig getInstance() {
-<span class="fc bfc" id="L49" title="All 2 branches covered.">    if (instance == null) {</span>
-<span class="fc" id="L50">      instance = new DatabaseConfig();</span>
-    }
-<span class="fc" id="L52">    return instance;</span>
-  }
-
-  /**
-   * Alternative thread-safe implementation using double-checked locking.
-   * This version is more efficient for high-concurrency scenarios.
-   * 
-   * @return the single instance of DatabaseConfig
-   */
-  public static DatabaseConfig getInstanceDoubleChecked() {
-<span class="fc bfc" id="L62" title="All 2 branches covered.">    if (instance == null) {</span>
-<span class="fc" id="L63">      synchronized (DatabaseConfig.class) {</span>
-<span class="pc bpc" id="L64" title="1 of 2 branches missed.">        if (instance == null) {</span>
-<span class="fc" id="L65">          instance = new DatabaseConfig();</span>
-        }
-<span class="fc" id="L67">      }</span>
-    }
-<span class="fc" id="L69">    return instance;</span>
-  }
-
-  /**
-   * Loads default database properties.
-   */
   private void loadDefaultProperties() {
-<span class="fc" id="L76">    properties.setProperty(&quot;database.driver&quot;, &quot;org.h2.Driver&quot;);</span>
-<span class="fc" id="L77">    properties.setProperty(&quot;database.url&quot;, databaseUrl);</span>
-<span class="fc" id="L78">    properties.setProperty(&quot;database.username&quot;, username);</span>
-<span class="fc" id="L79">    properties.setProperty(&quot;database.password&quot;, password);</span>
-<span class="fc" id="L80">    properties.setProperty(&quot;database.maxConnections&quot;, String.valueOf(maxConnections));</span>
-<span class="fc" id="L81">    properties.setProperty(&quot;database.autoCommit&quot;, &quot;true&quot;);</span>
-<span class="fc" id="L82">    properties.setProperty(&quot;database.timeout&quot;, &quot;30&quot;);</span>
-<span class="fc" id="L83">  }</span>
+<span class="nc" id="L34">    properties.setProperty(&quot;database.driver&quot;, &quot;org.h2.Driver&quot;);</span>
+<span class="nc" id="L35">    properties.setProperty(&quot;database.url&quot;, url);</span>
+<span class="nc" id="L36">    properties.setProperty(&quot;database.username&quot;, username);</span>
+<span class="nc" id="L37">    properties.setProperty(&quot;database.password&quot;, password);</span>
+<span class="nc" id="L38">    properties.setProperty(&quot;database.maxConnections&quot;, String.valueOf(maxConnections));</span>
+<span class="nc" id="L39">    properties.setProperty(&quot;database.autoCommit&quot;, &quot;true&quot;);</span>
+<span class="nc" id="L40">    properties.setProperty(&quot;database.timeout&quot;, String.valueOf(timeout));</span>
+<span class="nc" id="L41">    properties.setProperty(&quot;database.poolSize&quot;, String.valueOf(poolSize));</span>
+<span class="nc" id="L42">  }</span>
 
-  // Getter methods
-  public String getDatabaseUrl() {
-<span class="fc" id="L87">    return databaseUrl;</span>
+  // Getters y Setters (Spring los usa para inyectar desde application.properties)
+
+  public String getUrl() {
+<span class="nc" id="L47">    return url;</span>
   }
+
+  public void setUrl(String url) {
+<span class="nc" id="L51">    this.url = url;</span>
+<span class="nc" id="L52">    properties.setProperty(&quot;database.url&quot;, url);</span>
+<span class="nc" id="L53">  }</span>
 
   public String getUsername() {
-<span class="fc" id="L91">    return username;</span>
+<span class="nc" id="L56">    return username;</span>
   }
+
+  public void setUsername(String username) {
+<span class="nc" id="L60">    this.username = username;</span>
+<span class="nc" id="L61">    properties.setProperty(&quot;database.username&quot;, username);</span>
+<span class="nc" id="L62">  }</span>
 
   public String getPassword() {
-<span class="fc" id="L95">    return password;</span>
+<span class="nc" id="L65">    return password;</span>
   }
+
+  public void setPassword(String password) {
+<span class="nc" id="L69">    this.password = password;</span>
+<span class="nc" id="L70">    properties.setProperty(&quot;database.password&quot;, password);</span>
+<span class="nc" id="L71">  }</span>
 
   public int getMaxConnections() {
-<span class="fc" id="L99">    return maxConnections;</span>
+<span class="nc" id="L74">    return maxConnections;</span>
   }
 
+  public void setMaxConnections(int maxConnections) {
+<span class="nc" id="L78">    this.maxConnections = maxConnections;</span>
+<span class="nc" id="L79">    properties.setProperty(&quot;database.maxConnections&quot;, String.valueOf(maxConnections));</span>
+<span class="nc" id="L80">  }</span>
+
+  public int getPoolSize() {
+<span class="nc" id="L83">    return poolSize;</span>
+  }
+
+  public void setPoolSize(int poolSize) {
+<span class="nc" id="L87">    this.poolSize = poolSize;</span>
+<span class="nc" id="L88">    properties.setProperty(&quot;database.poolSize&quot;, String.valueOf(poolSize));</span>
+<span class="nc" id="L89">  }</span>
+
+  public int getTimeout() {
+<span class="nc" id="L92">    return timeout;</span>
+  }
+
+  public void setTimeout(int timeout) {
+<span class="nc" id="L96">    this.timeout = timeout;</span>
+<span class="nc" id="L97">    properties.setProperty(&quot;database.timeout&quot;, String.valueOf(timeout));</span>
+<span class="nc" id="L98">  }</span>
+
   public String getProperty(String key) {
-<span class="fc bfc" id="L103" title="All 2 branches covered.">    if (key == null) {</span>
-<span class="fc" id="L104">      return null;</span>
-    }
-<span class="fc" id="L106">    return properties.getProperty(key);</span>
+<span class="nc bnc" id="L101" title="All 2 branches missed.">    return key == null ? null : properties.getProperty(key);</span>
   }
 
   public Properties getAllProperties() {
-<span class="fc" id="L110">    return new Properties(properties);</span>
+<span class="nc" id="L105">    return new Properties(properties);</span>
   }
 
-  /**
-   * Updates a configuration property.
-   * 
-   * @param key   the property key
-   * @param value the property value
-   */
   public void setProperty(String key, String value) {
-<span class="pc bpc" id="L120" title="1 of 2 branches missed.">    if (key != null) {</span>
-<span class="fc bfc" id="L121" title="All 2 branches covered.">      if (value != null) {</span>
-<span class="fc" id="L122">        properties.setProperty(key, value);</span>
-      } else {
-<span class="fc" id="L124">        properties.remove(key);</span>
+<span class="nc bnc" id="L109" title="All 2 branches missed.">    if (key != null) {</span>
+<span class="nc bnc" id="L110" title="All 2 branches missed.">      if (value != null) {</span>
+<span class="nc" id="L111">        properties.setProperty(key, value);</span>
+<span class="nc" id="L112">      } else {</span>
+<span class="nc" id="L113">        properties.remove(key);</span>
       }
     }
-<span class="fc" id="L127">  }</span>
+<span class="nc" id="L116">  }</span>
 
-  /**
-   * Checks if the database is configured for production environment.
-   * 
-   * @return true if configured for production, false otherwise
-   */
   public boolean isProductionEnvironment() {
-<span class="pc bpc" id="L135" title="1 of 2 branches missed.">    return !databaseUrl.contains(&quot;h2:mem:&quot;);</span>
+<span class="nc bnc" id="L119" title="All 2 branches missed.">    return !url.contains(&quot;h2:mem:&quot;);</span>
   }
 
-  /**
-   * Gets the connection timeout in seconds.
-   * 
-   * @return connection timeout
-   */
-  public int getConnectionTimeout() {
-<span class="fc" id="L144">    String timeoutStr = properties.getProperty(&quot;database.timeout&quot;, &quot;30&quot;);</span>
-    try {
-<span class="fc" id="L146">      return Integer.parseInt(timeoutStr);</span>
-<span class="fc" id="L147">    } catch (NumberFormatException e) {</span>
-<span class="fc" id="L148">      return 30; // default fallback</span>
-    }
-  }
-
-  /**
-   * Validates the current database configuration.
-   * 
-   * @return true if configuration is valid, false otherwise
-   */
   public boolean isValidConfiguration() {
-<span class="pc bpc" id="L158" title="4 of 8 branches missed.">    return databaseUrl != null &amp;&amp; !databaseUrl.isEmpty() &amp;&amp;</span>
-        username != null &amp;&amp;
-        maxConnections &gt; 0;
+<span class="nc bnc" id="L123" title="All 6 branches missed.">    return url != null &amp;&amp; !url.isEmpty() &amp;&amp;</span>
+<span class="nc bnc" id="L124" title="All 2 branches missed.">        username != null &amp;&amp;</span>
+<span class="nc" id="L125">        maxConnections &gt; 0;</span>
   }
 
-  /**
-   * Reset method for testing purposes only.
-   * This method should not be used in production code.
-   */
-  public static synchronized void resetForTesting() {
-<span class="fc" id="L168">    instance = null;</span>
-<span class="fc" id="L169">  }</span>
+  public String getConnectionString() {
+<span class="nc" id="L129">    return String.format(&quot;%s;USER=%s;PASSWORD=%s;MAX_CONNECTIONS=%d&quot;,</span>
+<span class="nc" id="L130">        url, username, password, maxConnections);</span>
+  }
 
   @Override
   public String toString() {
-<span class="fc" id="L173">    return String.format(&quot;DatabaseConfig{url='%s', username='%s', maxConnections=%d}&quot;,</span>
-<span class="fc" id="L174">        databaseUrl, username, maxConnections);</span>
+<span class="nc" id="L135">    return String.format(&quot;DatabaseConfig{url='%s', username='%s', maxConnections=%d, poolSize=%d}&quot;,</span>
+<span class="nc" id="L136">        url, username, maxConnections, poolSize);</span>
   }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

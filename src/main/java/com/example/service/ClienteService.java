@@ -3,7 +3,6 @@ package com.example.service;
 import com.example.model.Cliente;
 import com.example.repository.ClienteRepository;
 import com.example.config.BankConfig;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
@@ -17,7 +16,6 @@ import java.util.concurrent.atomic.AtomicInteger;
  * @Service hace que Spring Boot cree UNA sola instancia (Singleton).
  *          Usa Constructor Injection para inyectar dependencias.
  */
-@Service
 public class ClienteService {
 
   private final ClienteRepository clienteRepository;

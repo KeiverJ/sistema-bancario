@@ -1,7 +1,6 @@
 package com.example.repository;
 
 import com.example.model.Cuenta;
-import org.springframework.stereotype.Repository;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
@@ -11,7 +10,6 @@ import java.util.concurrent.ConcurrentHashMap;
  * 
  * @Repository hace que Spring Boot cree UNA sola instancia (Singleton).
  */
-@Repository
 public class CuentaRepository {
 
     private final Map<String, Cuenta> cuentas;

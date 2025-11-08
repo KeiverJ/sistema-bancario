@@ -1,9 +1,7 @@
 package com.example.chain;
 
 import com.example.config.BankConfig;
-import org.springframework.stereotype.Service;
 
-@Service
 public class ApprovalChainBuilder {
 
     public ApprovalHandler build(BankConfig config) {

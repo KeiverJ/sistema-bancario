@@ -7,7 +7,6 @@ import com.example.repository.ClienteRepository;
 import com.example.config.BankConfig;
 import com.example.factory.FabricaProductosProvider;
 import com.example.factory.ProductoBancarioFactory;
-import org.springframework.stereotype.Service;
 import com.example.observer.DomainEventPublisher;
 import com.example.observer.CuentaSaldoActualizadoEvent;
 
@@ -19,7 +18,6 @@ import java.util.Optional;
  * 
  * @Service hace que Spring Boot cree UNA sola instancia (Singleton).
  */
-@Service
 public class CuentaService {
 
     private final CuentaRepository cuentaRepository;

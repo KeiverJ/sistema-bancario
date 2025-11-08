@@ -1,7 +1,6 @@
 package com.example.repository;
 
 import com.example.model.Transaccion;
-import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
 import java.util.*;
@@ -12,7 +11,6 @@ import java.util.concurrent.ConcurrentHashMap;
  * 
  * @Repository hace que Spring Boot cree UNA sola instancia (Singleton).
  */
-@Repository
 public class TransaccionRepository {
 
     private final Map<String, Transaccion> transacciones;

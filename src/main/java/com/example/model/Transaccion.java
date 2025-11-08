@@ -2,13 +2,10 @@ package com.example.model;
 
 import java.time.LocalDateTime;
 
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
 
 /**
  * Transacción bancaria.
  */
-@Document(collection = "transacciones")
 public class Transaccion {
 
     public enum TipoTransaccion {
@@ -27,7 +24,6 @@ public class Transaccion {
     private LocalDateTime fecha;
     private EstadoTransaccion estado;
 
-    @Id
     private String id;
     private String codigo;
 

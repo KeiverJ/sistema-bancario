@@ -9,9 +9,7 @@ import com.example.observer.DomainEventPublisher;
 import com.example.repository.ClienteRepository;
 import com.example.repository.CuentaRepository;
 import com.example.template.AperturaCuentaTemplate;
-import org.springframework.stereotype.Service;
 
-@Service
 public class AperturaCuentaDefault extends AperturaCuentaTemplate {
 
     private final BankConfig bankConfig;

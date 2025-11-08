@@ -12,7 +12,6 @@ import com.example.adapter.ScoreProviderRegistry;
 import com.example.model.Score;
 import com.example.builder.CreditoBuilderRegistry;
 import com.example.builder.CreditoBuilder;
-import org.springframework.stereotype.Service;
 import com.example.chain.ApprovalChainBuilder;
 import com.example.chain.ApprovalContext;
 import com.example.chain.ApprovalHandler;
@@ -24,7 +23,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-@Service
 public class CreditoService {
 
     private final CreditoRepository creditoRepository;

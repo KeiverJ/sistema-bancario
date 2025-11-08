@@ -1,9 +1,7 @@
 package com.example.builder;
 
 import com.example.model.Credito;
-import org.springframework.stereotype.Service;
 
-@Service
 public class CreditoBuilderRegistry {
 
     public CreditoBuilder get(Credito.TipoCredito tipo) {

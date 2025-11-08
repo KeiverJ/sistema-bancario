@@ -3,12 +3,10 @@ package com.example.adapter;
 import com.example.model.Cliente;
 import com.example.model.Score;
 import com.example.repository.ClienteRepository;
-import org.springframework.stereotype.Component;
 
 /**
  * Adaptador que obtiene el score del cliente desde la base de datos
  */
-@Component
 public class BuroFinancieroAdapter implements ScoreProvider {
 
     private final ClienteRepository clienteRepository;

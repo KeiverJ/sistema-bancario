@@ -3,8 +3,6 @@ package com.example.model;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.data.annotation.Id;
-
 /**
  * Cliente del sistema.
  */
@@ -14,7 +12,6 @@ public class Cliente {
     PERSONA_NATURAL, PERSONA_JURIDICA, EXTRANJERO
   }
 
-  @Id
   private String id;
   private String codigo;
   private String nombre;

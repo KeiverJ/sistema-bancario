@@ -7,7 +7,6 @@ import com.example.factory.RetiroFactory;
 import com.example.factory.TransferenciaFactory;
 import com.example.model.Transaccion;
 import com.example.repository.TransaccionRepository;
-import org.springframework.stereotype.Service;
 import com.example.observer.DomainEventPublisher;
 import com.example.observer.TransaccionRegistradaEvent;
 
@@ -17,7 +16,6 @@ import java.util.Optional;
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicInteger;
 
-@Service
 public class TransaccionService {
 
     private final TransaccionRepository transaccionRepository;

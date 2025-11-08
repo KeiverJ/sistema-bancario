@@ -1,9 +1,7 @@
 package com.example.adapter;
 
 import com.example.model.Score;
-import org.springframework.stereotype.Component;
 
-@Component
 public class LegacyRiskApiAdapter implements ScoreProvider {
 
     private final LegacyRiskApi legacyApi = new LegacyRiskApi();

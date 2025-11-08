@@ -6,9 +6,7 @@ import com.example.model.Credito;
 import com.example.strategy.impl.InteresConsumoStrategy;
 import com.example.strategy.impl.InteresLibreInversionStrategy;
 import com.example.strategy.impl.InteresHipotecarioStrategy;
-import org.springframework.stereotype.Service;
 
-@Service
 public class InteresStrategyRegistry {
 
     private final CalculoInteresStrategy consumo = new InteresConsumoStrategy();

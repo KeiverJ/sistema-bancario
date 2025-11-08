@@ -1,7 +1,6 @@
 package com.example.repository;
 
 import com.example.model.Credito;
-import org.springframework.stereotype.Repository;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
@@ -11,7 +10,6 @@ import java.util.concurrent.ConcurrentHashMap;
  * 
  * @Repository hace que Spring Boot cree UNA sola instancia (Singleton).
  */
-@Repository
 public class CreditoRepository {
 
     private final Map<String, Credito> creditos;
@@ -50,7 +48,7 @@ public class CreditoRepository {
 
     public List<Credito> findByEstado(String estado) {
         return creditos.values().stream()
-                .filter(c -> estado.equals(c.getEstadoActual()))
+                .filter(c -> c.getEstadoActual() != null && estado != null && estado.equals(c.getEstadoActual().name()))
                 .toList();
     }
 

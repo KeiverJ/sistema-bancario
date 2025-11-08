@@ -2,12 +2,10 @@ package com.example.adapter;
 
 import com.example.model.Cliente;
 import com.example.model.Score;
-import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
 import java.util.Map;
 
-@Component
 public class ScoreProviderRegistry {
 
     private final Map<String, ScoreProvider> providers;

@@ -10,57 +10,106 @@ import com.example.service.ClienteService;
 import com.example.service.CreditoService;
 import com.example.service.CuentaService;
 import com.example.service.TransaccionService;
-import org.springframework.boot.CommandLineRunner;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Bean;
+import com.example.repository.*;
+import com.example.config.*;
+import com.example.factory.*;
+import com.example.strategy.*;
+import com.example.adapter.*;
+import com.example.builder.*;
+import com.example.chain.*;
+import com.example.observer.*;
+import com.example.template.impl.SolicitudCreditoDefault;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Scanner;
 
-@SpringBootApplication
 public class BankingSystemApp {
 
   private static final String ABORTAR = "0";
 
   public static void main(String[] args) {
-    SpringApplication.run(BankingSystemApp.class, args);
+    // Wiring manual (reemplaza el contenedor de Spring)
+    BankConfig bankConfig = new BankConfig();
+  // DatabaseConfig instanciado si en el futuro se requiere info de conexión (opcional)
+
+    // Repositorios
+    ClienteRepository clienteRepository = new ClienteRepository();
+    CuentaRepository cuentaRepository = new CuentaRepository();
+    CreditoRepository creditoRepository = new CreditoRepository();
+    TransaccionRepository transaccionRepository = new TransaccionRepository();
+
+    // Componentes auxiliares / factories / registries
+    FabricaProductosProvider fabricaProductosProvider = new FabricaProductosProvider();
+    InteresStrategyRegistry interesStrategyRegistry = new InteresStrategyRegistry();
+    CreditoBuilderRegistry creditoBuilderRegistry = new CreditoBuilderRegistry();
+    ApprovalChainBuilder approvalChainBuilder = new ApprovalChainBuilder();
+    ScoreProviderRegistry scoreProviderRegistry = new ScoreProviderRegistry(
+        new BuroFinancieroAdapter(clienteRepository),
+        new LegacyRiskApiAdapter());
+
+    // Observers y publisher
+    DomainEventPublisher publisher = new DomainEventPublisher(List.of(
+        new LoggingObserver(),
+        new FraudeObserver(),
+        new NotificacionObserver()));
+
+    // Templates
+    SolicitudCreditoDefault solicitudCreditoTemplate = new SolicitudCreditoDefault(
+        creditoBuilderRegistry,
+        interesStrategyRegistry,
+        approvalChainBuilder,
+        creditoRepository,
+        clienteRepository,
+        publisher,
+        scoreProviderRegistry,
+        bankConfig);
+  // Nota: Existe AperturaCuentaDefault para encapsular apertura de cuentas si deseas usar plantilla
+
+    // Servicios
+    ClienteService clienteService = new ClienteService(clienteRepository, bankConfig);
+    CuentaService cuentaService = new CuentaService(cuentaRepository, clienteRepository, bankConfig,
+        fabricaProductosProvider, publisher);
+    CreditoService creditoService = new CreditoService(creditoRepository, clienteRepository, bankConfig,
+        fabricaProductosProvider, interesStrategyRegistry, scoreProviderRegistry,
+        creditoBuilderRegistry, approvalChainBuilder, publisher, solicitudCreditoTemplate);
+    TransaccionService transaccionService = new TransaccionService(transaccionRepository, bankConfig, publisher,
+        cuentaService);
+
+    // Iniciar menú interactivo
+    new BankingSystemApp().runMenu(clienteService, cuentaService, creditoService, transaccionService);
   }
 
-  @Bean
-  CommandLineRunner menu(ClienteService clienteService,
+  private void runMenu(ClienteService clienteService,
       CuentaService cuentaService,
       CreditoService creditoService,
       TransaccionService transaccionService) {
-    return args -> {
-      Scanner sc = new Scanner(System.in);
-      System.out.println("SISTEMA BANCARIO - PATRONES DE DISEÑO");
-      System.out.println();
+    Scanner sc = new Scanner(System.in);
+    System.out.println("SISTEMA BANCARIO - PATRONES DE DISEÑO (Java Puro)");
+    System.out.println();
 
-      boolean running = true;
-      while (running) {
-        mostrarMenu();
-        System.out.print("\nOpción: ");
-        String opcion = sc.nextLine().trim();
+    boolean running = true;
+    while (running) {
+      mostrarMenu();
+      System.out.print("\nOpción: ");
+      String opcion = sc.nextLine().trim();
 
-        try {
-          running = procesarOpcion(opcion, sc, clienteService, cuentaService,
-              creditoService, transaccionService);
-        } catch (Exception e) {
-          System.err.println("\nError: " + e.getMessage());
-        }
-
-        if (running) {
-          System.out.println("\nPresione ENTER para continuar...");
-          sc.nextLine();
-        }
+      try {
+        running = procesarOpcion(opcion, sc, clienteService, cuentaService,
+            creditoService, transaccionService);
+      } catch (Exception e) {
+        System.err.println("\nError: " + e.getMessage());
       }
 
-      System.out.println("\n¡Hasta pronto!");
-      sc.close();
-    };
+      if (running) {
+        System.out.println("\nPresione ENTER para continuar...");
+        sc.nextLine();
+      }
+    }
+
+    System.out.println("\n¡Hasta pronto!");
+    sc.close();
   }
 
   private void mostrarMenu() {
@@ -693,7 +742,7 @@ public class BankingSystemApp {
     }
   }
 
-  private void listarCreditosCliente(Scanner sc, ClienteService clienteService,
+private void listarCreditosCliente(Scanner sc, ClienteService clienteService,
       CreditoService creditoService) {
     System.out.println("\nCRÉDITOS DEL CLIENTE\n");
 
@@ -721,15 +770,13 @@ public class BankingSystemApp {
           cr.getEstadoActual())));
 
       System.out.println("-".repeat(75));
-
-      // ✅ CORRECCIÓN: Solo sumar créditos que tengan saldo real (APROBADO,
-      // DESEMBOLSADO, ACTIVO, EN_MORA)
+      
       double totalSaldo = creditos.stream()
-          .filter(cr -> cr.getEstadoActual() != Credito.EstadoCredito.RECHAZADO
-              && cr.getEstadoActual() != Credito.EstadoCredito.CANCELADO)
+          .filter(cr -> cr.getEstadoActual() != Credito.EstadoCredito.RECHAZADO 
+                     && cr.getEstadoActual() != Credito.EstadoCredito.CANCELADO)
           .mapToDouble(Credito::getSaldo)
           .sum();
-
+          
       System.out.println("Total adeudado: $" + String.format("%,.2f", totalSaldo));
     } catch (Exception e) {
       System.err.println("Error: " + e.getMessage());

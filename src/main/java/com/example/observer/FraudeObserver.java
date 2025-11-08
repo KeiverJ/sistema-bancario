@@ -1,9 +1,7 @@
 package com.example.observer;
 
 import com.example.observer.TransaccionRegistradaEvent;
-import org.springframework.stereotype.Component;
 
-@Component
 public class FraudeObserver implements EventoObserver {
     @Override
     public void onEvento(DomainEvent event) {

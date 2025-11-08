@@ -1,13 +1,9 @@
 package com.example.model;
 
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document(collection = "cuentas")
 public class Cuenta extends ProductoFinanciero {
 
-    @Id
-    private String id;
+    // Eliminar el campo id duplicado; usar el id heredado de ProductoFinanciero
     private String codigo;
     private String numeroCuenta;
     private TipoCuenta tipoCuenta;
@@ -23,15 +19,7 @@ public class Cuenta extends ProductoFinanciero {
         ACTIVA, INACTIVA, BLOQUEADA
     }
 
-    @Override
-    public String getId() {
-        return id;
-    }
-
-    @Override
-    public void setId(String id) {
-        this.id = id;
-    }
+    // Métodos getId/setId heredados directamente de ProductoFinanciero
 
     public String getCodigo() {
         return codigo;

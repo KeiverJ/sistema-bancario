@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>InteresStrategyRegistry.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Sistema Bancario</a> &gt; <a href="index.source.html" class="el_package">com.example.strategy</a> &gt; <span class="el_source">InteresStrategyRegistry.java</span></div><h1>InteresStrategyRegistry.java</h1><pre class="source lang-java linenums">package com.example.strategy;
+
+import com.example.config.BankConfig;
+import com.example.model.Cliente;
+import com.example.model.Credito;
+import com.example.strategy.impl.InteresConsumoStrategy;
+import com.example.strategy.impl.InteresLibreInversionStrategy;
+import com.example.strategy.impl.InteresHipotecarioStrategy;
+
+<span class="fc" id="L10">public class InteresStrategyRegistry {</span>
+
+<span class="fc" id="L12">    private final CalculoInteresStrategy consumo = new InteresConsumoStrategy();</span>
+<span class="fc" id="L13">    private final CalculoInteresStrategy libre = new InteresLibreInversionStrategy();</span>
+<span class="fc" id="L14">    private final CalculoInteresStrategy hipotecario = new InteresHipotecarioStrategy();</span>
+
+    public double tasaPara(Credito credito, Cliente cliente, BankConfig config) {
+<span class="pc bpc" id="L17" title="1 of 2 branches missed.">        if (credito.getTipoCredito() == null)</span>
+<span class="nc" id="L18">            return config.getTasaInteresBase();</span>
+<span class="fc bfc" id="L19" title="All 4 branches covered.">        return switch (credito.getTipoCredito()) {</span>
+<span class="fc" id="L20">            case CONSUMO -&gt; consumo.calcularTasaAnual(credito, cliente, config);</span>
+<span class="fc" id="L21">            case LIBRE_INVERSION -&gt; libre.calcularTasaAnual(credito, cliente, config);</span>
+<span class="fc" id="L22">            case HIPOTECARIO -&gt; hipotecario.calcularTasaAnual(credito, cliente, config);</span>
+<span class="fc" id="L23">            case VEHICULO -&gt; consumo.calcularTasaAnual(credito, cliente, config); // por defecto</span>
+        };
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

@@ -13,11 +13,9 @@ import com.example.repository.CreditoRepository;
 import com.example.strategy.InteresStrategyRegistry;
 import com.example.template.SolicitudCreditoTemplate;
 import com.example.util.CreditoCodigoGenerator;
-import org.springframework.stereotype.Component;
 
 import java.util.UUID;
 
-@Component
 public class SolicitudCreditoDefault extends SolicitudCreditoTemplate {
 
     public SolicitudCreditoDefault(

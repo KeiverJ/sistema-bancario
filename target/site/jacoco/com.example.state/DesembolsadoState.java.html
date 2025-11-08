@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DesembolsadoState.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Sistema Bancario</a> &gt; <a href="index.source.html" class="el_package">com.example.state</a> &gt; <span class="el_source">DesembolsadoState.java</span></div><h1>DesembolsadoState.java</h1><pre class="source lang-java linenums">package com.example.state;
+
+import com.example.model.Credito;
+
+<span class="fc" id="L5">public class DesembolsadoState implements CreditoState {</span>
+    @Override
+    public String nombre() {
+<span class="fc" id="L8">        return &quot;DESEMBOLSADO&quot;;</span>
+    }
+
+    @Override
+    public boolean pagar(Credito c, double monto) {
+<span class="pc bpc" id="L13" title="1 of 2 branches missed.">        if (monto &lt;= 0)</span>
+<span class="nc" id="L14">            return false;</span>
+<span class="fc" id="L15">        double saldo = c.getSaldo() - monto;</span>
+<span class="fc" id="L16">        c.setSaldo(Math.max(0, saldo));</span>
+<span class="pc bpc" id="L17" title="1 of 2 branches missed.">        if (c.getSaldo() &lt;= 0) {</span>
+<span class="nc" id="L18">            c.setState(new CanceladoState());</span>
+        }
+<span class="fc" id="L20">        return true;</span>
+    }
+
+    @Override
+    public void marcarMora(Credito c) {
+<span class="nc" id="L25">        c.setState(new EnMoraState());</span>
+<span class="nc" id="L26">    }</span>
+
+    @Override
+    public void cerrar(Credito c) {
+<span class="nc bnc" id="L30" title="All 2 branches missed.">        if (c.getSaldo() &lt;= 0)</span>
+<span class="nc" id="L31">            c.setState(new CanceladoState());</span>
+        else
+<span class="nc" id="L33">            throw new IllegalStateException(&quot;No se puede cerrar con saldo &gt; 0&quot;);</span>
+<span class="nc" id="L34">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

@@ -1,8 +1,6 @@
 package com.example.observer;
 
-import org.springframework.stereotype.Component;
 
-@Component
 public class NotificacionObserver implements EventoObserver {
     @Override
     public void onEvento(DomainEvent event) {

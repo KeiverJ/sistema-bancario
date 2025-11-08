@@ -1,7 +1,5 @@
 package com.example.model;
 
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
 
 import com.example.state.CreditoState;
 import com.example.state.StateFactory;
@@ -9,7 +7,6 @@ import com.example.state.StateFactory;
 /**
  * Crédito otorgado al cliente.
  */
-@Document(collection = "creditos")
 public class Credito extends ProductoFinanciero {
 
     public enum TipoCredito {
@@ -26,8 +23,7 @@ public class Credito extends ProductoFinanciero {
         CANCELADO
     }
 
-    @Id
-    private String id;
+    // id heredado de ProductoFinanciero
     private String codigo;
     // clienteId se hereda de ProductoFinanciero
 
@@ -48,15 +44,7 @@ public class Credito extends ProductoFinanciero {
     // State (no serializable)
     private transient CreditoState state;
 
-    @Override
-    public String getId() {
-        return id;
-    }
-
-    @Override
-    public void setId(String id) {
-        this.id = id;
-    }
+    // getId/setId heredados directamente
 
     public String getCodigo() {
         return codigo;

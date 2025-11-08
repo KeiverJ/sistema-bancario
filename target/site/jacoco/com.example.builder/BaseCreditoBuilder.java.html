@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>BaseCreditoBuilder.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Sistema Bancario</a> &gt; <a href="index.source.html" class="el_package">com.example.builder</a> &gt; <span class="el_source">BaseCreditoBuilder.java</span></div><h1>BaseCreditoBuilder.java</h1><pre class="source lang-java linenums">package com.example.builder;
+
+import com.example.model.Credito;
+
+/**
+ * Builder base con fluent API.
+ */
+<span class="nc" id="L8">public class BaseCreditoBuilder implements CreditoBuilder {</span>
+
+    protected Credito credito;
+
+    @Override
+    public CreditoBuilder desdeBase(Credito base) {
+<span class="nc" id="L14">        this.credito = base;</span>
+<span class="nc" id="L15">        return this;</span>
+    }
+
+    @Override
+    public CreditoBuilder conSeguroVida(boolean valor) {
+<span class="nc" id="L20">        ensure();</span>
+<span class="nc" id="L21">        credito.setSeguroVida(valor);</span>
+<span class="nc" id="L22">        return this;</span>
+    }
+
+    @Override
+    public CreditoBuilder conSeguroDesempleo(boolean valor) {
+<span class="nc" id="L27">        ensure();</span>
+<span class="nc" id="L28">        credito.setSeguroDesempleo(valor);</span>
+<span class="nc" id="L29">        return this;</span>
+    }
+
+    @Override
+    public CreditoBuilder conGarantia(String garantia) {
+<span class="nc" id="L34">        ensure();</span>
+<span class="nc" id="L35">        credito.setGarantia(garantia);</span>
+<span class="nc" id="L36">        return this;</span>
+    }
+
+    @Override
+    public CreditoBuilder conCostoApertura(double costo) {
+<span class="nc" id="L41">        ensure();</span>
+<span class="nc" id="L42">        credito.setCostoApertura(costo);</span>
+<span class="nc" id="L43">        return this;</span>
+    }
+
+    @Override
+    public CreditoBuilder conCuotaAdministracion(double cuota) {
+<span class="nc" id="L48">        ensure();</span>
+<span class="nc" id="L49">        credito.setCuotaAdministracion(cuota);</span>
+<span class="nc" id="L50">        return this;</span>
+    }
+
+    @Override
+    public Credito build() {
+<span class="nc" id="L55">        ensure();</span>
+<span class="nc" id="L56">        return credito;</span>
+    }
+
+    protected void ensure() {
+<span class="nc bnc" id="L60" title="All 2 branches missed.">        if (credito == null) {</span>
+<span class="nc" id="L61">            credito = new Credito();</span>
+        }
+<span class="nc" id="L63">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

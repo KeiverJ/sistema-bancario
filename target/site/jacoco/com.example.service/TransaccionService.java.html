@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TransaccionService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Sistema Bancario</a> &gt; <a href="index.source.html" class="el_package">com.example.service</a> &gt; <span class="el_source">TransaccionService.java</span></div><h1>TransaccionService.java</h1><pre class="source lang-java linenums">package com.example.service;
+
+import com.example.config.BankConfig;
+import com.example.factory.DepositoFactory;
+import com.example.factory.PagoServicioFactory;
+import com.example.factory.RetiroFactory;
+import com.example.factory.TransferenciaFactory;
+import com.example.model.Transaccion;
+import com.example.repository.TransaccionRepository;
+import com.example.observer.DomainEventPublisher;
+import com.example.observer.TransaccionRegistradaEvent;
+
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
+import java.util.concurrent.atomic.AtomicInteger;
+
+public class TransaccionService {
+
+    private final TransaccionRepository transaccionRepository;
+    private final BankConfig bankConfig;
+    private final DomainEventPublisher publisher;
+    private final CuentaService cuentaService;
+<span class="fc" id="L25">    private final AtomicInteger contadorTx = new AtomicInteger(1);</span>
+
+<span class="fc" id="L27">    public TransaccionService(TransaccionRepository transaccionRepository, BankConfig bankConfig,</span>
+            DomainEventPublisher publisher, CuentaService cuentaService) {
+<span class="fc" id="L29">        this.transaccionRepository = transaccionRepository;</span>
+<span class="fc" id="L30">        this.bankConfig = bankConfig;</span>
+<span class="fc" id="L31">        this.publisher = publisher;</span>
+<span class="fc" id="L32">        this.cuentaService = cuentaService;</span>
+<span class="fc" id="L33">    }</span>
+
+    public Transaccion registrarTransaccion(Transaccion t) {
+<span class="nc bnc" id="L36" title="All 2 branches missed.">        if (t.getMonto() &lt;= 0)</span>
+<span class="nc" id="L37">            throw new IllegalArgumentException(&quot;El monto debe ser mayor a cero&quot;);</span>
+<span class="nc bnc" id="L38" title="All 2 branches missed.">        if (t.getMonto() &gt; bankConfig.getLimiteDiario())</span>
+<span class="nc" id="L39">            throw new IllegalArgumentException(&quot;El monto excede el límite diario&quot;);</span>
+<span class="nc" id="L40">        t.setId(UUID.randomUUID().toString());</span>
+<span class="nc" id="L41">        t.setCodigo(&quot;TRX-&quot; + String.format(&quot;%05d&quot;, contadorTx.getAndIncrement()));</span>
+<span class="nc" id="L42">        t.setFecha(LocalDateTime.now());</span>
+<span class="nc" id="L43">        t.setEstado(Transaccion.EstadoTransaccion.PENDIENTE);</span>
+<span class="nc" id="L44">        Transaccion saved = transaccionRepository.save(t);</span>
+<span class="nc" id="L45">        publisher.publish(new TransaccionRegistradaEvent(saved));</span>
+<span class="nc" id="L46">        return saved;</span>
+    }
+
+    // Procesa una transacción pendiente y la marca EXITOSA/FALLIDA
+    public Transaccion procesarTransaccion(String transaccionId) {
+<span class="nc" id="L51">        Transaccion tx = transaccionRepository.findById(transaccionId)</span>
+<span class="nc" id="L52">                .orElseThrow(() -&gt; new IllegalArgumentException(&quot;Transacción no encontrada&quot;));</span>
+<span class="nc bnc" id="L53" title="All 2 branches missed.">        if (tx.getEstado() != Transaccion.EstadoTransaccion.PENDIENTE)</span>
+<span class="nc" id="L54">            return tx;</span>
+
+<span class="nc" id="L56">        boolean ok = false;</span>
+<span class="nc bnc" id="L57" title="All 5 branches missed.">        switch (tx.getTipo()) {</span>
+<span class="nc" id="L58">            case DEPOSITO -&gt; ok = cuentaService.depositar(tx.getCuentaDestinoId(), tx.getMonto());</span>
+<span class="nc" id="L59">            case RETIRO -&gt; ok = cuentaService.retirar(tx.getCuentaOrigenId(), tx.getMonto());</span>
+            case TRANSFERENCIA -&gt;
+<span class="nc" id="L61">                ok = cuentaService.transferir(tx.getCuentaOrigenId(), tx.getCuentaDestinoId(), tx.getMonto());</span>
+<span class="nc" id="L62">            case PAGO_SERVICIO -&gt; ok = cuentaService.retirar(tx.getCuentaOrigenId(), tx.getMonto());</span>
+        }
+<span class="nc bnc" id="L64" title="All 2 branches missed.">        tx.setEstado(ok ? Transaccion.EstadoTransaccion.EXITOSA : Transaccion.EstadoTransaccion.FALLIDA);</span>
+<span class="nc" id="L65">        return transaccionRepository.save(tx);</span>
+    }
+
+    // Si quieres registrar y procesar en un solo paso
+    public Transaccion registrarYProcesar(Transaccion t) {
+<span class="nc" id="L70">        Transaccion saved = registrarTransaccion(t);</span>
+<span class="nc" id="L71">        return procesarTransaccion(saved.getId());</span>
+    }
+
+    public Optional&lt;Transaccion&gt; obtenerTransaccion(String id) {
+<span class="nc" id="L75">        return transaccionRepository.findById(id);</span>
+    }
+
+    public List&lt;Transaccion&gt; listarTransaccionesCuenta(String cuentaId) {
+<span class="nc" id="L79">        return transaccionRepository.findByCuentaId(cuentaId);</span>
+    }
+
+    public List&lt;Transaccion&gt; listarTodasTransacciones() {
+<span class="nc" id="L83">        return transaccionRepository.findAll();</span>
+    }
+
+    public List&lt;Transaccion&gt; listarPorRangoFechas(LocalDateTime inicio, LocalDateTime fin) {
+<span class="nc" id="L87">        return transaccionRepository.findByFechaRange(inicio, fin);</span>
+    }
+
+    // Factory Method helpers (déjalos como registrar o cámbialos a
+    // registrarYProcesar)
+    public Transaccion crearTransferencia(String origenId, String destinoId, double monto, String descripcion) {
+<span class="nc" id="L93">        Transaccion tx = new TransferenciaFactory(origenId, destinoId, monto, descripcion).nueva();</span>
+<span class="nc" id="L94">        return registrarTransaccion(tx); // o registrarYProcesar(tx);</span>
+    }
+
+    public Transaccion crearPagoServicio(String origenId, String codigoServicio, double monto, String referencia) {
+<span class="nc" id="L98">        Transaccion tx = new PagoServicioFactory(origenId, codigoServicio, monto, referencia).nueva();</span>
+<span class="nc" id="L99">        return registrarTransaccion(tx); // o registrarYProcesar(tx);</span>
+    }
+
+    public Transaccion crearRetiro(String origenId, double monto, String ubicacion) {
+<span class="nc" id="L103">        Transaccion tx = new RetiroFactory(origenId, monto, ubicacion).nueva();</span>
+<span class="nc" id="L104">        return registrarTransaccion(tx); // o registrarYProcesar(tx);</span>
+    }
+
+    public Transaccion crearDeposito(String destinoId, double monto, String descripcion) {
+<span class="nc" id="L108">        Transaccion tx = new DepositoFactory(destinoId, monto, descripcion).nueva();</span>
+<span class="nc" id="L109">        return registrarTransaccion(tx); // o registrarYProcesar(tx);</span>
+    }
+
+    public Optional&lt;Transaccion&gt; obtenerPorCodigo(String codigo) {
+<span class="nc" id="L113">        return transaccionRepository.findAll().stream()</span>
+<span class="nc" id="L114">                .filter(t -&gt; codigo.equals(t.getCodigo()))</span>
+<span class="nc" id="L115">                .findFirst();</span>
+    }
+
+    public Transaccion procesarTransaccionPorCodigo(String codigo) {
+<span class="nc" id="L119">        Transaccion tx = obtenerPorCodigo(codigo)</span>
+<span class="nc" id="L120">                .orElseThrow(() -&gt; new IllegalArgumentException(&quot;Transacción no encontrada&quot;));</span>
+<span class="nc" id="L121">        return procesarTransaccion(tx.getId());</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

@@ -1,9 +1,7 @@
 package com.example.factory;
 
 import com.example.model.Cliente;
-import org.springframework.stereotype.Service;
 
-@Service
 public class FabricaProductosProvider {
 
     public ProductoBancarioFactory getFactory(Cliente.TipoCliente tipo) {

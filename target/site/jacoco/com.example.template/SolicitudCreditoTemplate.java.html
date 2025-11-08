@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>SolicitudCreditoTemplate.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Sistema Bancario</a> &gt; <a href="index.source.html" class="el_package">com.example.template</a> &gt; <span class="el_source">SolicitudCreditoTemplate.java</span></div><h1>SolicitudCreditoTemplate.java</h1><pre class="source lang-java linenums">package com.example.template;
+
+import com.example.adapter.ScoreProviderRegistry;
+import com.example.builder.CreditoBuilderRegistry;
+import com.example.chain.ApprovalChainBuilder;
+import com.example.chain.ApprovalContext;
+import com.example.config.BankConfig;
+import com.example.model.Cliente;
+import com.example.model.Credito;
+import com.example.model.Score;
+import com.example.observer.CreditoEstadoCambiadoEvent;
+import com.example.observer.DomainEventPublisher;
+import com.example.repository.ClienteRepository;
+import com.example.repository.CreditoRepository;
+import com.example.strategy.InteresStrategyRegistry;
+
+public abstract class SolicitudCreditoTemplate {
+
+    protected final CreditoBuilderRegistry builderRegistry;
+    protected final InteresStrategyRegistry strategyRegistry;
+    protected final ApprovalChainBuilder chainBuilder;
+    protected final CreditoRepository creditoRepository;
+    protected final ClienteRepository clienteRepository;
+    protected final DomainEventPublisher publisher;
+    protected final ScoreProviderRegistry scoreProviderRegistry;
+    protected final BankConfig bankConfig;
+
+<span class="fc" id="L28">    public SolicitudCreditoTemplate(</span>
+            CreditoBuilderRegistry builderRegistry,
+            InteresStrategyRegistry strategyRegistry,
+            ApprovalChainBuilder chainBuilder,
+            CreditoRepository creditoRepository,
+            ClienteRepository clienteRepository,
+            DomainEventPublisher publisher,
+            ScoreProviderRegistry scoreProviderRegistry,
+            BankConfig bankConfig) {
+<span class="fc" id="L37">        this.builderRegistry = builderRegistry;</span>
+<span class="fc" id="L38">        this.strategyRegistry = strategyRegistry;</span>
+<span class="fc" id="L39">        this.chainBuilder = chainBuilder;</span>
+<span class="fc" id="L40">        this.creditoRepository = creditoRepository;</span>
+<span class="fc" id="L41">        this.clienteRepository = clienteRepository;</span>
+<span class="fc" id="L42">        this.publisher = publisher;</span>
+<span class="fc" id="L43">        this.scoreProviderRegistry = scoreProviderRegistry;</span>
+<span class="fc" id="L44">        this.bankConfig = bankConfig;</span>
+<span class="fc" id="L45">    }</span>
+
+    // Template Method principal
+    public final Credito solicitar(Cliente cliente, Credito.TipoCredito tipo, double monto, int plazo) {
+        // 1. Pre-evaluación
+<span class="fc" id="L50">        preEvaluacion(cliente, tipo, monto, plazo);</span>
+
+        // 2. Construir crédito
+<span class="fc" id="L53">        Credito credito = construirCredito(cliente, tipo, monto, plazo);</span>
+
+        // 3. Configurar tasa y extras
+<span class="fc" id="L56">        configurarTasaYExtras(credito, cliente);</span>
+
+        // 4. Persistir en estado SOLICITADO
+<span class="fc" id="L59">        credito = creditoRepository.save(credito);</span>
+
+        // 5. Evaluar aprobación
+<span class="fc" id="L62">        ApprovalContext context = evaluarAprobacion(credito, cliente);</span>
+
+        // 6. Procesar resultado
+<span class="fc bfc" id="L65" title="All 2 branches covered.">        if (context.isAprobado()) {</span>
+<span class="fc" id="L66">            credito.aprobar();</span>
+<span class="fc" id="L67">        } else {</span>
+<span class="fc" id="L68">            credito.rechazar();</span>
+<span class="fc" id="L69">            throw new IllegalStateException(&quot;Crédito rechazado: &quot; + context.getMotivoRechazo());</span>
+        }
+
+        // 7. Persistir cambio de estado
+<span class="fc" id="L73">        credito = persistir(credito, cliente);</span>
+
+        // 8. Notificar
+<span class="fc" id="L76">        notificar(credito, cliente);</span>
+
+<span class="fc" id="L78">        return credito;</span>
+    }
+
+    // Hooks con implementación por defecto
+    protected void preEvaluacion(Cliente cliente, Credito.TipoCredito tipo, double monto, int plazo) {
+<span class="pc bpc" id="L83" title="1 of 2 branches missed.">        if (monto &lt;= 0) {</span>
+<span class="nc" id="L84">            throw new IllegalArgumentException(&quot;El monto debe ser positivo&quot;);</span>
+        }
+<span class="pc bpc" id="L86" title="1 of 2 branches missed.">        if (plazo &lt;= 0) {</span>
+<span class="nc" id="L87">            throw new IllegalArgumentException(&quot;El plazo debe ser positivo&quot;);</span>
+        }
+<span class="fc" id="L89">    }</span>
+
+    protected abstract Credito construirCredito(Cliente cliente, Credito.TipoCredito tipo, double monto, int plazo);
+
+    protected abstract void configurarTasaYExtras(Credito credito, Cliente cliente);
+
+    protected ApprovalContext evaluarAprobacion(Credito credito, Cliente cliente) {
+<span class="fc" id="L96">        Score score = scoreProviderRegistry.obtenerScoreParaCliente(cliente);</span>
+<span class="fc" id="L97">        ApprovalContext context = new ApprovalContext(cliente, credito, score, bankConfig);</span>
+<span class="fc" id="L98">        chainBuilder.build(bankConfig).handle(context);</span>
+<span class="fc" id="L99">        return context;</span>
+    }
+
+    protected Credito persistir(Credito credito, Cliente cliente) {
+<span class="fc" id="L103">        credito = creditoRepository.save(credito);</span>
+<span class="fc" id="L104">        cliente.agregarCredito(credito.getId());</span>
+<span class="fc" id="L105">        clienteRepository.save(cliente);</span>
+<span class="fc" id="L106">        return credito;</span>
+    }
+
+    protected void notificar(Credito credito, Cliente cliente) {
+<span class="fc" id="L110">        publisher.publish(new CreditoEstadoCambiadoEvent(credito));</span>
+<span class="fc" id="L111">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>
