@@ -17,4 +17,51 @@ class FactoryIntegrationTest {
         assertTrue(vNit.validar("123456789-1"));
         assertFalse(vNit.validar("123456789"));
     }
+    @Test
+    @DisplayName("FactoryPersonaNatural y ValidadorCedula integran correctamente")
+    void personaNatural_factoryYValidador() {
+        FactoryPersonaNatural factory = new FactoryPersonaNatural();
+        var cuenta = factory.crearCuenta("cli1", com.example.model.Cuenta.TipoCuenta.AHORROS, 2000);
+        assertNotNull(cuenta.getId());
+        assertEquals("cli1", cuenta.getClienteId());
+        Validador val = factory.crearValidadorDocumento();
+        assertTrue(val.validar("1234567"));
+        assertFalse(val.validar("ABC"));
+    }
+
+    @Test
+    @DisplayName("FactoryPersonaJuridica y ValidadorNIT integran correctamente")
+    void personaJuridica_factoryYValidador() {
+        FactoryPersonaJuridica factory = new FactoryPersonaJuridica();
+        var cuenta = factory.crearCuenta("cli2", com.example.model.Cuenta.TipoCuenta.CORRIENTE, 5000);
+        assertNotNull(cuenta.getId());
+        assertEquals("cli2", cuenta.getClienteId());
+        Validador val = factory.crearValidadorDocumento();
+        assertTrue(val.validar("123456789-1"));
+        assertFalse(val.validar("123456789"));
+    }
+
+    @Test
+    @DisplayName("FactoryExtranjero y ValidadorPasaporte integran correctamente")
+    void extranjero_factoryYValidador() {
+        FactoryExtranjero factory = new FactoryExtranjero();
+        var cuenta = factory.crearCuenta("cli3", com.example.model.Cuenta.TipoCuenta.AHORROS, 3000);
+        assertNotNull(cuenta.getId());
+        assertEquals("cli3", cuenta.getClienteId());
+        Validador val = factory.crearValidadorDocumento();
+        assertTrue(val.validar("A12345B"));
+        assertFalse(val.validar("123"));
+    }
+
+    @Test
+    @DisplayName("FabricaProductosProvider integra con todas las factories")
+    void provider_integracionTodas() {
+        FabricaProductosProvider provider = new FabricaProductosProvider();
+        for (com.example.model.Cliente.TipoCliente tipo : com.example.model.Cliente.TipoCliente.values()) {
+            ProductoBancarioFactory factory = provider.getFactory(tipo);
+            assertNotNull(factory);
+            assertNotNull(factory.crearCuenta("cli", com.example.model.Cuenta.TipoCuenta.AHORROS, 1000));
+            assertNotNull(factory.crearCredito("cli", com.example.model.Credito.TipoCredito.CONSUMO, 5000, 12));
+        }
+    }
 }

@@ -64,23 +64,23 @@ public class CuentaService {
     }
 
     public boolean depositar(String cuentaId, double monto) {
-<span class="nc" id="L67">        Cuenta cuenta = cuentaRepository.findById(cuentaId)</span>
-<span class="nc" id="L68">                .orElseThrow(() -&gt; new IllegalArgumentException(&quot;Cuenta no encontrada&quot;));</span>
-<span class="nc bnc" id="L69" title="All 2 branches missed.">        if (cuenta.depositar(monto)) {</span>
-<span class="nc" id="L70">            cuentaRepository.save(cuenta);</span>
-<span class="nc" id="L71">            publisher.publish(new CuentaSaldoActualizadoEvent(cuenta));</span>
-<span class="nc" id="L72">            return true;</span>
+<span class="fc" id="L67">        Cuenta cuenta = cuentaRepository.findById(cuentaId)</span>
+<span class="fc" id="L68">                .orElseThrow(() -&gt; new IllegalArgumentException(&quot;Cuenta no encontrada&quot;));</span>
+<span class="pc bpc" id="L69" title="1 of 2 branches missed.">        if (cuenta.depositar(monto)) {</span>
+<span class="fc" id="L70">            cuentaRepository.save(cuenta);</span>
+<span class="fc" id="L71">            publisher.publish(new CuentaSaldoActualizadoEvent(cuenta));</span>
+<span class="fc" id="L72">            return true;</span>
         }
 <span class="nc" id="L74">        return false;</span>
     }
 
     public boolean retirar(String cuentaId, double monto) {
-<span class="nc" id="L78">        Cuenta cuenta = cuentaRepository.findById(cuentaId)</span>
-<span class="nc" id="L79">                .orElseThrow(() -&gt; new IllegalArgumentException(&quot;Cuenta no encontrada&quot;));</span>
-<span class="nc bnc" id="L80" title="All 2 branches missed.">        if (cuenta.retirar(monto)) {</span>
-<span class="nc" id="L81">            cuentaRepository.save(cuenta);</span>
-<span class="nc" id="L82">            publisher.publish(new CuentaSaldoActualizadoEvent(cuenta));</span>
-<span class="nc" id="L83">            return true;</span>
+<span class="fc" id="L78">        Cuenta cuenta = cuentaRepository.findById(cuentaId)</span>
+<span class="fc" id="L79">                .orElseThrow(() -&gt; new IllegalArgumentException(&quot;Cuenta no encontrada&quot;));</span>
+<span class="pc bpc" id="L80" title="1 of 2 branches missed.">        if (cuenta.retirar(monto)) {</span>
+<span class="fc" id="L81">            cuentaRepository.save(cuenta);</span>
+<span class="fc" id="L82">            publisher.publish(new CuentaSaldoActualizadoEvent(cuenta));</span>
+<span class="fc" id="L83">            return true;</span>
         }
 <span class="nc" id="L85">        return false;</span>
     }

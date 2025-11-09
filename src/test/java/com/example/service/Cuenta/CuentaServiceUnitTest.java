@@ -29,6 +29,73 @@ class CuentaServiceUnitTest {
     }
 
     @Test
+    @DisplayName("abrirCuenta llama a factory y repo correctamente")
+    void abrirCuenta_ok() {
+        var repo = mock(com.example.repository.CuentaRepository.class);
+        var clienteRepo = mock(com.example.repository.ClienteRepository.class);
+        var config = mock(com.example.config.BankConfig.class);
+        var fabrica = mock(com.example.factory.FabricaProductosProvider.class);
+        var factory = mock(com.example.factory.ProductoBancarioFactory.class);
+        var publisher = mock(com.example.observer.DomainEventPublisher.class);
+        Cliente cliente = new Cliente();
+        cliente.setTipoCliente(Cliente.TipoCliente.PERSONA_NATURAL);
+        when(clienteRepo.findById(anyString())).thenReturn(java.util.Optional.of(cliente));
+        when(config.getSaldoMinimo(anyString())).thenReturn(1000.0);
+        when(fabrica.getFactory(any())).thenReturn(factory);
+        Cuenta cuenta = new Cuenta();
+        when(factory.crearCuenta(anyString(), any(), anyDouble())).thenReturn(cuenta);
+        when(repo.save(any(Cuenta.class))).thenAnswer(i -> i.getArgument(0));
+        when(clienteRepo.save(any(Cliente.class))).thenAnswer(i -> i.getArgument(0));
+        CuentaService service = new CuentaService(repo, clienteRepo, config, fabrica, publisher);
+        Cuenta creada = service.abrirCuenta("id", Cuenta.TipoCuenta.AHORROS, 2000);
+        assertNotNull(creada);
+    }
+
+    @Test
+    @DisplayName("depositar y retirar funcionan y publican evento")
+    void depositarYRetirar_ok() {
+        var repo = mock(com.example.repository.CuentaRepository.class);
+        var clienteRepo = mock(com.example.repository.ClienteRepository.class);
+        var config = mock(com.example.config.BankConfig.class);
+        var fabrica = mock(com.example.factory.FabricaProductosProvider.class);
+        var publisher = mock(com.example.observer.DomainEventPublisher.class);
+        Cuenta cuenta = mock(Cuenta.class);
+        when(repo.findById("c1")).thenReturn(java.util.Optional.of(cuenta));
+        when(cuenta.depositar(100)).thenReturn(true);
+        when(cuenta.retirar(50)).thenReturn(true);
+        when(repo.save(any(Cuenta.class))).thenAnswer(i -> i.getArgument(0));
+        CuentaService service = new CuentaService(repo, clienteRepo, config, fabrica, publisher);
+        assertTrue(service.depositar("c1", 100));
+        assertTrue(service.retirar("c1", 50));
+    }
+
+    @Test
+    @DisplayName("depositar lanza excepción si cuenta no existe")
+    void depositar_lanzaExcepcion() {
+        var repo = mock(com.example.repository.CuentaRepository.class);
+        var clienteRepo = mock(com.example.repository.ClienteRepository.class);
+        var config = mock(com.example.config.BankConfig.class);
+        var fabrica = mock(com.example.factory.FabricaProductosProvider.class);
+        var publisher = mock(com.example.observer.DomainEventPublisher.class);
+        when(repo.findById("nope")).thenReturn(java.util.Optional.empty());
+        CuentaService service = new CuentaService(repo, clienteRepo, config, fabrica, publisher);
+        assertThrows(IllegalArgumentException.class, () -> service.depositar("nope", 100));
+    }
+
+    @Test
+    @DisplayName("retirar lanza excepción si cuenta no existe")
+    void retirar_lanzaExcepcion() {
+        var repo = mock(com.example.repository.CuentaRepository.class);
+        var clienteRepo = mock(com.example.repository.ClienteRepository.class);
+        var config = mock(com.example.config.BankConfig.class);
+        var fabrica = mock(com.example.factory.FabricaProductosProvider.class);
+        var publisher = mock(com.example.observer.DomainEventPublisher.class);
+        when(repo.findById("nope")).thenReturn(java.util.Optional.empty());
+        CuentaService service = new CuentaService(repo, clienteRepo, config, fabrica, publisher);
+        assertThrows(IllegalArgumentException.class, () -> service.retirar("nope", 100));
+    }
+
+    @Test
     @DisplayName("abrirCuenta lanza excepción si saldo insuficiente")
     void abrirCuenta_saldoInsuficiente() {
         var repo = mock(com.example.repository.CuentaRepository.class);

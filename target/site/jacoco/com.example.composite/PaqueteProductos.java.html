@@ -18,7 +18,7 @@ public class PaqueteProductos implements ProductoFinancieroComponent {
 <span class="fc" id="L18">    }</span>
 
     public PaqueteProductos add(ProductoFinancieroComponent component) {
-<span class="pc bpc" id="L21" title="1 of 2 branches missed.">        if (component != null)</span>
+<span class="fc bfc" id="L21" title="All 2 branches covered.">        if (component != null)</span>
 <span class="fc" id="L22">            items.add(component);</span>
 <span class="fc" id="L23">        return this;</span>
     }
@@ -34,7 +34,7 @@ public class PaqueteProductos implements ProductoFinancieroComponent {
 
     @Override
     public String getId() {
-<span class="nc" id="L37">        return id;</span>
+<span class="fc" id="L37">        return id;</span>
     }
 
     @Override
@@ -44,22 +44,22 @@ public class PaqueteProductos implements ProductoFinancieroComponent {
 
     @Override
     public double getBeneficioMensual() {
-<span class="nc" id="L47">        return items.stream().mapToDouble(ProductoFinancieroComponent::getBeneficioMensual).sum();</span>
+<span class="fc" id="L47">        return items.stream().mapToDouble(ProductoFinancieroComponent::getBeneficioMensual).sum();</span>
     }
 
     public String getNombre() {
-<span class="nc" id="L51">        return nombre;</span>
+<span class="fc" id="L51">        return nombre;</span>
     }
 
     @Override
     public String getDescripcion() {
-<span class="nc" id="L56">        StringBuilder sb = new StringBuilder();</span>
-<span class="nc" id="L57">        sb.append(&quot;📦 Paquete: &quot;).append(nombre).append(&quot;\n&quot;);</span>
-<span class="nc" id="L58">        sb.append(&quot;Productos incluidos:\n&quot;);</span>
-<span class="nc bnc" id="L59" title="All 2 branches missed.">        for (ProductoFinancieroComponent comp : items) {</span>
-<span class="nc" id="L60">            sb.append(&quot;\n&quot;).append(comp.getDescripcion());</span>
+<span class="fc" id="L56">        StringBuilder sb = new StringBuilder();</span>
+<span class="fc" id="L57">        sb.append(&quot;📦 Paquete: &quot;).append(nombre).append(&quot;\n&quot;);</span>
+<span class="fc" id="L58">        sb.append(&quot;Productos incluidos:\n&quot;);</span>
+<span class="fc bfc" id="L59" title="All 2 branches covered.">        for (ProductoFinancieroComponent comp : items) {</span>
+<span class="fc" id="L60">            sb.append(&quot;\n&quot;).append(comp.getDescripcion());</span>
         }
-<span class="nc" id="L62">        return sb.toString();</span>
+<span class="fc" id="L62">        return sb.toString();</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

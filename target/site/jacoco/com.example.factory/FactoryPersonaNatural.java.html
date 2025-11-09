@@ -26,15 +26,15 @@ import java.util.concurrent.atomic.AtomicLong;
 
     @Override
     public Credito crearCredito(String clienteId, Credito.TipoCredito tipoCredito, double monto, int plazoMeses) {
-<span class="nc" id="L29">        Credito cr = new Credito();</span>
-<span class="nc" id="L30">        cr.setId(UUID.randomUUID().toString());</span>
-<span class="nc" id="L31">        cr.setCodigo(&quot;CRE-&quot; + String.format(&quot;%04d&quot;, contadorCredito.getAndIncrement()));</span>
-<span class="nc" id="L32">        cr.setClienteId(clienteId);</span>
-<span class="nc" id="L33">        cr.setTipoCredito(tipoCredito);</span>
-<span class="nc" id="L34">        cr.setMonto(monto);</span>
-<span class="nc" id="L35">        cr.setSaldo(monto);</span>
-<span class="nc" id="L36">        cr.setPlazoMeses(plazoMeses);</span>
-<span class="nc" id="L37">        return cr;</span>
+<span class="fc" id="L29">        Credito cr = new Credito();</span>
+<span class="fc" id="L30">        cr.setId(UUID.randomUUID().toString());</span>
+<span class="fc" id="L31">        cr.setCodigo(&quot;CRE-&quot; + String.format(&quot;%04d&quot;, contadorCredito.getAndIncrement()));</span>
+<span class="fc" id="L32">        cr.setClienteId(clienteId);</span>
+<span class="fc" id="L33">        cr.setTipoCredito(tipoCredito);</span>
+<span class="fc" id="L34">        cr.setMonto(monto);</span>
+<span class="fc" id="L35">        cr.setSaldo(monto);</span>
+<span class="fc" id="L36">        cr.setPlazoMeses(plazoMeses);</span>
+<span class="fc" id="L37">        return cr;</span>
     }
 
     private String generarNumeroCuenta() {

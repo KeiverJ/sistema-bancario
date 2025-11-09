@@ -48,10 +48,10 @@ public class TransaccionService {
 
     // Procesa una transacción pendiente y la marca EXITOSA/FALLIDA
     public Transaccion procesarTransaccion(String transaccionId) {
-<span class="pc" id="L51">        Transaccion tx = transaccionRepository.findById(transaccionId)</span>
-<span class="pc" id="L52">                .orElseThrow(() -&gt; new IllegalArgumentException(&quot;Transacción no encontrada&quot;));</span>
-<span class="nc bnc" id="L53" title="All 2 branches missed.">        if (tx.getEstado() != Transaccion.EstadoTransaccion.PENDIENTE)</span>
-<span class="nc" id="L54">            return tx;</span>
+<span class="fc" id="L51">        Transaccion tx = transaccionRepository.findById(transaccionId)</span>
+<span class="fc" id="L52">                .orElseThrow(() -&gt; new IllegalArgumentException(&quot;Transacción no encontrada&quot;));</span>
+<span class="pc bpc" id="L53" title="1 of 2 branches missed.">        if (tx.getEstado() != Transaccion.EstadoTransaccion.PENDIENTE)</span>
+<span class="fc" id="L54">            return tx;</span>
 
 <span class="nc" id="L56">        boolean ok = false;</span>
 <span class="nc bnc" id="L57" title="All 5 branches missed.">        switch (tx.getTipo()) {</span>

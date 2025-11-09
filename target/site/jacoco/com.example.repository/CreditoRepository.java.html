@@ -19,8 +19,8 @@ public class CreditoRepository {
 <span class="fc" id="L19">    }</span>
 
     public Credito save(Credito credito) {
-<span class="pc bpc" id="L22" title="2 of 4 branches missed.">        if (credito.getId() == null || credito.getId().isEmpty()) {</span>
-<span class="nc" id="L23">            credito.setId(UUID.randomUUID().toString());</span>
+<span class="pc bpc" id="L22" title="1 of 4 branches missed.">        if (credito.getId() == null || credito.getId().isEmpty()) {</span>
+<span class="fc" id="L23">            credito.setId(UUID.randomUUID().toString());</span>
         }
 <span class="fc" id="L25">        creditos.put(credito.getId(), credito);</span>
 <span class="fc" id="L26">        return credito;</span>
@@ -31,32 +31,32 @@ public class CreditoRepository {
     }
 
     public List&lt;Credito&gt; findByClienteId(String clienteId) {
-<span class="nc" id="L34">        return creditos.values().stream()</span>
-<span class="nc" id="L35">                .filter(c -&gt; c.getClienteId().equals(clienteId))</span>
-<span class="nc" id="L36">                .toList();</span>
+<span class="fc" id="L34">        return creditos.values().stream()</span>
+<span class="fc" id="L35">                .filter(c -&gt; c.getClienteId().equals(clienteId))</span>
+<span class="fc" id="L36">                .toList();</span>
     }
 
     public List&lt;Credito&gt; findAll() {
-<span class="nc" id="L40">        return new ArrayList&lt;&gt;(creditos.values());</span>
+<span class="fc" id="L40">        return new ArrayList&lt;&gt;(creditos.values());</span>
     }
 
     public List&lt;Credito&gt; findByTipoCredito(Credito.TipoCredito tipoCredito) {
-<span class="nc" id="L44">        return creditos.values().stream()</span>
-<span class="nc bnc" id="L45" title="All 2 branches missed.">                .filter(c -&gt; c.getTipoCredito() == tipoCredito)</span>
-<span class="nc" id="L46">                .toList();</span>
+<span class="fc" id="L44">        return creditos.values().stream()</span>
+<span class="fc bfc" id="L45" title="All 2 branches covered.">                .filter(c -&gt; c.getTipoCredito() == tipoCredito)</span>
+<span class="fc" id="L46">                .toList();</span>
     }
 
     public List&lt;Credito&gt; findByEstado(String estado) {
-<span class="nc" id="L50">        return creditos.values().stream()</span>
-<span class="nc bnc" id="L51" title="All 6 branches missed.">                .filter(c -&gt; c.getEstadoActual() != null &amp;&amp; estado != null &amp;&amp; estado.equals(c.getEstadoActual().name()))</span>
-<span class="nc" id="L52">                .toList();</span>
+<span class="fc" id="L50">        return creditos.values().stream()</span>
+<span class="pc bpc" id="L51" title="2 of 6 branches missed.">                .filter(c -&gt; c.getEstadoActual() != null &amp;&amp; estado != null &amp;&amp; estado.equals(c.getEstadoActual().name()))</span>
+<span class="fc" id="L52">                .toList();</span>
     }
 
     public double getTotalSaldoByClienteId(String clienteId) {
-<span class="nc" id="L56">        return creditos.values().stream()</span>
-<span class="nc" id="L57">                .filter(c -&gt; c.getClienteId().equals(clienteId))</span>
-<span class="nc" id="L58">                .mapToDouble(Credito::getSaldo)</span>
-<span class="nc" id="L59">                .sum();</span>
+<span class="fc" id="L56">        return creditos.values().stream()</span>
+<span class="fc" id="L57">                .filter(c -&gt; c.getClienteId().equals(clienteId))</span>
+<span class="fc" id="L58">                .mapToDouble(Credito::getSaldo)</span>
+<span class="fc" id="L59">                .sum();</span>
     }
 
     public void delete(String id) {
@@ -64,11 +64,11 @@ public class CreditoRepository {
 <span class="fc" id="L64">    }</span>
 
     public void deleteAll() {
-<span class="nc" id="L67">        creditos.clear();</span>
-<span class="nc" id="L68">    }</span>
+<span class="fc" id="L67">        creditos.clear();</span>
+<span class="fc" id="L68">    }</span>
 
     public long count() {
-<span class="nc" id="L71">        return creditos.size();</span>
+<span class="fc" id="L71">        return creditos.size();</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

@@ -41,16 +41,16 @@ public class ClienteService {
   }
 
   public Optional&lt;Cliente&gt; obtenerClientePorDocumento(String numeroDocumento) {
-<span class="nc" id="L44">    return clienteRepository.findByNumeroDocumento(numeroDocumento);</span>
+<span class="fc" id="L44">    return clienteRepository.findByNumeroDocumento(numeroDocumento);</span>
   }
 
   public List&lt;Cliente&gt; listarClientes() {
-<span class="nc" id="L48">    return clienteRepository.findAll();</span>
+<span class="fc" id="L48">    return clienteRepository.findAll();</span>
   }
 
   public Cliente actualizarCliente(String id, String email, String telefono) {
 <span class="fc" id="L52">    Cliente cliente = clienteRepository.findById(id)</span>
-<span class="pc" id="L53">        .orElseThrow(() -&gt; new IllegalArgumentException(&quot;Cliente no encontrado&quot;));</span>
+<span class="fc" id="L53">        .orElseThrow(() -&gt; new IllegalArgumentException(&quot;Cliente no encontrado&quot;));</span>
 
 <span class="pc bpc" id="L55" title="1 of 2 branches missed.">    if (email != null) {</span>
 <span class="fc" id="L56">      cliente.setEmail(email);</span>
@@ -63,23 +63,23 @@ public class ClienteService {
   }
 
   public boolean eliminarCliente(String id) {
-<span class="nc bnc" id="L66" title="All 2 branches missed.">    if (!clienteRepository.findById(id).isPresent()) {</span>
-<span class="nc" id="L67">      return false;</span>
+<span class="fc bfc" id="L66" title="All 2 branches covered.">    if (!clienteRepository.findById(id).isPresent()) {</span>
+<span class="fc" id="L67">      return false;</span>
     }
-<span class="nc" id="L69">    clienteRepository.delete(id);</span>
-<span class="nc" id="L70">    return true;</span>
+<span class="fc" id="L69">    clienteRepository.delete(id);</span>
+<span class="fc" id="L70">    return true;</span>
   }
 
   public boolean existeCliente(String numeroDocumento) {
-<span class="nc" id="L74">    return clienteRepository.existsByNumeroDocumento(numeroDocumento);</span>
+<span class="fc" id="L74">    return clienteRepository.existsByNumeroDocumento(numeroDocumento);</span>
   }
 
   public long contarClientes() {
-<span class="nc" id="L78">    return clienteRepository.count();</span>
+<span class="fc" id="L78">    return clienteRepository.count();</span>
   }
 
   public List&lt;Cliente&gt; listarClientesPorTipo(Cliente.TipoCliente tipoCliente) {
-<span class="nc" id="L82">    return clienteRepository.findByTipoCliente(tipoCliente);</span>
+<span class="fc" id="L82">    return clienteRepository.findByTipoCliente(tipoCliente);</span>
   }
 
   public List&lt;Cliente&gt; listarTodos() {
@@ -87,31 +87,31 @@ public class ClienteService {
   }
 
   public Optional&lt;Cliente&gt; obtenerCliente(String id) {
-<span class="nc" id="L90">    return clienteRepository.findById(id);</span>
+<span class="fc" id="L90">    return clienteRepository.findById(id);</span>
   }
 
   public Optional&lt;Cliente&gt; obtenerClientePorCodigo(String codigo) {
-<span class="nc" id="L94">    return clienteRepository.findAll().stream()</span>
-<span class="nc" id="L95">        .filter(c -&gt; codigo.equals(c.getCodigo()))</span>
-<span class="nc" id="L96">        .findFirst();</span>
+<span class="fc" id="L94">    return clienteRepository.findAll().stream()</span>
+<span class="fc" id="L95">        .filter(c -&gt; codigo.equals(c.getCodigo()))</span>
+<span class="fc" id="L96">        .findFirst();</span>
   }
 
   public Cliente actualizarScore(String clienteId, int nuevoScore) {
-<span class="nc" id="L100">    Cliente cliente = clienteRepository.findById(clienteId)</span>
-<span class="nc" id="L101">        .orElseThrow(() -&gt; new IllegalArgumentException(&quot;Cliente no encontrado&quot;));</span>
+<span class="fc" id="L100">    Cliente cliente = clienteRepository.findById(clienteId)</span>
+<span class="fc" id="L101">        .orElseThrow(() -&gt; new IllegalArgumentException(&quot;Cliente no encontrado&quot;));</span>
 
-<span class="nc" id="L103">    cliente.setScoreActual(nuevoScore);</span>
-<span class="nc" id="L104">    return clienteRepository.save(cliente);</span>
+<span class="fc" id="L103">    cliente.setScoreActual(nuevoScore);</span>
+<span class="fc" id="L104">    return clienteRepository.save(cliente);</span>
   }
 
   public Cliente actualizarScorePorCodigo(String codigo, int nuevoScore) {
-<span class="nc" id="L108">    Cliente cliente = clienteRepository.findAll().stream()</span>
-<span class="nc" id="L109">        .filter(c -&gt; codigo.equals(c.getCodigo()))</span>
-<span class="nc" id="L110">        .findFirst()</span>
-<span class="nc" id="L111">        .orElseThrow(() -&gt; new IllegalArgumentException(&quot;Cliente no encontrado&quot;));</span>
+<span class="fc" id="L108">    Cliente cliente = clienteRepository.findAll().stream()</span>
+<span class="fc" id="L109">        .filter(c -&gt; codigo.equals(c.getCodigo()))</span>
+<span class="fc" id="L110">        .findFirst()</span>
+<span class="fc" id="L111">        .orElseThrow(() -&gt; new IllegalArgumentException(&quot;Cliente no encontrado&quot;));</span>
 
-<span class="nc" id="L113">    cliente.setScoreActual(nuevoScore);</span>
-<span class="nc" id="L114">    return clienteRepository.save(cliente);</span>
+<span class="fc" id="L113">    cliente.setScoreActual(nuevoScore);</span>
+<span class="fc" id="L114">    return clienteRepository.save(cliente);</span>
   }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

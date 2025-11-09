@@ -6,7 +6,7 @@ public interface CreditoState {
     String nombre();
 
     default void aprobar(Credito c) {
-<span class="nc" id="L9">        throw new IllegalStateException(&quot;No se puede aprobar en estado &quot; + nombre());</span>
+<span class="fc" id="L9">        throw new IllegalStateException(&quot;No se puede aprobar en estado &quot; + nombre());</span>
     }
 
     default void rechazar(Credito c, String motivo) {

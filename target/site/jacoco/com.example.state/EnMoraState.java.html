@@ -2,24 +2,24 @@
 
 import com.example.model.Credito;
 
-<span class="nc" id="L5">public class EnMoraState implements CreditoState {</span>
+<span class="fc" id="L5">public class EnMoraState implements CreditoState {</span>
     @Override
     public String nombre() {
-<span class="nc" id="L8">        return &quot;EN_MORA&quot;;</span>
+<span class="fc" id="L8">        return &quot;EN_MORA&quot;;</span>
     }
 
     @Override
     public boolean pagar(Credito c, double monto) {
-<span class="nc bnc" id="L13" title="All 2 branches missed.">        if (monto &lt;= 0)</span>
+<span class="pc bpc" id="L13" title="1 of 2 branches missed.">        if (monto &lt;= 0)</span>
 <span class="nc" id="L14">            return false;</span>
-<span class="nc" id="L15">        double saldo = c.getSaldo() - monto;</span>
-<span class="nc" id="L16">        c.setSaldo(Math.max(0, saldo));</span>
-<span class="nc bnc" id="L17" title="All 2 branches missed.">        if (c.getSaldo() &lt;= 0) {</span>
-<span class="nc" id="L18">            c.setState(new CanceladoState());</span>
-<span class="nc" id="L19">        } else {</span>
-<span class="nc" id="L20">            c.setState(new DesembolsadoState()); // normaliza el estado</span>
+<span class="fc" id="L15">        double saldo = c.getSaldo() - monto;</span>
+<span class="fc" id="L16">        c.setSaldo(Math.max(0, saldo));</span>
+<span class="fc bfc" id="L17" title="All 2 branches covered.">        if (c.getSaldo() &lt;= 0) {</span>
+<span class="fc" id="L18">            c.setState(new CanceladoState());</span>
+<span class="fc" id="L19">        } else {</span>
+<span class="fc" id="L20">            c.setState(new DesembolsadoState()); // normaliza el estado</span>
         }
-<span class="nc" id="L22">        return true;</span>
+<span class="fc" id="L22">        return true;</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

@@ -7,20 +7,20 @@ public class DepositoFactory extends TransaccionFactory {
     private final double monto;
     private final String descripcion;
 
-<span class="nc" id="L10">    public DepositoFactory(String cuentaDestinoId, double monto, String descripcion) {</span>
-<span class="nc" id="L11">        this.cuentaDestinoId = cuentaDestinoId;</span>
-<span class="nc" id="L12">        this.monto = monto;</span>
-<span class="nc" id="L13">        this.descripcion = descripcion;</span>
-<span class="nc" id="L14">    }</span>
+<span class="fc" id="L10">    public DepositoFactory(String cuentaDestinoId, double monto, String descripcion) {</span>
+<span class="fc" id="L11">        this.cuentaDestinoId = cuentaDestinoId;</span>
+<span class="fc" id="L12">        this.monto = monto;</span>
+<span class="fc" id="L13">        this.descripcion = descripcion;</span>
+<span class="fc" id="L14">    }</span>
 
     @Override
     protected Transaccion crear() {
-<span class="nc" id="L18">        Transaccion t = new Transaccion();</span>
-<span class="nc" id="L19">        t.setTipo(Transaccion.TipoTransaccion.DEPOSITO);</span>
-<span class="nc" id="L20">        t.setCuentaDestinoId(cuentaDestinoId);</span>
-<span class="nc" id="L21">        t.setMonto(monto);</span>
-<span class="nc" id="L22">        t.setDescripcion(descripcion);</span>
-<span class="nc" id="L23">        return t;</span>
+<span class="fc" id="L18">        Transaccion t = new Transaccion();</span>
+<span class="fc" id="L19">        t.setTipo(Transaccion.TipoTransaccion.DEPOSITO);</span>
+<span class="fc" id="L20">        t.setCuentaDestinoId(cuentaDestinoId);</span>
+<span class="fc" id="L21">        t.setMonto(monto);</span>
+<span class="fc" id="L22">        t.setDescripcion(descripcion);</span>
+<span class="fc" id="L23">        return t;</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

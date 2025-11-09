@@ -61,22 +61,22 @@ public class CreditoService {
     public Credito solicitarCredito(String clienteId, Credito.TipoCredito tipoCredito,
             double monto, int plazoMeses) {
 <span class="fc" id="L63">        Cliente cliente = clienteRepository.findById(clienteId)</span>
-<span class="pc" id="L64">                .orElseThrow(() -&gt; new IllegalArgumentException(&quot;Cliente no encontrado&quot;));</span>
+<span class="fc" id="L64">                .orElseThrow(() -&gt; new IllegalArgumentException(&quot;Cliente no encontrado&quot;));</span>
 <span class="fc" id="L65">        return solicitudCreditoTemplate.solicitar(cliente, tipoCredito, monto, plazoMeses);</span>
     }
 
     public Optional&lt;Credito&gt; obtenerCredito(String id) {
-<span class="nc" id="L69">        return creditoRepository.findById(id);</span>
+<span class="fc" id="L69">        return creditoRepository.findById(id);</span>
     }
 
     public List&lt;Credito&gt; listarCreditosCliente(String clienteId) {
-<span class="nc" id="L73">        return creditoRepository.findByClienteId(clienteId);</span>
+<span class="fc" id="L73">        return creditoRepository.findByClienteId(clienteId);</span>
     }
 
     public Optional&lt;Credito&gt; obtenerCreditoPorCodigo(String codigo) {
-<span class="nc" id="L77">        return creditoRepository.findAll().stream()</span>
-<span class="nc" id="L78">                .filter(cr -&gt; codigo.equals(cr.getCodigo()))</span>
-<span class="nc" id="L79">                .findFirst();</span>
+<span class="fc" id="L77">        return creditoRepository.findAll().stream()</span>
+<span class="fc" id="L78">                .filter(cr -&gt; codigo.equals(cr.getCodigo()))</span>
+<span class="fc" id="L79">                .findFirst();</span>
     }
 
     public List&lt;Credito&gt; listarCreditosClientePorCodigo(String codigoCliente) {

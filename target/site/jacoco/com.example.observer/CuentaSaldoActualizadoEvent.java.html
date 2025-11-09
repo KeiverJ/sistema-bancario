@@ -5,17 +5,17 @@ import com.example.model.Cuenta;
 public class CuentaSaldoActualizadoEvent extends DomainEvent {
     private final Cuenta cuenta;
 
-<span class="nc" id="L8">    public CuentaSaldoActualizadoEvent(Cuenta cuenta) {</span>
-<span class="nc" id="L9">        this.cuenta = cuenta;</span>
-<span class="nc" id="L10">    }</span>
+<span class="fc" id="L8">    public CuentaSaldoActualizadoEvent(Cuenta cuenta) {</span>
+<span class="fc" id="L9">        this.cuenta = cuenta;</span>
+<span class="fc" id="L10">    }</span>
 
     public Cuenta getCuenta() {
-<span class="nc" id="L13">        return cuenta;</span>
+<span class="fc" id="L13">        return cuenta;</span>
     }
 
     @Override
     public String tipo() {
-<span class="nc" id="L18">        return &quot;CUENTA_SALDO_ACTUALIZADO&quot;;</span>
+<span class="fc" id="L18">        return &quot;CUENTA_SALDO_ACTUALIZADO&quot;;</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

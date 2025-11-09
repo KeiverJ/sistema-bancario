@@ -80,11 +80,11 @@ public abstract class SolicitudCreditoTemplate {
 
     // Hooks con implementación por defecto
     protected void preEvaluacion(Cliente cliente, Credito.TipoCredito tipo, double monto, int plazo) {
-<span class="pc bpc" id="L83" title="1 of 2 branches missed.">        if (monto &lt;= 0) {</span>
-<span class="nc" id="L84">            throw new IllegalArgumentException(&quot;El monto debe ser positivo&quot;);</span>
+<span class="fc bfc" id="L83" title="All 2 branches covered.">        if (monto &lt;= 0) {</span>
+<span class="fc" id="L84">            throw new IllegalArgumentException(&quot;El monto debe ser positivo&quot;);</span>
         }
-<span class="pc bpc" id="L86" title="1 of 2 branches missed.">        if (plazo &lt;= 0) {</span>
-<span class="nc" id="L87">            throw new IllegalArgumentException(&quot;El plazo debe ser positivo&quot;);</span>
+<span class="fc bfc" id="L86" title="All 2 branches covered.">        if (plazo &lt;= 0) {</span>
+<span class="fc" id="L87">            throw new IllegalArgumentException(&quot;El plazo debe ser positivo&quot;);</span>
         }
 <span class="fc" id="L89">    }</span>
 

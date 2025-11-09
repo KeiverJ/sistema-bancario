@@ -19,8 +19,8 @@ public class CuentaRepository {
 <span class="fc" id="L19">    }</span>
 
     public Cuenta save(Cuenta cuenta) {
-<span class="pc bpc" id="L22" title="2 of 4 branches missed.">        if (cuenta.getId() == null || cuenta.getId().isEmpty()) {</span>
-<span class="nc" id="L23">            cuenta.setId(UUID.randomUUID().toString());</span>
+<span class="pc bpc" id="L22" title="1 of 4 branches missed.">        if (cuenta.getId() == null || cuenta.getId().isEmpty()) {</span>
+<span class="fc" id="L23">            cuenta.setId(UUID.randomUUID().toString());</span>
         }
 <span class="pc bpc" id="L25" title="1 of 4 branches missed.">        if (cuenta.getNumeroCuenta() == null || cuenta.getNumeroCuenta().isEmpty()) {</span>
 <span class="fc" id="L26">            cuenta.setNumeroCuenta(generarNumeroCuenta());</span>
@@ -34,25 +34,25 @@ public class CuentaRepository {
     }
 
     public Optional&lt;Cuenta&gt; findByNumeroCuenta(String numeroCuenta) {
-<span class="nc" id="L37">        return cuentas.values().stream()</span>
-<span class="nc" id="L38">                .filter(c -&gt; c.getNumeroCuenta().equals(numeroCuenta))</span>
-<span class="nc" id="L39">                .findFirst();</span>
+<span class="fc" id="L37">        return cuentas.values().stream()</span>
+<span class="fc" id="L38">                .filter(c -&gt; c.getNumeroCuenta().equals(numeroCuenta))</span>
+<span class="fc" id="L39">                .findFirst();</span>
     }
 
     public List&lt;Cuenta&gt; findByClienteId(String clienteId) {
-<span class="nc" id="L43">        return cuentas.values().stream()</span>
-<span class="nc" id="L44">                .filter(c -&gt; c.getClienteId().equals(clienteId))</span>
-<span class="nc" id="L45">                .toList();</span>
+<span class="fc" id="L43">        return cuentas.values().stream()</span>
+<span class="fc" id="L44">                .filter(c -&gt; c.getClienteId().equals(clienteId))</span>
+<span class="fc" id="L45">                .toList();</span>
     }
 
     public List&lt;Cuenta&gt; findAll() {
-<span class="nc" id="L49">        return new ArrayList&lt;&gt;(cuentas.values());</span>
+<span class="fc" id="L49">        return new ArrayList&lt;&gt;(cuentas.values());</span>
     }
 
     public List&lt;Cuenta&gt; findByEstado(Cuenta.EstadoCuenta estado) {
-<span class="nc" id="L53">        return cuentas.values().stream()</span>
-<span class="nc bnc" id="L54" title="All 2 branches missed.">                .filter(c -&gt; c.getEstado() == estado)</span>
-<span class="nc" id="L55">                .toList();</span>
+<span class="fc" id="L53">        return cuentas.values().stream()</span>
+<span class="fc bfc" id="L54" title="All 2 branches covered.">                .filter(c -&gt; c.getEstado() == estado)</span>
+<span class="fc" id="L55">                .toList();</span>
     }
 
     public void delete(String id) {
@@ -60,11 +60,11 @@ public class CuentaRepository {
 <span class="fc" id="L60">    }</span>
 
     public void deleteAll() {
-<span class="nc" id="L63">        cuentas.clear();</span>
-<span class="nc" id="L64">    }</span>
+<span class="fc" id="L63">        cuentas.clear();</span>
+<span class="fc" id="L64">    }</span>
 
     public long count() {
-<span class="nc" id="L67">        return cuentas.size();</span>
+<span class="fc" id="L67">        return cuentas.size();</span>
     }
 
     private String generarNumeroCuenta() {
