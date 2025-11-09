@@ -1,6 +1,9 @@
 package com.example.builder;
 
-import com.example.model.Credito;
+import com.example.builder.credito.CreditoBuilder;
+import com.example.builder.credito.CreditoBuilderRegistry;
+import com.example.model.credito.Credito;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

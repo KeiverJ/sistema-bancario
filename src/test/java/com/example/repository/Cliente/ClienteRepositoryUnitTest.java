@@ -1,7 +1,7 @@
 package com.example.repository.Cliente;
 
-import com.example.model.Cliente;
-import com.example.repository.ClienteRepository;
+import com.example.model.cliente.Cliente;
+import com.example.repository.cliente.ClienteRepository;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

@@ -1,8 +1,10 @@
 package com.example.service.Transaccion;
 
-import com.example.model.Transaccion;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import com.example.model.transacccion.Transaccion;
+
 import util.TestAppContext;
 
 import static org.junit.jupiter.api.Assertions.*;

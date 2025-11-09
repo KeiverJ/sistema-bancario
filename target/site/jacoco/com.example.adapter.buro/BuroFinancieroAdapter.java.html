@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>BuroFinancieroAdapter.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Sistema Bancario</a> &gt; <a href="index.source.html" class="el_package">com.example.adapter.buro</a> &gt; <span class="el_source">BuroFinancieroAdapter.java</span></div><h1>BuroFinancieroAdapter.java</h1><pre class="source lang-java linenums">package com.example.adapter.buro;
+
+import com.example.adapter.score.ScoreProvider;
+import com.example.model.cliente.Cliente;
+import com.example.model.score.Score;
+import com.example.repository.cliente.ClienteRepository;
+
+/**
+ * Adaptador que obtiene el score del cliente desde la base de datos
+ */
+public class BuroFinancieroAdapter implements ScoreProvider {
+
+    private final ClienteRepository clienteRepository;
+
+<span class="fc" id="L15">    public BuroFinancieroAdapter(ClienteRepository clienteRepository) {</span>
+<span class="fc" id="L16">        this.clienteRepository = clienteRepository;</span>
+<span class="fc" id="L17">    }</span>
+
+    @Override
+    public Score obtenerScore(String clienteId) {
+        // ✅ Obtener el cliente real de la base de datos
+<span class="fc" id="L22">        Cliente cliente = clienteRepository.findById(clienteId)</span>
+<span class="pc" id="L23">                .orElseThrow(() -&gt; new IllegalArgumentException(&quot;Cliente no encontrado&quot;));</span>
+
+<span class="fc" id="L25">        Score score = new Score();</span>
+<span class="fc" id="L26">        score.setClienteId(clienteId);</span>
+
+        // ✅ Usar el score REAL del cliente
+<span class="fc" id="L29">        score.setValor(cliente.getScoreActual());</span>
+<span class="fc" id="L30">        score.setFuente(&quot;BURO&quot;);</span>
+
+<span class="fc" id="L32">        return score;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

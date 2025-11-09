@@ -1,7 +1,7 @@
 package com.example.service.Cliente;
 
-import com.example.model.Cliente;
-import com.example.service.ClienteService;
+import com.example.model.cliente.Cliente;
+import com.example.service.cliente.ClienteService;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -17,7 +17,7 @@ class ClienteServiceUnitTest {
     @Test
     @DisplayName("crearCliente asigna datos correctamente")
     void crearCliente_asignaDatos() {
-        var repo = mock(com.example.repository.ClienteRepository.class);
+        var repo = mock(com.example.repository.cliente.ClienteRepository.class);
         var config = mock(com.example.config.BankConfig.class);
         when(repo.save(any(Cliente.class))).thenAnswer(i -> i.getArgument(0));
         ClienteService service = new ClienteService(repo, config);
@@ -31,7 +31,7 @@ class ClienteServiceUnitTest {
     @Test
     @DisplayName("eliminarCliente retorna true si existe y false si no")
     void eliminarCliente_trueFalse() {
-        var repo = mock(com.example.repository.ClienteRepository.class);
+        var repo = mock(com.example.repository.cliente.ClienteRepository.class);
         var config = mock(com.example.config.BankConfig.class);
         when(repo.findById("1")).thenReturn(java.util.Optional.of(new Cliente()));
         ClienteService service = new ClienteService(repo, config);
@@ -43,7 +43,7 @@ class ClienteServiceUnitTest {
     @Test
     @DisplayName("obtenerClientePorDocumento y existeCliente funcionan")
     void obtenerYExisteCliente() {
-        var repo = mock(com.example.repository.ClienteRepository.class);
+        var repo = mock(com.example.repository.cliente.ClienteRepository.class);
         var config = mock(com.example.config.BankConfig.class);
         Cliente c = new Cliente();
         when(repo.findByNumeroDocumento("123")).thenReturn(java.util.Optional.of(c));
@@ -56,7 +56,7 @@ class ClienteServiceUnitTest {
     @Test
     @DisplayName("listarClientes, listarClientesPorTipo y contarClientes funcionan")
     void listarYContarClientes() {
-        var repo = mock(com.example.repository.ClienteRepository.class);
+        var repo = mock(com.example.repository.cliente.ClienteRepository.class);
         var config = mock(com.example.config.BankConfig.class);
         when(repo.findAll()).thenReturn(java.util.List.of(new Cliente(), new Cliente()));
         when(repo.findByTipoCliente(Cliente.TipoCliente.PERSONA_NATURAL)).thenReturn(java.util.List.of(new Cliente()));
@@ -70,7 +70,7 @@ class ClienteServiceUnitTest {
     @Test
     @DisplayName("obtenerCliente y obtenerClientePorCodigo funcionan")
     void obtenerClientePorIdYCodigo() {
-        var repo = mock(com.example.repository.ClienteRepository.class);
+        var repo = mock(com.example.repository.cliente.ClienteRepository.class);
         var config = mock(com.example.config.BankConfig.class);
         Cliente c = new Cliente();
         c.setCodigo("C-1");
@@ -84,7 +84,7 @@ class ClienteServiceUnitTest {
     @Test
     @DisplayName("actualizarScore y actualizarScorePorCodigo funcionan")
     void actualizarScore_funciona() {
-        var repo = mock(com.example.repository.ClienteRepository.class);
+        var repo = mock(com.example.repository.cliente.ClienteRepository.class);
         var config = mock(com.example.config.BankConfig.class);
         Cliente c = new Cliente();
         c.setId("1");
@@ -102,7 +102,7 @@ class ClienteServiceUnitTest {
     @Test
     @DisplayName("actualizarCliente lanza excepción si no existe")
     void actualizarCliente_lanzaExcepcion() {
-        var repo = mock(com.example.repository.ClienteRepository.class);
+        var repo = mock(com.example.repository.cliente.ClienteRepository.class);
         var config = mock(com.example.config.BankConfig.class);
         when(repo.findById("nope")).thenReturn(java.util.Optional.empty());
         ClienteService service = new ClienteService(repo, config);
@@ -112,7 +112,7 @@ class ClienteServiceUnitTest {
     @Test
     @DisplayName("actualizarScore lanza excepción si no existe")
     void actualizarScore_lanzaExcepcion() {
-        var repo = mock(com.example.repository.ClienteRepository.class);
+        var repo = mock(com.example.repository.cliente.ClienteRepository.class);
         var config = mock(com.example.config.BankConfig.class);
         when(repo.findById("nope")).thenReturn(java.util.Optional.empty());
         ClienteService service = new ClienteService(repo, config);
@@ -122,7 +122,7 @@ class ClienteServiceUnitTest {
     @Test
     @DisplayName("actualizarScorePorCodigo lanza excepción si no existe")
     void actualizarScorePorCodigo_lanzaExcepcion() {
-        var repo = mock(com.example.repository.ClienteRepository.class);
+        var repo = mock(com.example.repository.cliente.ClienteRepository.class);
         var config = mock(com.example.config.BankConfig.class);
         when(repo.findAll()).thenReturn(java.util.List.of());
         ClienteService service = new ClienteService(repo, config);
@@ -132,7 +132,7 @@ class ClienteServiceUnitTest {
     @Test
     @DisplayName("actualizarCliente actualiza email y teléfono")
     void actualizarCliente_unit() {
-        var repo = mock(com.example.repository.ClienteRepository.class);
+        var repo = mock(com.example.repository.cliente.ClienteRepository.class);
         var config = mock(com.example.config.BankConfig.class);
         Cliente original = new Cliente();
         original.setId("1");

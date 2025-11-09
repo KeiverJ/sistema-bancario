@@ -1,7 +1,8 @@
 package com.example.service.Cuenta;
 
-import com.example.model.Cliente;
-import com.example.model.Cuenta;
+import com.example.model.cliente.Cliente;
+import com.example.model.cuenta.Cuenta;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import util.TestAppContext;

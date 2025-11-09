@@ -1,11 +1,11 @@
 package com.example.composite;
 
-import com.example.decorator.ProductoFinancieroComponent;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
+
+import com.example.decorator.core.ProductoFinancieroComponent;
 
 public class PaqueteProductos implements ProductoFinancieroComponent {
 

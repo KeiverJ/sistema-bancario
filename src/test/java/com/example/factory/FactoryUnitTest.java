@@ -1,6 +1,20 @@
 package com.example.factory;
 
-import com.example.model.Cliente;
+import com.example.factory.common.FabricaProductosProvider;
+import com.example.factory.common.ProductoBancarioFactory;
+import com.example.factory.deposito.DepositoFactory;
+import com.example.factory.pagos.PagoServicioFactory;
+import com.example.factory.persona.FactoryExtranjero;
+import com.example.factory.persona.FactoryPersonaJuridica;
+import com.example.factory.persona.FactoryPersonaNatural;
+import com.example.factory.retiro.RetiroFactory;
+import com.example.factory.transferencia.TransferenciaFactory;
+import com.example.factory.validacion.Validador;
+import com.example.factory.validacion.ValidadorCedula;
+import com.example.factory.validacion.ValidadorNIT;
+import com.example.factory.validacion.ValidadorPasaporte;
+import com.example.model.cliente.Cliente;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -12,10 +26,10 @@ class FactoryUnitTest {
     @DisplayName("FactoryPersonaJuridica: crearCredito retorna crédito válido")
     void personaJuridica_crearCredito_valido() {
         FactoryPersonaJuridica factory = new FactoryPersonaJuridica();
-        var credito = factory.crearCredito("cliJ", com.example.model.Credito.TipoCredito.HIPOTECARIO, 100000, 36);
+        var credito = factory.crearCredito("cliJ", com.example.model.credito.Credito.TipoCredito.HIPOTECARIO, 100000, 36);
         assertNotNull(credito.getId());
         assertEquals("cliJ", credito.getClienteId());
-        assertEquals(com.example.model.Credito.TipoCredito.HIPOTECARIO, credito.getTipoCredito());
+        assertEquals(com.example.model.credito.Credito.TipoCredito.HIPOTECARIO, credito.getTipoCredito());
         assertEquals(100000, credito.getMonto());
         assertEquals(100000, credito.getSaldo());
         assertEquals(36, credito.getPlazoMeses());
@@ -26,7 +40,7 @@ class FactoryUnitTest {
     @DisplayName("FactoryPersonaJuridica: crearCredito con monto cero y plazo negativo")
     void personaJuridica_crearCredito_casosLimite() {
         FactoryPersonaJuridica factory = new FactoryPersonaJuridica();
-        var credito = factory.crearCredito("cliJ2", com.example.model.Credito.TipoCredito.LIBRE_INVERSION, 0, -12);
+        var credito = factory.crearCredito("cliJ2", com.example.model.credito.Credito.TipoCredito.LIBRE_INVERSION, 0, -12);
         assertEquals(0, credito.getMonto());
         assertEquals(-12, credito.getPlazoMeses());
         assertEquals(0, credito.getSaldo());
@@ -59,7 +73,7 @@ class FactoryUnitTest {
     @DisplayName("FactoryPersonaNatural: crearCredito con monto negativo")
     void personaNatural_crearCredito_montoNegativo() {
         FactoryPersonaNatural factory = new FactoryPersonaNatural();
-        var credito = factory.crearCredito("cliY", com.example.model.Credito.TipoCredito.LIBRE_INVERSION, -1000, 12);
+        var credito = factory.crearCredito("cliY", com.example.model.credito.Credito.TipoCredito.LIBRE_INVERSION, -1000, 12);
         assertNotNull(credito.getId());
         assertEquals(-1000, credito.getMonto());
         assertEquals(12, credito.getPlazoMeses());
@@ -69,8 +83,8 @@ class FactoryUnitTest {
     @DisplayName("FactoryPersonaJuridica: crearCuenta genera número único")
     void personaJuridica_crearCuenta_numeroUnico() {
         FactoryPersonaJuridica factory = new FactoryPersonaJuridica();
-        var cuenta1 = factory.crearCuenta("cli1", com.example.model.Cuenta.TipoCuenta.CORRIENTE, 1000);
-        var cuenta2 = factory.crearCuenta("cli2", com.example.model.Cuenta.TipoCuenta.CORRIENTE, 2000);
+        var cuenta1 = factory.crearCuenta("cli1", com.example.model.cuenta.Cuenta.TipoCuenta.CORRIENTE, 1000);
+        var cuenta2 = factory.crearCuenta("cli2", com.example.model.cuenta.Cuenta.TipoCuenta.CORRIENTE, 2000);
         assertNotEquals(cuenta1.getNumeroCuenta(), cuenta2.getNumeroCuenta());
     }
 
@@ -78,7 +92,7 @@ class FactoryUnitTest {
     @DisplayName("FactoryExtranjero: crearCredito con plazo cero")
     void extranjero_crearCredito_plazoCero() {
         FactoryExtranjero factory = new FactoryExtranjero();
-        var credito = factory.crearCredito("cliZ", com.example.model.Credito.TipoCredito.HIPOTECARIO, 50000, 0);
+        var credito = factory.crearCredito("cliZ", com.example.model.credito.Credito.TipoCredito.HIPOTECARIO, 50000, 0);
         assertNotNull(credito.getId());
         assertEquals(0, credito.getPlazoMeses());
         assertEquals(50000, credito.getMonto());
@@ -88,7 +102,7 @@ class FactoryUnitTest {
     @DisplayName("FactoryPersonaNatural: crearCuenta con clienteId nulo")
     void personaNatural_crearCuenta_clienteIdNulo() {
         FactoryPersonaNatural factory = new FactoryPersonaNatural();
-        var cuenta = factory.crearCuenta(null, com.example.model.Cuenta.TipoCuenta.AHORROS, 100);
+        var cuenta = factory.crearCuenta(null, com.example.model.cuenta.Cuenta.TipoCuenta.AHORROS, 100);
         assertNull(cuenta.getClienteId());
         assertEquals(100, cuenta.getSaldo());
     }
@@ -96,9 +110,9 @@ class FactoryUnitTest {
     @DisplayName("FactoryPersonaNatural crearCuenta retorna cuenta válida")
     void personaNatural_crearCuenta_valida() {
         FactoryPersonaNatural factory = new FactoryPersonaNatural();
-        var c = factory.crearCuenta("cli", com.example.model.Cuenta.TipoCuenta.AHORROS, 1000);
+        var c = factory.crearCuenta("cli", com.example.model.cuenta.Cuenta.TipoCuenta.AHORROS, 1000);
         assertNotNull(c.getId());
-        assertEquals(com.example.model.Cuenta.TipoCuenta.AHORROS, c.getTipoCuenta());
+        assertEquals(com.example.model.cuenta.Cuenta.TipoCuenta.AHORROS, c.getTipoCuenta());
         assertEquals("cli", c.getClienteId());
         assertTrue(c.getSaldo() >= 1000);
     }
@@ -107,9 +121,9 @@ class FactoryUnitTest {
     @DisplayName("FactoryPersonaJuridica crearCuenta retorna cuenta válida")
     void personaJuridica_crearCuenta_valida() {
         FactoryPersonaJuridica factory = new FactoryPersonaJuridica();
-        var c = factory.crearCuenta("cli", com.example.model.Cuenta.TipoCuenta.CORRIENTE, 5000);
+        var c = factory.crearCuenta("cli", com.example.model.cuenta.Cuenta.TipoCuenta.CORRIENTE, 5000);
         assertNotNull(c.getId());
-        assertEquals(com.example.model.Cuenta.TipoCuenta.CORRIENTE, c.getTipoCuenta());
+        assertEquals(com.example.model.cuenta.Cuenta.TipoCuenta.CORRIENTE, c.getTipoCuenta());
         assertEquals("cli", c.getClienteId());
         assertTrue(c.getSaldo() >= 5000);
     }
@@ -118,9 +132,9 @@ class FactoryUnitTest {
     @DisplayName("FactoryExtranjero crearCuenta retorna cuenta válida")
     void extranjero_crearCuenta_valida() {
         FactoryExtranjero factory = new FactoryExtranjero();
-        var c = factory.crearCuenta("cli", com.example.model.Cuenta.TipoCuenta.AHORROS, 1000);
+        var c = factory.crearCuenta("cli", com.example.model.cuenta.Cuenta.TipoCuenta.AHORROS, 1000);
         assertNotNull(c.getId());
-        assertEquals(com.example.model.Cuenta.TipoCuenta.AHORROS, c.getTipoCuenta());
+        assertEquals(com.example.model.cuenta.Cuenta.TipoCuenta.AHORROS, c.getTipoCuenta());
         assertEquals("cli", c.getClienteId());
         assertTrue(c.getSaldo() >= 1000);
     }
@@ -129,8 +143,8 @@ class FactoryUnitTest {
     @DisplayName("RetiroFactory crear() retorna transacción de retiro válida")
     void retiroFactory_crear_retiroValido() {
         RetiroFactory factory = new RetiroFactory("cuenta1", 500.0, "Cajero Centro");
-        var t = factory.crear();
-        assertEquals(com.example.model.Transaccion.TipoTransaccion.RETIRO, t.getTipo());
+        var t = factory.nueva();
+        assertEquals(com.example.model.transacccion.Transaccion.TipoTransaccion.RETIRO, t.getTipo());
         assertEquals("cuenta1", t.getCuentaOrigenId());
         assertEquals(500.0, t.getMonto());
         assertTrue(t.getDescripcion().contains("Cajero Centro"));
@@ -163,7 +177,7 @@ class FactoryUnitTest {
     void transferenciaFactory_crear_transferenciaValida() {
         TransferenciaFactory factory = new TransferenciaFactory("cuenta1", "cuenta2", 1500.0, "Pago amigo");
         var t = factory.nueva();
-        assertEquals(com.example.model.Transaccion.TipoTransaccion.TRANSFERENCIA, t.getTipo());
+        assertEquals(com.example.model.transacccion.Transaccion.TipoTransaccion.TRANSFERENCIA, t.getTipo());
         assertEquals("cuenta1", t.getCuentaOrigenId());
         assertEquals("cuenta2", t.getCuentaDestinoId());
         assertEquals(1500.0, t.getMonto());
@@ -175,7 +189,7 @@ class FactoryUnitTest {
     void pagoServicioFactory_crear_pagoServicioValido() {
         PagoServicioFactory factory = new PagoServicioFactory("cuenta1", "ENERGIA", 200.0, "REF123");
         var t = factory.nueva();
-        assertEquals(com.example.model.Transaccion.TipoTransaccion.PAGO_SERVICIO, t.getTipo());
+        assertEquals(com.example.model.transacccion.Transaccion.TipoTransaccion.PAGO_SERVICIO, t.getTipo());
         assertEquals("cuenta1", t.getCuentaOrigenId());
         assertEquals(200.0, t.getMonto());
         assertTrue(t.getDescripcion().contains("ENERGIA"));
@@ -187,7 +201,7 @@ class FactoryUnitTest {
     void depositoFactory_crear_depositoValido() {
         DepositoFactory factory = new DepositoFactory("cuenta2", 300.0, "Depósito en ventanilla");
         var t = factory.nueva();
-        assertEquals(com.example.model.Transaccion.TipoTransaccion.DEPOSITO, t.getTipo());
+        assertEquals(com.example.model.transacccion.Transaccion.TipoTransaccion.DEPOSITO, t.getTipo());
         assertEquals("cuenta2", t.getCuentaDestinoId());
         assertEquals(300.0, t.getMonto());
         assertTrue(t.getDescripcion().contains("ventanilla"));

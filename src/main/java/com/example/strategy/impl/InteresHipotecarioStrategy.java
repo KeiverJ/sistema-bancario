@@ -1,8 +1,8 @@
 package com.example.strategy.impl;
 
-import com.example.strategy.CalculoInteresStrategy;
-import com.example.model.Credito;
-import com.example.model.Cliente;
+import com.example.model.cliente.Cliente;
+import com.example.model.credito.Credito;
+import com.example.strategy.core.CalculoInteresStrategy;
 import com.example.config.BankConfig;
 
 public class InteresHipotecarioStrategy implements CalculoInteresStrategy {

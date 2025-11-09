@@ -1,8 +1,10 @@
 package com.example.repository.Cliente;
 
-import com.example.model.Cliente;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import com.example.model.cliente.Cliente;
+
 import util.TestAppContext;
 
 import static org.junit.jupiter.api.Assertions.*;

@@ -1,8 +1,8 @@
 package com.example.service.Transaccion;
 
-import com.example.model.Transaccion;
-import com.example.service.CuentaService;
-import com.example.service.TransaccionService;
+import com.example.model.transacccion.Transaccion;
+import com.example.service.cuenta.CuentaService;
+import com.example.service.transaccion.TransaccionService;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -17,9 +17,9 @@ class TransaccionServiceUnitTest {
     @Test
     @DisplayName("registrarTransaccion lanza excepción si monto <= 0")
     void registrarTransaccion_montoInvalido() {
-        var repo = mock(com.example.repository.TransaccionRepository.class);
+        var repo = mock(com.example.repository.transaccion.TransaccionRepository.class);
         var config = mock(com.example.config.BankConfig.class);
-        var publisher = mock(com.example.observer.DomainEventPublisher.class);
+        var publisher = mock(com.example.observer.core.DomainEventPublisher.class);
         var cuentaService = mock(CuentaService.class);
         when(config.getLimiteDiario()).thenReturn(1000.0);
         TransaccionService service = new TransaccionService(repo, config, publisher, cuentaService);
@@ -32,9 +32,9 @@ class TransaccionServiceUnitTest {
     @Test
     @DisplayName("registrarTransaccion llama a repo y retorna transacción")
     void registrarTransaccion_ok() {
-        var repo = mock(com.example.repository.TransaccionRepository.class);
+        var repo = mock(com.example.repository.transaccion.TransaccionRepository.class);
         var config = mock(com.example.config.BankConfig.class);
-        var publisher = mock(com.example.observer.DomainEventPublisher.class);
+        var publisher = mock(com.example.observer.core.DomainEventPublisher.class);
         var cuentaService = mock(CuentaService.class);
         when(repo.save(any(Transaccion.class))).thenAnswer(i -> i.getArgument(0));
         when(config.getLimiteDiario()).thenReturn(1000.0);
@@ -49,9 +49,9 @@ class TransaccionServiceUnitTest {
     @Test
     @DisplayName("procesarTransaccion lanza excepción si no existe")
     void procesarTransaccion_noExiste() {
-        var repo = mock(com.example.repository.TransaccionRepository.class);
+        var repo = mock(com.example.repository.transaccion.TransaccionRepository.class);
         var config = mock(com.example.config.BankConfig.class);
-        var publisher = mock(com.example.observer.DomainEventPublisher.class);
+        var publisher = mock(com.example.observer.core.DomainEventPublisher.class);
         var cuentaService = mock(CuentaService.class);
         when(repo.findById(anyString())).thenReturn(java.util.Optional.empty());
         TransaccionService service = new TransaccionService(repo, config, publisher, cuentaService);
@@ -61,9 +61,9 @@ class TransaccionServiceUnitTest {
     @Test
     @DisplayName("procesarTransaccion retorna tx si no está pendiente")
     void procesarTransaccion_noPendiente() {
-        var repo = mock(com.example.repository.TransaccionRepository.class);
+        var repo = mock(com.example.repository.transaccion.TransaccionRepository.class);
         var config = mock(com.example.config.BankConfig.class);
-        var publisher = mock(com.example.observer.DomainEventPublisher.class);
+        var publisher = mock(com.example.observer.core.DomainEventPublisher.class);
         var cuentaService = mock(CuentaService.class);
         Transaccion tx = new Transaccion();
         tx.setEstado(Transaccion.EstadoTransaccion.EXITOSA);
@@ -75,9 +75,9 @@ class TransaccionServiceUnitTest {
     @Test
     @DisplayName("registrarTransaccion lanza excepción si monto excede límite diario")
     void registrarTransaccion_montoExcedeLimite() {
-        var repo = mock(com.example.repository.TransaccionRepository.class);
+        var repo = mock(com.example.repository.transaccion.TransaccionRepository.class);
         var config = mock(com.example.config.BankConfig.class);
-        var publisher = mock(com.example.observer.DomainEventPublisher.class);
+        var publisher = mock(com.example.observer.core.DomainEventPublisher.class);
         var cuentaService = mock(CuentaService.class);
         when(config.getLimiteDiario()).thenReturn(100.0);
         TransaccionService service = new TransaccionService(repo, config, publisher, cuentaService);

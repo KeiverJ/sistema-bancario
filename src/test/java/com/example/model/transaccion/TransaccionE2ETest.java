@@ -2,7 +2,7 @@ package com.example.model.transaccion;
 
 import org.junit.jupiter.api.Test;
 
-import com.example.model.Transaccion;
+import com.example.model.transacccion.Transaccion;
 
 import static org.junit.jupiter.api.Assertions.*;
 

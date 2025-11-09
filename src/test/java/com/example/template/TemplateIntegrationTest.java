@@ -1,7 +1,7 @@
 package com.example.template;
 
-import com.example.model.Cliente;
-import com.example.model.Credito;
+import com.example.model.cliente.Cliente;
+import com.example.model.credito.Credito;
 import com.example.template.impl.SolicitudCreditoDefault;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

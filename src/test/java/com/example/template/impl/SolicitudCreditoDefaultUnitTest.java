@@ -1,17 +1,18 @@
 package com.example.template.impl;
 
-import com.example.builder.CreditoBuilder;
-import com.example.builder.CreditoBuilderRegistry;
-import com.example.chain.ApprovalChainBuilder;
-import com.example.chain.ApprovalHandler;
+import com.example.adapter.score.ScoreProviderRegistry;
+import com.example.builder.credito.CreditoBuilder;
+import com.example.builder.credito.CreditoBuilderRegistry;
+import com.example.chain.core.ApprovalChainBuilder;
+import com.example.chain.core.ApprovalHandler;
 import com.example.config.BankConfig;
-import com.example.model.Cliente;
-import com.example.model.Credito;
-import com.example.observer.DomainEventPublisher;
-import com.example.repository.ClienteRepository;
-import com.example.repository.CreditoRepository;
-import com.example.strategy.InteresStrategyRegistry;
-import com.example.adapter.ScoreProviderRegistry;
+import com.example.model.cliente.Cliente;
+import com.example.model.credito.Credito;
+import com.example.observer.core.DomainEventPublisher;
+import com.example.repository.cliente.ClienteRepository;
+import com.example.repository.credito.CreditoRepository;
+import com.example.strategy.core.InteresStrategyRegistry;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -38,14 +39,14 @@ class SolicitudCreditoDefaultUnitTest {
         ApprovalChainBuilder chainBuilder = mock(ApprovalChainBuilder.class);
         ApprovalHandler chain = mock(ApprovalHandler.class);
         when(chainBuilder.build(any())).thenReturn(chain);
-        doAnswer(inv -> { ((com.example.chain.ApprovalContext)inv.getArgument(0)).aprobar(); return null; }).when(chain).handle(any());
+        doAnswer(inv -> { ((com.example.chain.core.ApprovalContext)inv.getArgument(0)).aprobar(); return null; }).when(chain).handle(any());
         CreditoRepository creditoRepo = mock(CreditoRepository.class);
         when(creditoRepo.save(any())).thenAnswer(inv -> inv.getArgument(0));
         ClienteRepository clienteRepo = mock(ClienteRepository.class);
         when(clienteRepo.save(any())).thenAnswer(inv -> inv.getArgument(0));
         DomainEventPublisher publisher = mock(DomainEventPublisher.class);
         ScoreProviderRegistry scoreRegistry = mock(ScoreProviderRegistry.class);
-        when(scoreRegistry.obtenerScoreParaCliente(any())).thenReturn(new com.example.model.Score());
+        when(scoreRegistry.obtenerScoreParaCliente(any())).thenReturn(new com.example.model.score.Score());
         BankConfig bankConfig = mock(BankConfig.class);
         SolicitudCreditoDefault tpl = new SolicitudCreditoDefault(builderRegistry, strategyRegistry, chainBuilder, creditoRepo, clienteRepo, publisher, scoreRegistry, bankConfig);
         Cliente cliente = mock(Cliente.class);
@@ -93,14 +94,14 @@ class SolicitudCreditoDefaultUnitTest {
         ApprovalChainBuilder chainBuilder = mock(ApprovalChainBuilder.class);
         ApprovalHandler chain = mock(ApprovalHandler.class);
         when(chainBuilder.build(any())).thenReturn(chain);
-        doAnswer(inv -> { ((com.example.chain.ApprovalContext)inv.getArgument(0)).rechazar("NO"); return null; }).when(chain).handle(any());
+        doAnswer(inv -> { ((com.example.chain.core.ApprovalContext)inv.getArgument(0)).rechazar("NO"); return null; }).when(chain).handle(any());
         CreditoRepository creditoRepo = mock(CreditoRepository.class);
         when(creditoRepo.save(any())).thenAnswer(inv -> inv.getArgument(0));
         ClienteRepository clienteRepo = mock(ClienteRepository.class);
         when(clienteRepo.save(any())).thenAnswer(inv -> inv.getArgument(0));
         DomainEventPublisher publisher = mock(DomainEventPublisher.class);
         ScoreProviderRegistry scoreRegistry = mock(ScoreProviderRegistry.class);
-        when(scoreRegistry.obtenerScoreParaCliente(any())).thenReturn(new com.example.model.Score());
+        when(scoreRegistry.obtenerScoreParaCliente(any())).thenReturn(new com.example.model.score.Score());
         BankConfig bankConfig = mock(BankConfig.class);
         SolicitudCreditoDefault tpl = new SolicitudCreditoDefault(builderRegistry, strategyRegistry, chainBuilder, creditoRepo, clienteRepo, publisher, scoreRegistry, bankConfig);
         Cliente cliente = mock(Cliente.class);

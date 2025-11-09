@@ -1,17 +1,17 @@
 package com.example.template.impl;
 
-import com.example.adapter.ScoreProviderRegistry;
-import com.example.builder.CreditoBuilder;
-import com.example.builder.CreditoBuilderRegistry;
-import com.example.chain.ApprovalChainBuilder;
+import com.example.adapter.score.ScoreProviderRegistry;
+import com.example.builder.credito.CreditoBuilder;
+import com.example.builder.credito.CreditoBuilderRegistry;
+import com.example.chain.core.ApprovalChainBuilder;
 import com.example.config.BankConfig;
-import com.example.model.Cliente;
-import com.example.model.Credito;
-import com.example.observer.DomainEventPublisher;
-import com.example.repository.ClienteRepository;
-import com.example.repository.CreditoRepository;
-import com.example.strategy.InteresStrategyRegistry;
-import com.example.template.SolicitudCreditoTemplate;
+import com.example.model.cliente.Cliente;
+import com.example.model.credito.Credito;
+import com.example.observer.core.DomainEventPublisher;
+import com.example.repository.cliente.ClienteRepository;
+import com.example.repository.credito.CreditoRepository;
+import com.example.strategy.core.InteresStrategyRegistry;
+import com.example.template.core.SolicitudCreditoTemplate;
 import com.example.util.CreditoCodigoGenerator;
 
 import java.util.UUID;

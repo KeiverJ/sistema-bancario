@@ -3,8 +3,7 @@ package com.example.model.cliente;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import com.example.model.Cliente;
-import com.example.model.Cliente.TipoCliente;
+import com.example.model.cliente.Cliente.TipoCliente;
 
 import static org.junit.jupiter.api.Assertions.*;
 

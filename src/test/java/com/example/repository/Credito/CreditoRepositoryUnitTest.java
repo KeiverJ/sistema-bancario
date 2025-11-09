@@ -1,7 +1,7 @@
 package com.example.repository.Credito;
 
-import com.example.model.Credito;
-import com.example.repository.CreditoRepository;
+import com.example.model.credito.Credito;
+import com.example.repository.credito.CreditoRepository;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

@@ -1,26 +1,26 @@
 package util;
 
-import com.example.adapter.BuroFinancieroAdapter;
-import com.example.adapter.LegacyRiskApiAdapter;
-import com.example.adapter.ScoreProviderRegistry;
-import com.example.builder.CreditoBuilderRegistry;
-import com.example.chain.ApprovalChainBuilder;
+import com.example.adapter.buro.BuroFinancieroAdapter;
+import com.example.adapter.legacy.LegacyRiskApiAdapter;
+import com.example.adapter.score.ScoreProviderRegistry;
+import com.example.builder.credito.CreditoBuilderRegistry;
+import com.example.chain.core.ApprovalChainBuilder;
 import com.example.config.BankConfig;
-import com.example.observer.DomainEventPublisher;
-import com.example.observer.FraudeObserver;
-import com.example.observer.LoggingObserver;
-import com.example.observer.NotificacionObserver;
-import com.example.repository.ClienteRepository;
-import com.example.repository.CreditoRepository;
-import com.example.repository.CuentaRepository;
-import com.example.repository.TransaccionRepository;
-import com.example.service.ClienteService;
-import com.example.service.CreditoService;
-import com.example.service.CuentaService;
-import com.example.service.TransaccionService;
-import com.example.strategy.InteresStrategyRegistry;
+import com.example.factory.common.FabricaProductosProvider;
+import com.example.observer.core.DomainEventPublisher;
+import com.example.observer.impl.FraudeObserver;
+import com.example.observer.impl.LoggingObserver;
+import com.example.observer.impl.NotificacionObserver;
+import com.example.repository.cliente.ClienteRepository;
+import com.example.repository.credito.CreditoRepository;
+import com.example.repository.cuenta.CuentaRepository;
+import com.example.repository.transaccion.TransaccionRepository;
+import com.example.service.cliente.ClienteService;
+import com.example.service.credito.CreditoService;
+import com.example.service.cuenta.CuentaService;
+import com.example.service.transaccion.TransaccionService;
+import com.example.strategy.core.InteresStrategyRegistry;
 import com.example.template.impl.SolicitudCreditoDefault;
-import com.example.factory.FabricaProductosProvider;
 
 import java.util.List;
 

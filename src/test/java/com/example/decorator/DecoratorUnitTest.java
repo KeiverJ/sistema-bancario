@@ -1,6 +1,14 @@
 package com.example.decorator;
 
-import com.example.model.Cuenta;
+import com.example.decorator.impl.BaseProductoComponent;
+import com.example.model.cuenta.Cuenta;
+import com.example.decorator.core.ProductoDecorator;
+import com.example.decorator.core.ProductoFinancieroComponent;
+import com.example.decorator.impl.SeguroVidaDecorator;
+import com.example.decorator.impl.ExencionCuotaDecorator;
+import com.example.decorator.impl.CashbackDecorator;
+import com.example.decorator.impl.BeneficioVipDecorator;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -30,8 +38,8 @@ class DecoratorUnitTest {
         assertEquals(5000, baseCuenta.getCostoMensual());
         assertEquals(0.0, baseCuenta.getBeneficioMensual());
 
-        com.example.model.Credito credito = new com.example.model.Credito();
-        credito.setTipoCredito(com.example.model.Credito.TipoCredito.HIPOTECARIO);
+        com.example.model.credito.Credito credito = new com.example.model.credito.Credito();
+        credito.setTipoCredito(com.example.model.credito.Credito.TipoCredito.HIPOTECARIO);
         credito.setMonto(200000);
         BaseProductoComponent baseCredito = new BaseProductoComponent(credito);
         assertTrue(baseCredito.getDescripcion().contains("Crédito HIPOTECARIO"));
@@ -88,7 +96,8 @@ class DecoratorUnitTest {
         cuenta.setId("C1");
         cuenta.setCuotaManejo(3000);
         BaseProductoComponent base = new BaseProductoComponent(cuenta);
-        ProductoDecorator decorador = new ProductoDecorator(base) {};
+        ProductoDecorator decorador = new ProductoDecorator(base) {
+        };
         assertEquals("C1", decorador.getId());
         assertEquals(3000, decorador.getCostoMensual());
         assertEquals(0.0, decorador.getBeneficioMensual());

@@ -202,12 +202,12 @@ public class BankConfig {
     }
 
     public boolean isValidConfiguration() {
-<span class="pc bpc" id="L205" title="1 of 6 branches missed.">        return name != null &amp;&amp; !name.isEmpty() &amp;&amp;</span>
-<span class="pc bpc" id="L206" title="1 of 4 branches missed.">                code != null &amp;&amp; !code.isEmpty() &amp;&amp;</span>
-<span class="fc bfc" id="L207" title="All 2 branches covered.">                tasaInteresBase &gt; 0 &amp;&amp;</span>
-<span class="fc bfc" id="L208" title="All 2 branches covered.">                scoreMinimo &gt; 0 &amp;&amp;</span>
-<span class="fc bfc" id="L209" title="All 2 branches covered.">                montoMaximoCredito &gt; 0 &amp;&amp;</span>
-<span class="fc bfc" id="L210" title="All 2 branches covered.">                ratioEndeudamientoMaximo &gt; 0 &amp;&amp; ratioEndeudamientoMaximo &lt;= 1.0;</span>
+<span class="pc bpc" id="L205" title="2 of 6 branches missed.">        return name != null &amp;&amp; !name.isEmpty() &amp;&amp;</span>
+<span class="fc bfc" id="L206" title="All 12 branches covered.">                code != null &amp;&amp; !code.isEmpty() &amp;&amp;</span>
+                tasaInteresBase &gt; 0 &amp;&amp;
+                scoreMinimo &gt; 0 &amp;&amp;
+                montoMaximoCredito &gt; 0 &amp;&amp;
+                ratioEndeudamientoMaximo &gt; 0 &amp;&amp; ratioEndeudamientoMaximo &lt;= 1.0;
     }
 
     @Override

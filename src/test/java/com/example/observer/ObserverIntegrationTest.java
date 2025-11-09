@@ -1,8 +1,14 @@
 package com.example.observer;
 
-import com.example.model.Credito;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import com.example.model.credito.Credito;
+import com.example.observer.core.DomainEventPublisher;
+import com.example.observer.eventos.CreditoEstadoCambiadoEvent;
+import com.example.observer.impl.FraudeObserver;
+import com.example.observer.impl.LoggingObserver;
+import com.example.observer.impl.NotificacionObserver;
 
 import java.util.List;
 

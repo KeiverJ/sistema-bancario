@@ -1,7 +1,8 @@
 package com.example.strategy;
 
-import com.example.model.Cliente;
-import com.example.model.Credito;
+import com.example.model.cliente.Cliente;
+import com.example.model.credito.Credito;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import util.TestAppContext;

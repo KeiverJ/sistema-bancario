@@ -1,6 +1,6 @@
 package com.example.util;
 
-import com.example.model.Transaccion;
+import com.example.model.transacccion.Transaccion;
 
 /**
  * Utilidad para crear datos de prueba para tests.

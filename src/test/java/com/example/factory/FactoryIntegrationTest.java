@@ -3,6 +3,15 @@ package com.example.factory;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import com.example.factory.common.FabricaProductosProvider;
+import com.example.factory.common.ProductoBancarioFactory;
+import com.example.factory.persona.FactoryExtranjero;
+import com.example.factory.persona.FactoryPersonaJuridica;
+import com.example.factory.persona.FactoryPersonaNatural;
+import com.example.factory.validacion.Validador;
+import com.example.factory.validacion.ValidadorCedula;
+import com.example.factory.validacion.ValidadorNIT;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class FactoryIntegrationTest {
@@ -21,7 +30,7 @@ class FactoryIntegrationTest {
     @DisplayName("FactoryPersonaNatural y ValidadorCedula integran correctamente")
     void personaNatural_factoryYValidador() {
         FactoryPersonaNatural factory = new FactoryPersonaNatural();
-        var cuenta = factory.crearCuenta("cli1", com.example.model.Cuenta.TipoCuenta.AHORROS, 2000);
+        var cuenta = factory.crearCuenta("cli1", com.example.model.cuenta.Cuenta.TipoCuenta.AHORROS, 2000);
         assertNotNull(cuenta.getId());
         assertEquals("cli1", cuenta.getClienteId());
         Validador val = factory.crearValidadorDocumento();
@@ -33,7 +42,7 @@ class FactoryIntegrationTest {
     @DisplayName("FactoryPersonaJuridica y ValidadorNIT integran correctamente")
     void personaJuridica_factoryYValidador() {
         FactoryPersonaJuridica factory = new FactoryPersonaJuridica();
-        var cuenta = factory.crearCuenta("cli2", com.example.model.Cuenta.TipoCuenta.CORRIENTE, 5000);
+        var cuenta = factory.crearCuenta("cli2", com.example.model.cuenta.Cuenta.TipoCuenta.CORRIENTE, 5000);
         assertNotNull(cuenta.getId());
         assertEquals("cli2", cuenta.getClienteId());
         Validador val = factory.crearValidadorDocumento();
@@ -45,7 +54,7 @@ class FactoryIntegrationTest {
     @DisplayName("FactoryExtranjero y ValidadorPasaporte integran correctamente")
     void extranjero_factoryYValidador() {
         FactoryExtranjero factory = new FactoryExtranjero();
-        var cuenta = factory.crearCuenta("cli3", com.example.model.Cuenta.TipoCuenta.AHORROS, 3000);
+        var cuenta = factory.crearCuenta("cli3", com.example.model.cuenta.Cuenta.TipoCuenta.AHORROS, 3000);
         assertNotNull(cuenta.getId());
         assertEquals("cli3", cuenta.getClienteId());
         Validador val = factory.crearValidadorDocumento();
@@ -57,11 +66,11 @@ class FactoryIntegrationTest {
     @DisplayName("FabricaProductosProvider integra con todas las factories")
     void provider_integracionTodas() {
         FabricaProductosProvider provider = new FabricaProductosProvider();
-        for (com.example.model.Cliente.TipoCliente tipo : com.example.model.Cliente.TipoCliente.values()) {
+        for (com.example.model.cliente.Cliente.TipoCliente tipo : com.example.model.cliente.Cliente.TipoCliente.values()) {
             ProductoBancarioFactory factory = provider.getFactory(tipo);
             assertNotNull(factory);
-            assertNotNull(factory.crearCuenta("cli", com.example.model.Cuenta.TipoCuenta.AHORROS, 1000));
-            assertNotNull(factory.crearCredito("cli", com.example.model.Credito.TipoCredito.CONSUMO, 5000, 12));
+            assertNotNull(factory.crearCuenta("cli", com.example.model.cuenta.Cuenta.TipoCuenta.AHORROS, 1000));
+            assertNotNull(factory.crearCredito("cli", com.example.model.credito.Credito.TipoCredito.CONSUMO, 5000, 12));
         }
     }
 }

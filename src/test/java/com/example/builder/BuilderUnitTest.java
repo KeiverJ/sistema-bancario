@@ -1,6 +1,13 @@
 package com.example.builder;
 
-import com.example.model.Credito;
+import com.example.builder.credito.BaseCreditoBuilder;
+import com.example.builder.credito.CreditoBuilderRegistry;
+import com.example.builder.credito.tipos.ConsumoCreditoBuilder;
+import com.example.builder.credito.tipos.HipotecarioCreditoBuilder;
+import com.example.builder.credito.tipos.LibreInversionCreditoBuilder;
+import com.example.builder.credito.tipos.VehiculoCreditoBuilder;
+import com.example.model.credito.Credito;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

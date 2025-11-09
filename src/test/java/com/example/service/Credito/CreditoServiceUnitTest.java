@@ -1,8 +1,9 @@
 package com.example.service.Credito;
 
-import com.example.model.Credito;
-import com.example.service.CreditoService;
-import com.example.model.Cliente;
+import com.example.model.cliente.Cliente;
+import com.example.model.credito.Credito;
+import com.example.service.credito.CreditoService;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -15,32 +16,32 @@ import static org.mockito.Mockito.*;
 class CreditoServiceUnitTest {
 
     private CreditoService buildService(
-            com.example.repository.CreditoRepository repo,
-            com.example.repository.ClienteRepository clienteRepo,
+            com.example.repository.credito.CreditoRepository repo,
+            com.example.repository.cliente.ClienteRepository clienteRepo,
             com.example.config.BankConfig config,
-            com.example.factory.FabricaProductosProvider fabrica,
-            com.example.strategy.InteresStrategyRegistry interes,
-            com.example.adapter.ScoreProviderRegistry score,
-            com.example.builder.CreditoBuilderRegistry builder,
-            com.example.chain.ApprovalChainBuilder chain,
-            com.example.observer.DomainEventPublisher publisher,
-            com.example.template.SolicitudCreditoTemplate template) {
+            com.example.factory.common.FabricaProductosProvider fabrica,
+            com.example.strategy.core.InteresStrategyRegistry interes,
+            com.example.adapter.score.ScoreProviderRegistry score,
+            com.example.builder.credito.CreditoBuilderRegistry builder,
+            com.example.chain.core.ApprovalChainBuilder chain,
+            com.example.observer.core.DomainEventPublisher publisher,
+            com.example.template.core.SolicitudCreditoTemplate template) {
         return new CreditoService(repo, clienteRepo, config, fabrica, interes, score, builder, chain, publisher, template);
     }
 
     @Test
     @DisplayName("solicitarCredito lanza excepción si cliente no existe")
     void solicitarCredito_clienteNoExiste() {
-        var repo = mock(com.example.repository.CreditoRepository.class);
-        var clienteRepo = mock(com.example.repository.ClienteRepository.class);
+        var repo = mock(com.example.repository.credito.CreditoRepository.class);
+        var clienteRepo = mock(com.example.repository.cliente.ClienteRepository.class);
         var config = mock(com.example.config.BankConfig.class);
-        var fabrica = mock(com.example.factory.FabricaProductosProvider.class);
-        var interes = mock(com.example.strategy.InteresStrategyRegistry.class);
-        var score = mock(com.example.adapter.ScoreProviderRegistry.class);
-        var builder = mock(com.example.builder.CreditoBuilderRegistry.class);
-        var chain = mock(com.example.chain.ApprovalChainBuilder.class);
-        var publisher = mock(com.example.observer.DomainEventPublisher.class);
-        var template = mock(com.example.template.SolicitudCreditoTemplate.class);
+        var fabrica = mock(com.example.factory.common.FabricaProductosProvider.class);
+        var interes = mock(com.example.strategy.core.InteresStrategyRegistry.class);
+        var score = mock(com.example.adapter.score.ScoreProviderRegistry.class);
+        var builder = mock(com.example.builder.credito.CreditoBuilderRegistry.class);
+        var chain = mock(com.example.chain.core.ApprovalChainBuilder.class);
+        var publisher = mock(com.example.observer.core.DomainEventPublisher.class);
+        var template = mock(com.example.template.core.SolicitudCreditoTemplate.class);
         when(clienteRepo.findById(anyString())).thenReturn(java.util.Optional.empty());
         CreditoService service = buildService(repo, clienteRepo, config, fabrica, interes, score, builder, chain, publisher, template);
         assertThrows(IllegalArgumentException.class, () ->
@@ -51,16 +52,16 @@ class CreditoServiceUnitTest {
     @Test
     @DisplayName("solicitarCredito llama a template y retorna crédito")
     void solicitarCredito_ok() {
-        var repo = mock(com.example.repository.CreditoRepository.class);
-        var clienteRepo = mock(com.example.repository.ClienteRepository.class);
+        var repo = mock(com.example.repository.credito.CreditoRepository.class);
+        var clienteRepo = mock(com.example.repository.cliente.ClienteRepository.class);
         var config = mock(com.example.config.BankConfig.class);
-        var fabrica = mock(com.example.factory.FabricaProductosProvider.class);
-        var interes = mock(com.example.strategy.InteresStrategyRegistry.class);
-        var score = mock(com.example.adapter.ScoreProviderRegistry.class);
-        var builder = mock(com.example.builder.CreditoBuilderRegistry.class);
-        var chain = mock(com.example.chain.ApprovalChainBuilder.class);
-        var publisher = mock(com.example.observer.DomainEventPublisher.class);
-        var template = mock(com.example.template.SolicitudCreditoTemplate.class);
+        var fabrica = mock(com.example.factory.common.FabricaProductosProvider.class);
+        var interes = mock(com.example.strategy.core.InteresStrategyRegistry.class);
+        var score = mock(com.example.adapter.score.ScoreProviderRegistry.class);
+        var builder = mock(com.example.builder.credito.CreditoBuilderRegistry.class);
+        var chain = mock(com.example.chain.core.ApprovalChainBuilder.class);
+        var publisher = mock(com.example.observer.core.DomainEventPublisher.class);
+        var template = mock(com.example.template.core.SolicitudCreditoTemplate.class);
         Cliente cliente = new Cliente();
         Credito credito = new Credito();
         when(clienteRepo.findById("cli1")).thenReturn(java.util.Optional.of(cliente));
@@ -73,16 +74,16 @@ class CreditoServiceUnitTest {
     @Test
     @DisplayName("obtenerCredito y obtenerCreditoPorCodigo funcionan")
     void obtenerCredito_funciona() {
-        var repo = mock(com.example.repository.CreditoRepository.class);
-        var clienteRepo = mock(com.example.repository.ClienteRepository.class);
+        var repo = mock(com.example.repository.credito.CreditoRepository.class);
+        var clienteRepo = mock(com.example.repository.cliente.ClienteRepository.class);
         var config = mock(com.example.config.BankConfig.class);
-        var fabrica = mock(com.example.factory.FabricaProductosProvider.class);
-        var interes = mock(com.example.strategy.InteresStrategyRegistry.class);
-        var score = mock(com.example.adapter.ScoreProviderRegistry.class);
-        var builder = mock(com.example.builder.CreditoBuilderRegistry.class);
-        var chain = mock(com.example.chain.ApprovalChainBuilder.class);
-        var publisher = mock(com.example.observer.DomainEventPublisher.class);
-        var template = mock(com.example.template.SolicitudCreditoTemplate.class);
+        var fabrica = mock(com.example.factory.common.FabricaProductosProvider.class);
+        var interes = mock(com.example.strategy.core.InteresStrategyRegistry.class);
+        var score = mock(com.example.adapter.score.ScoreProviderRegistry.class);
+        var builder = mock(com.example.builder.credito.CreditoBuilderRegistry.class);
+        var chain = mock(com.example.chain.core.ApprovalChainBuilder.class);
+        var publisher = mock(com.example.observer.core.DomainEventPublisher.class);
+        var template = mock(com.example.template.core.SolicitudCreditoTemplate.class);
         Credito c = new Credito();
         c.setCodigo("C-1");
         when(repo.findById("id1")).thenReturn(java.util.Optional.of(c));
@@ -95,16 +96,16 @@ class CreditoServiceUnitTest {
     @Test
     @DisplayName("listarCreditosCliente funciona")
     void listarCreditosCliente_funciona() {
-        var repo = mock(com.example.repository.CreditoRepository.class);
-        var clienteRepo = mock(com.example.repository.ClienteRepository.class);
+        var repo = mock(com.example.repository.credito.CreditoRepository.class);
+        var clienteRepo = mock(com.example.repository.cliente.ClienteRepository.class);
         var config = mock(com.example.config.BankConfig.class);
-        var fabrica = mock(com.example.factory.FabricaProductosProvider.class);
-        var interes = mock(com.example.strategy.InteresStrategyRegistry.class);
-        var score = mock(com.example.adapter.ScoreProviderRegistry.class);
-        var builder = mock(com.example.builder.CreditoBuilderRegistry.class);
-        var chain = mock(com.example.chain.ApprovalChainBuilder.class);
-        var publisher = mock(com.example.observer.DomainEventPublisher.class);
-        var template = mock(com.example.template.SolicitudCreditoTemplate.class);
+        var fabrica = mock(com.example.factory.common.FabricaProductosProvider.class);
+        var interes = mock(com.example.strategy.core.InteresStrategyRegistry.class);
+        var score = mock(com.example.adapter.score.ScoreProviderRegistry.class);
+        var builder = mock(com.example.builder.credito.CreditoBuilderRegistry.class);
+        var chain = mock(com.example.chain.core.ApprovalChainBuilder.class);
+        var publisher = mock(com.example.observer.core.DomainEventPublisher.class);
+        var template = mock(com.example.template.core.SolicitudCreditoTemplate.class);
         when(repo.findByClienteId("cli1")).thenReturn(java.util.List.of(new Credito()));
         CreditoService service = buildService(repo, clienteRepo, config, fabrica, interes, score, builder, chain, publisher, template);
         assertEquals(1, service.listarCreditosCliente("cli1").size());
@@ -113,16 +114,16 @@ class CreditoServiceUnitTest {
     @Test
     @DisplayName("consultarSaldo retorna saldo del repo")
     void consultarSaldo_unit() {
-        var repo = mock(com.example.repository.CreditoRepository.class);
-        var clienteRepo = mock(com.example.repository.ClienteRepository.class);
+        var repo = mock(com.example.repository.credito.CreditoRepository.class);
+        var clienteRepo = mock(com.example.repository.cliente.ClienteRepository.class);
         var config = mock(com.example.config.BankConfig.class);
-        var fabrica = mock(com.example.factory.FabricaProductosProvider.class);
-        var interes = mock(com.example.strategy.InteresStrategyRegistry.class);
-        var score = mock(com.example.adapter.ScoreProviderRegistry.class);
-        var builder = mock(com.example.builder.CreditoBuilderRegistry.class);
-        var chain = mock(com.example.chain.ApprovalChainBuilder.class);
-        var publisher = mock(com.example.observer.DomainEventPublisher.class);
-        var template = mock(com.example.template.SolicitudCreditoTemplate.class);
+        var fabrica = mock(com.example.factory.common.FabricaProductosProvider.class);
+        var interes = mock(com.example.strategy.core.InteresStrategyRegistry.class);
+        var score = mock(com.example.adapter.score.ScoreProviderRegistry.class);
+        var builder = mock(com.example.builder.credito.CreditoBuilderRegistry.class);
+        var chain = mock(com.example.chain.core.ApprovalChainBuilder.class);
+        var publisher = mock(com.example.observer.core.DomainEventPublisher.class);
+        var template = mock(com.example.template.core.SolicitudCreditoTemplate.class);
         CreditoService service = buildService(repo, clienteRepo, config, fabrica, interes, score, builder, chain, publisher, template);
         Credito credito = new Credito();
         credito.setSaldo(1234);
@@ -134,16 +135,16 @@ class CreditoServiceUnitTest {
     @Test
     @DisplayName("consultarSaldo retorna 0.0 si no existe")
     void consultarSaldo_retornaCeroSiNoExiste() {
-        var repo = mock(com.example.repository.CreditoRepository.class);
-        var clienteRepo = mock(com.example.repository.ClienteRepository.class);
+        var repo = mock(com.example.repository.credito.CreditoRepository.class);
+        var clienteRepo = mock(com.example.repository.cliente.ClienteRepository.class);
         var config = mock(com.example.config.BankConfig.class);
-        var fabrica = mock(com.example.factory.FabricaProductosProvider.class);
-        var interes = mock(com.example.strategy.InteresStrategyRegistry.class);
-        var score = mock(com.example.adapter.ScoreProviderRegistry.class);
-        var builder = mock(com.example.builder.CreditoBuilderRegistry.class);
-        var chain = mock(com.example.chain.ApprovalChainBuilder.class);
-        var publisher = mock(com.example.observer.DomainEventPublisher.class);
-        var template = mock(com.example.template.SolicitudCreditoTemplate.class);
+        var fabrica = mock(com.example.factory.common.FabricaProductosProvider.class);
+        var interes = mock(com.example.strategy.core.InteresStrategyRegistry.class);
+        var score = mock(com.example.adapter.score.ScoreProviderRegistry.class);
+        var builder = mock(com.example.builder.credito.CreditoBuilderRegistry.class);
+        var chain = mock(com.example.chain.core.ApprovalChainBuilder.class);
+        var publisher = mock(com.example.observer.core.DomainEventPublisher.class);
+        var template = mock(com.example.template.core.SolicitudCreditoTemplate.class);
         when(repo.findById("nope")).thenReturn(java.util.Optional.empty());
         CreditoService service = buildService(repo, clienteRepo, config, fabrica, interes, score, builder, chain, publisher, template);
         double saldo = service.consultarSaldo("nope");

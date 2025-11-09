@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CuentaService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Sistema Bancario</a> &gt; <a href="index.source.html" class="el_package">com.example.service.cuenta</a> &gt; <span class="el_source">CuentaService.java</span></div><h1>CuentaService.java</h1><pre class="source lang-java linenums">package com.example.service.cuenta;
+
+import com.example.model.cliente.Cliente;
+import com.example.model.cuenta.Cuenta;
+import com.example.repository.cliente.ClienteRepository;
+import com.example.repository.cuenta.CuentaRepository;
+import com.example.config.BankConfig;
+import com.example.factory.common.FabricaProductosProvider;
+import com.example.factory.common.ProductoBancarioFactory;
+import com.example.observer.core.DomainEventPublisher;
+import com.example.observer.eventos.CuentaSaldoActualizadoEvent;
+
+import java.util.List;
+import java.util.Optional;
+
+/**
+ * Service para operaciones de Cuenta.
+ * 
+ * @Service hace que Spring Boot cree UNA sola instancia (Singleton).
+ */
+public class CuentaService {
+
+    private final CuentaRepository cuentaRepository;
+    private final ClienteRepository clienteRepository;
+    private final BankConfig bankConfig;
+    private final FabricaProductosProvider fabricaProductosProvider;
+    private final DomainEventPublisher publisher;
+
+    // Constructor Injection
+    public CuentaService(CuentaRepository cuentaRepository,
+            ClienteRepository clienteRepository,
+            BankConfig bankConfig,
+            FabricaProductosProvider fabricaProductosProvider,
+<span class="fc" id="L34">            DomainEventPublisher publisher) {</span>
+<span class="fc" id="L35">        this.cuentaRepository = cuentaRepository;</span>
+<span class="fc" id="L36">        this.clienteRepository = clienteRepository;</span>
+<span class="fc" id="L37">        this.bankConfig = bankConfig;</span>
+<span class="fc" id="L38">        this.fabricaProductosProvider = fabricaProductosProvider;</span>
+<span class="fc" id="L39">        this.publisher = publisher;</span>
+<span class="fc" id="L40">    }</span>
+
+    public Cuenta abrirCuenta(String clienteId, Cuenta.TipoCuenta tipoCuenta, double saldoInicial) {
+<span class="fc" id="L43">        Cliente cliente = clienteRepository.findById(clienteId)</span>
+<span class="fc" id="L44">                .orElseThrow(() -&gt; new IllegalArgumentException(&quot;Cliente no encontrado&quot;));</span>
+
+<span class="fc" id="L46">        double saldoMinimo = bankConfig.getSaldoMinimo(tipoCuenta.name());</span>
+<span class="fc bfc" id="L47" title="All 2 branches covered.">        if (saldoInicial &lt; saldoMinimo) {</span>
+<span class="fc" id="L48">            throw new IllegalArgumentException(</span>
+<span class="fc" id="L49">                    String.format(&quot;El saldo inicial debe ser al menos %.2f&quot;, saldoMinimo));</span>
+        }
+
+        // Abstract Factory según tipo de cliente
+<span class="fc" id="L53">        ProductoBancarioFactory factory = fabricaProductosProvider.getFactory(cliente.getTipoCliente());</span>
+<span class="fc" id="L54">        Cuenta cuenta = factory.crearCuenta(clienteId, tipoCuenta, saldoInicial);</span>
+<span class="fc" id="L55">        cuenta.setCuotaManejo(bankConfig.getCuotaManejo(tipoCuenta.name()));</span>
+<span class="fc" id="L56">        cuenta.setEstado(Cuenta.EstadoCuenta.ACTIVA);</span>
+
+<span class="fc" id="L58">        cuenta = cuentaRepository.save(cuenta);</span>
+
+<span class="fc" id="L60">        cliente.agregarCuenta(cuenta.getId());</span>
+<span class="fc" id="L61">        clienteRepository.save(cliente);</span>
+
+<span class="fc" id="L63">        return cuenta;</span>
+    }
+
+    public boolean depositar(String cuentaId, double monto) {
+<span class="fc" id="L67">        Cuenta cuenta = cuentaRepository.findById(cuentaId)</span>
+<span class="fc" id="L68">                .orElseThrow(() -&gt; new IllegalArgumentException(&quot;Cuenta no encontrada&quot;));</span>
+<span class="pc bpc" id="L69" title="1 of 2 branches missed.">        if (cuenta.depositar(monto)) {</span>
+<span class="fc" id="L70">            cuentaRepository.save(cuenta);</span>
+<span class="fc" id="L71">            publisher.publish(new CuentaSaldoActualizadoEvent(cuenta));</span>
+<span class="fc" id="L72">            return true;</span>
+        }
+<span class="nc" id="L74">        return false;</span>
+    }
+
+    public boolean retirar(String cuentaId, double monto) {
+<span class="fc" id="L78">        Cuenta cuenta = cuentaRepository.findById(cuentaId)</span>
+<span class="fc" id="L79">                .orElseThrow(() -&gt; new IllegalArgumentException(&quot;Cuenta no encontrada&quot;));</span>
+<span class="pc bpc" id="L80" title="1 of 2 branches missed.">        if (cuenta.retirar(monto)) {</span>
+<span class="fc" id="L81">            cuentaRepository.save(cuenta);</span>
+<span class="fc" id="L82">            publisher.publish(new CuentaSaldoActualizadoEvent(cuenta));</span>
+<span class="fc" id="L83">            return true;</span>
+        }
+<span class="nc" id="L85">        return false;</span>
+    }
+
+    public boolean transferir(String cuentaOrigenId, String cuentaDestinoId, double monto) {
+<span class="nc" id="L89">        Cuenta origen = cuentaRepository.findById(cuentaOrigenId)</span>
+<span class="nc" id="L90">                .orElseThrow(() -&gt; new IllegalArgumentException(&quot;Cuenta origen no encontrada&quot;));</span>
+<span class="nc" id="L91">        Cuenta destino = cuentaRepository.findById(cuentaDestinoId)</span>
+<span class="nc" id="L92">                .orElseThrow(() -&gt; new IllegalArgumentException(&quot;Cuenta destino no encontrada&quot;));</span>
+<span class="nc bnc" id="L93" title="All 2 branches missed.">        if (monto &gt; bankConfig.getLimiteDiario()) {</span>
+<span class="nc" id="L94">            throw new IllegalArgumentException(&quot;El monto excede el límite diario&quot;);</span>
+        }
+<span class="nc bnc" id="L96" title="All 2 branches missed.">        if (!origen.retirar(monto))</span>
+<span class="nc" id="L97">            return false;</span>
+<span class="nc bnc" id="L98" title="All 2 branches missed.">        if (!destino.depositar(monto)) {</span>
+<span class="nc" id="L99">            origen.depositar(monto);</span>
+<span class="nc" id="L100">            return false;</span>
+        }
+<span class="nc" id="L102">        cuentaRepository.save(origen);</span>
+<span class="nc" id="L103">        cuentaRepository.save(destino);</span>
+<span class="nc" id="L104">        publisher.publish(new CuentaSaldoActualizadoEvent(origen));</span>
+<span class="nc" id="L105">        publisher.publish(new CuentaSaldoActualizadoEvent(destino));</span>
+<span class="nc" id="L106">        return true;</span>
+    }
+
+    public Optional&lt;Cuenta&gt; obtenerCuenta(String id) {
+<span class="nc" id="L110">        return cuentaRepository.findById(id);</span>
+    }
+
+    public Optional&lt;Cuenta&gt; obtenerCuentaPorNumero(String numeroCuenta) {
+<span class="nc" id="L114">        return cuentaRepository.findByNumeroCuenta(numeroCuenta);</span>
+    }
+
+    public List&lt;Cuenta&gt; listarCuentasCliente(String clienteId) {
+<span class="nc" id="L118">        return cuentaRepository.findByClienteId(clienteId);</span>
+    }
+
+    public double consultarSaldo(String cuentaId) {
+<span class="nc" id="L122">        return cuentaRepository.findById(cuentaId)</span>
+<span class="nc" id="L123">                .map(Cuenta::getSaldo)</span>
+<span class="nc" id="L124">                .orElse(0.0);</span>
+    }
+
+    public boolean bloquearCuenta(String cuentaId) {
+<span class="nc" id="L128">        Cuenta cuenta = cuentaRepository.findById(cuentaId)</span>
+<span class="nc" id="L129">                .orElseThrow(() -&gt; new IllegalArgumentException(&quot;Cuenta no encontrada&quot;));</span>
+
+<span class="nc" id="L131">        cuenta.setEstado(Cuenta.EstadoCuenta.BLOQUEADA);</span>
+<span class="nc" id="L132">        cuentaRepository.save(cuenta);</span>
+<span class="nc" id="L133">        return true;</span>
+    }
+
+    public boolean activarCuenta(String cuentaId) {
+<span class="nc" id="L137">        Cuenta cuenta = cuentaRepository.findById(cuentaId)</span>
+<span class="nc" id="L138">                .orElseThrow(() -&gt; new IllegalArgumentException(&quot;Cuenta no encontrada&quot;));</span>
+
+<span class="nc" id="L140">        cuenta.setEstado(Cuenta.EstadoCuenta.ACTIVA);</span>
+<span class="nc" id="L141">        cuentaRepository.save(cuenta);</span>
+<span class="nc" id="L142">        return true;</span>
+    }
+
+    public List&lt;Cuenta&gt; listarTodasCuentas() {
+<span class="nc" id="L146">        return cuentaRepository.findAll();</span>
+    }
+
+    public Optional&lt;Cuenta&gt; obtenerCuentaPorCodigo(String codigo) {
+<span class="nc" id="L150">        return cuentaRepository.findAll().stream()</span>
+<span class="nc" id="L151">                .filter(c -&gt; codigo.equals(c.getCodigo()))</span>
+<span class="nc" id="L152">                .findFirst();</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

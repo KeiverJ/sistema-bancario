@@ -2,9 +2,8 @@ package com.example.model.cuenta;
 
 import org.junit.jupiter.api.Test;
 
-import com.example.model.Cuenta;
-import com.example.model.Cuenta.EstadoCuenta;
-import com.example.model.Cuenta.TipoCuenta;
+import com.example.model.cuenta.Cuenta.EstadoCuenta;
+import com.example.model.cuenta.Cuenta.TipoCuenta;
 
 import static org.junit.jupiter.api.Assertions.*;
 

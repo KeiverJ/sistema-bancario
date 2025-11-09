@@ -1,6 +1,12 @@
 package com.example.decorator;
 
-import com.example.model.Cuenta;
+import com.example.decorator.impl.BaseProductoComponent;
+import com.example.model.cuenta.Cuenta;
+import com.example.decorator.core.ProductoFinancieroComponent;
+import com.example.decorator.impl.SeguroVidaDecorator;
+import com.example.decorator.impl.CashbackDecorator;
+import com.example.decorator.impl.BeneficioVipDecorator;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

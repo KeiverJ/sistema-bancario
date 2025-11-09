@@ -1,8 +1,9 @@
 package com.example.service.Transaccion;
 
-import com.example.model.Cliente;
-import com.example.model.Cuenta;
-import com.example.model.Transaccion;
+import com.example.model.cliente.Cliente;
+import com.example.model.cuenta.Cuenta;
+import com.example.model.transacccion.Transaccion;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import util.TestAppContext;

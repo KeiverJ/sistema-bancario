@@ -1,7 +1,8 @@
 package com.example.composite;
 
-import com.example.decorator.BaseProductoComponent;
-import com.example.model.Cuenta;
+import com.example.decorator.impl.BaseProductoComponent;
+import com.example.model.cuenta.Cuenta;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

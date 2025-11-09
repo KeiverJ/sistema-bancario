@@ -1,11 +1,11 @@
 package com.example.model.cliente;
 
-import com.example.model.Cliente;
-import com.example.repository.ClienteRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
+
+import com.example.repository.cliente.ClienteRepository;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;

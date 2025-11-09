@@ -1,8 +1,12 @@
 package com.example.adapter;
 
-import com.example.model.Cliente;
-import com.example.model.Score;
-import com.example.repository.ClienteRepository;
+import com.example.adapter.buro.BuroFinancieroAdapter;
+import com.example.adapter.legacy.LegacyRiskApiAdapter;
+import com.example.adapter.score.ScoreProviderRegistry;
+import com.example.model.cliente.Cliente;
+import com.example.model.score.Score;
+import com.example.repository.cliente.ClienteRepository;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

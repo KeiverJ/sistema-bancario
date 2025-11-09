@@ -2,7 +2,7 @@ package com.example.model.productofinanciero;
 
 import org.junit.jupiter.api.Test;
 
-import com.example.model.Cuenta;
+import com.example.model.cuenta.Cuenta;
 
 import static org.junit.jupiter.api.Assertions.*;
 

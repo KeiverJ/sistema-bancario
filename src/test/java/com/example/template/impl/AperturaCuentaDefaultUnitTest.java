@@ -1,12 +1,13 @@
 package com.example.template.impl;
 
 import com.example.config.BankConfig;
-import com.example.factory.FabricaProductosProvider;
-import com.example.factory.ProductoBancarioFactory;
-import com.example.model.Cliente;
-import com.example.model.Cuenta;
-import com.example.repository.ClienteRepository;
-import com.example.repository.CuentaRepository;
+import com.example.factory.common.FabricaProductosProvider;
+import com.example.factory.common.ProductoBancarioFactory;
+import com.example.model.cliente.Cliente;
+import com.example.model.cuenta.Cuenta;
+import com.example.repository.cliente.ClienteRepository;
+import com.example.repository.cuenta.CuentaRepository;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

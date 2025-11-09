@@ -1,9 +1,8 @@
 
 package com.example.repository.Trasanccion;
 import com.example.util.TestDataFactory;
-
-import com.example.model.Transaccion;
-import com.example.repository.TransaccionRepository;
+import com.example.model.transacccion.Transaccion;
+import com.example.repository.transaccion.TransaccionRepository;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

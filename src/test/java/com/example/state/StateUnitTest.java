@@ -1,8 +1,16 @@
 package com.example.state;
 
-import com.example.model.Credito;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import com.example.model.credito.Credito;
+import com.example.state.core.StateFactory;
+import com.example.state.impl.AprobadoState;
+import com.example.state.impl.CanceladoState;
+import com.example.state.impl.DesembolsadoState;
+import com.example.state.impl.EnMoraState;
+import com.example.state.impl.RechazadoState;
+import com.example.state.impl.SolicitadoState;
 
 import static org.junit.jupiter.api.Assertions.*;
 

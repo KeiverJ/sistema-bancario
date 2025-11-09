@@ -1,26 +1,42 @@
 package com.example;
 
 import com.example.composite.PaqueteProductos;
-import com.example.decorator.*;
-import com.example.model.Cliente;
-import com.example.model.Credito;
-import com.example.model.Cuenta;
-import com.example.model.Transaccion;
-import com.example.service.ClienteService;
-import com.example.service.CreditoService;
-import com.example.service.CuentaService;
-import com.example.service.TransaccionService;
-import com.example.repository.*;
-import com.example.config.*;
-import com.example.factory.*;
-import com.example.strategy.*;
-import com.example.adapter.*;
-import com.example.builder.*;
-import com.example.chain.*;
-import com.example.observer.*;
+import com.example.decorator.impl.BaseProductoComponent;
+import com.example.decorator.core.ProductoFinancieroComponent;
+import com.example.decorator.impl.CashbackDecorator;
+import com.example.decorator.impl.ExencionCuotaDecorator;
+import com.example.decorator.impl.BeneficioVipDecorator;
+import com.example.decorator.impl.SeguroVidaDecorator;
+import com.example.model.cliente.Cliente;
+import com.example.model.credito.Credito;
+import com.example.model.cuenta.Cuenta;
+import com.example.model.transacccion.Transaccion;
+import java.util.ArrayList;
+import com.example.service.cliente.ClienteService;
+import com.example.service.credito.CreditoService;
+import com.example.service.cuenta.CuentaService;
+import com.example.service.transaccion.TransaccionService;
+import com.example.repository.cliente.ClienteRepository;
+import com.example.repository.credito.CreditoRepository;
+import com.example.repository.cuenta.CuentaRepository;
+import com.example.repository.transaccion.TransaccionRepository;
+import com.example.config.BankConfig;
+import com.example.factory.common.FabricaProductosProvider;
+import com.example.strategy.core.InteresStrategyRegistry;
+import com.example.adapter.buro.BuroFinancieroAdapter;
+import com.example.adapter.legacy.LegacyRiskApiAdapter;
+import com.example.adapter.score.ScoreProviderRegistry;
+import com.example.builder.credito.CreditoBuilderRegistry;
+import com.example.chain.core.ApprovalChainBuilder;
+import com.example.observer.core.DomainEventPublisher;
+import com.example.observer.impl.FraudeObserver;
+import com.example.observer.impl.LoggingObserver;
+import com.example.observer.impl.NotificacionObserver;
 import com.example.template.impl.SolicitudCreditoDefault;
 
-import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+import java.util.Scanner;
 import java.util.List;
 import java.util.Optional;
 import java.util.Scanner;
@@ -32,7 +48,8 @@ public class BankingSystemApp {
   public static void main(String[] args) {
     // Wiring manual (reemplaza el contenedor de Spring)
     BankConfig bankConfig = new BankConfig();
-  // DatabaseConfig instanciado si en el futuro se requiere info de conexión (opcional)
+    // DatabaseConfig instanciado si en el futuro se requiere info de conexión
+    // (opcional)
 
     // Repositorios
     ClienteRepository clienteRepository = new ClienteRepository();
@@ -65,7 +82,8 @@ public class BankingSystemApp {
         publisher,
         scoreProviderRegistry,
         bankConfig);
-  // Nota: Existe AperturaCuentaDefault para encapsular apertura de cuentas si deseas usar plantilla
+    // Nota: Existe AperturaCuentaDefault para encapsular apertura de cuentas si
+    // deseas usar plantilla
 
     // Servicios
     ClienteService clienteService = new ClienteService(clienteRepository, bankConfig);
@@ -742,7 +760,7 @@ public class BankingSystemApp {
     }
   }
 
-private void listarCreditosCliente(Scanner sc, ClienteService clienteService,
+  private void listarCreditosCliente(Scanner sc, ClienteService clienteService,
       CreditoService creditoService) {
     System.out.println("\nCRÉDITOS DEL CLIENTE\n");
 
@@ -770,13 +788,13 @@ private void listarCreditosCliente(Scanner sc, ClienteService clienteService,
           cr.getEstadoActual())));
 
       System.out.println("-".repeat(75));
-      
+
       double totalSaldo = creditos.stream()
-          .filter(cr -> cr.getEstadoActual() != Credito.EstadoCredito.RECHAZADO 
-                     && cr.getEstadoActual() != Credito.EstadoCredito.CANCELADO)
+          .filter(cr -> cr.getEstadoActual() != Credito.EstadoCredito.RECHAZADO
+              && cr.getEstadoActual() != Credito.EstadoCredito.CANCELADO)
           .mapToDouble(Credito::getSaldo)
           .sum();
-          
+
       System.out.println("Total adeudado: $" + String.format("%,.2f", totalSaldo));
     } catch (Exception e) {
       System.err.println("Error: " + e.getMessage());

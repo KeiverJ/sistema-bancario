@@ -1,8 +1,10 @@
 package com.example.repository.Cuenta;
 
-import com.example.model.Cuenta;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import com.example.model.cuenta.Cuenta;
+
 import util.TestAppContext;
 
 import static org.junit.jupiter.api.Assertions.*;

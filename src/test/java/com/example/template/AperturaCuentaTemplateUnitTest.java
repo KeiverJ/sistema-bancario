@@ -1,7 +1,9 @@
 package com.example.template;
 
-import com.example.model.Cliente;
-import com.example.model.Cuenta;
+import com.example.model.cliente.Cliente;
+import com.example.model.cuenta.Cuenta;
+import com.example.template.core.AperturaCuentaTemplate;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

@@ -1,7 +1,8 @@
 package com.example.util;
 
-import com.example.model.Cliente;
 import java.util.concurrent.atomic.AtomicInteger;
+
+import com.example.model.cliente.Cliente;
 
 /**
  * Generador de códigos para créditos basado en el tipo de cliente.

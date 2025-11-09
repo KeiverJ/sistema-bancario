@@ -1,9 +1,13 @@
 package com.example.chain;
 
+import com.example.chain.core.ApprovalChainBuilder;
+import com.example.chain.core.ApprovalContext;
+import com.example.chain.core.ApprovalHandler;
 import com.example.config.BankConfig;
-import com.example.model.Cliente;
-import com.example.model.Credito;
-import com.example.model.Score;
+import com.example.model.cliente.Cliente;
+import com.example.model.credito.Credito;
+import com.example.model.score.Score;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

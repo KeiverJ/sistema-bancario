@@ -1,8 +1,10 @@
 package com.example.repository.Credito;
 
-import com.example.model.Credito;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import com.example.model.credito.Credito;
+
 import util.TestAppContext;
 
 import static org.junit.jupiter.api.Assertions.*;

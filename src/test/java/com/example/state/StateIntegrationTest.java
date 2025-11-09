@@ -1,9 +1,10 @@
 package com.example.state;
 
-import com.example.model.Credito;
-import com.example.model.Credito.EstadoCredito;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import com.example.model.credito.Credito;
+import com.example.model.credito.Credito.EstadoCredito;
 
 import static org.junit.jupiter.api.Assertions.*;
 

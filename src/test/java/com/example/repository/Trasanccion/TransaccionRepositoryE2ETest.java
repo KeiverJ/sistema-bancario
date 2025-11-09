@@ -1,7 +1,7 @@
 package com.example.repository.Trasanccion;
 
-import com.example.model.Transaccion;
-import com.example.repository.TransaccionRepository;
+import com.example.model.transacccion.Transaccion;
+import com.example.repository.transaccion.TransaccionRepository;
 
 import util.TestAppContext;
 import org.junit.jupiter.api.BeforeEach;

@@ -1,7 +1,7 @@
 package com.example.repository.Cuenta;
 
-import com.example.model.Cuenta;
-import com.example.repository.CuentaRepository;
+import com.example.model.cuenta.Cuenta;
+import com.example.repository.cuenta.CuentaRepository;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

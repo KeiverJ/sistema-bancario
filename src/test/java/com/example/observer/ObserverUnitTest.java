@@ -3,6 +3,14 @@ package com.example.observer;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import com.example.observer.core.EventoObserver;
+import com.example.observer.eventos.CreditoEstadoCambiadoEvent;
+import com.example.observer.eventos.CuentaSaldoActualizadoEvent;
+import com.example.observer.eventos.TransaccionRegistradaEvent;
+import com.example.observer.impl.FraudeObserver;
+import com.example.observer.impl.LoggingObserver;
+import com.example.observer.impl.NotificacionObserver;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class ObserverUnitTest {
@@ -11,9 +19,9 @@ class ObserverUnitTest {
     @DisplayName("NotificacionObserver solo soporta eventos de crédito y notifica correctamente")
     void notificacionObserverTest() {
         NotificacionObserver obs = new NotificacionObserver();
-        var credito = new com.example.model.Credito();
+        var credito = new com.example.model.credito.Credito();
         credito.setId("CRED-1");
-        credito.setEstadoActual(com.example.model.Credito.EstadoCredito.APROBADO);
+        credito.setEstadoActual(com.example.model.credito.Credito.EstadoCredito.APROBADO);
         var event = new CreditoEstadoCambiadoEvent(credito);
         assertTrue(obs.soporta("CREDITO_ESTADO_CAMBIADO"));
         assertFalse(obs.soporta("OTRO_EVENTO"));
@@ -24,7 +32,7 @@ class ObserverUnitTest {
     @DisplayName("FraudeObserver detecta montos altos y soporta solo transacciones")
     void fraudeObserverTest() {
         FraudeObserver obs = new FraudeObserver();
-        var transaccion = org.mockito.Mockito.mock(com.example.model.Transaccion.class);
+        var transaccion = org.mockito.Mockito.mock(com.example.model.transacccion.Transaccion.class);
         org.mockito.Mockito.when(transaccion.getMonto()).thenReturn(60_000_000.0);
         var event = new TransaccionRegistradaEvent(transaccion);
         assertTrue(obs.soporta("TRANSACCION_REGISTRADA"));
@@ -36,9 +44,9 @@ class ObserverUnitTest {
     @DisplayName("LoggingObserver soporta e imprime cualquier evento")
     void loggingObserverCubreTodo() {
         LoggingObserver obs = new LoggingObserver();
-        var event1 = new CreditoEstadoCambiadoEvent(new com.example.model.Credito());
-        var event2 = new CuentaSaldoActualizadoEvent(org.mockito.Mockito.mock(com.example.model.Cuenta.class));
-        var event3 = new TransaccionRegistradaEvent(org.mockito.Mockito.mock(com.example.model.Transaccion.class));
+        var event1 = new CreditoEstadoCambiadoEvent(new com.example.model.credito.Credito());
+        var event2 = new CuentaSaldoActualizadoEvent(org.mockito.Mockito.mock(com.example.model.cuenta.Cuenta.class));
+        var event3 = new TransaccionRegistradaEvent(org.mockito.Mockito.mock(com.example.model.transacccion.Transaccion.class));
         assertTrue(obs.soporta(event1.tipo()));
         assertTrue(obs.soporta(event2.tipo()));
         assertTrue(obs.soporta(event3.tipo()));
@@ -50,7 +58,7 @@ class ObserverUnitTest {
     @Test
     @DisplayName("CuentaSaldoActualizadoEvent retorna tipo y cuenta")
     void cuentaSaldoActualizadoEvent() {
-        var cuenta = org.mockito.Mockito.mock(com.example.model.Cuenta.class);
+        var cuenta = org.mockito.Mockito.mock(com.example.model.cuenta.Cuenta.class);
         var event = new CuentaSaldoActualizadoEvent(cuenta);
         assertEquals("CUENTA_SALDO_ACTUALIZADO", event.tipo());
         assertEquals(cuenta, event.getCuenta());
@@ -59,7 +67,7 @@ class ObserverUnitTest {
     @Test
     @DisplayName("TransaccionRegistradaEvent retorna tipo y transacción")
     void transaccionRegistradaEvent() {
-        var transaccion = org.mockito.Mockito.mock(com.example.model.Transaccion.class);
+        var transaccion = org.mockito.Mockito.mock(com.example.model.transacccion.Transaccion.class);
         var event = new TransaccionRegistradaEvent(transaccion);
         assertEquals("TRANSACCION_REGISTRADA", event.tipo());
         assertEquals(transaccion, event.getTransaccion());
@@ -77,7 +85,7 @@ class ObserverUnitTest {
     @DisplayName("LoggingObserver imprime evento correctamente")
     void loggingObserverOnEvento() {
         LoggingObserver obs = new LoggingObserver();
-        var event = new com.example.observer.CreditoEstadoCambiadoEvent(new com.example.model.Credito());
+        var event = new com.example.observer.eventos.CreditoEstadoCambiadoEvent(new com.example.model.credito.Credito());
         // Solo verificamos que no lanza excepción
         assertDoesNotThrow(() -> obs.onEvento(event));
     }
@@ -87,13 +95,13 @@ class ObserverUnitTest {
     void publisherPublicaSoloSiSoporta() {
         class TestObserver implements EventoObserver {
             boolean recibido = false;
-            @Override public void onEvento(com.example.observer.DomainEvent event) { recibido = true; }
+            @Override public void onEvento(com.example.observer.core.DomainEvent event) { recibido = true; }
             @Override public boolean soporta(String tipo) { return "TIPO_OK".equals(tipo); }
         }
         var obs1 = new TestObserver();
         var obs2 = new TestObserver();
-        var publisher = new com.example.observer.DomainEventPublisher(java.util.List.of(obs1, obs2));
-        var event = new com.example.observer.DomainEvent() {
+        var publisher = new com.example.observer.core.DomainEventPublisher(java.util.List.of(obs1, obs2));
+        var event = new com.example.observer.core.DomainEvent() {
             @Override public String tipo() { return "TIPO_OK"; }
         };
         publisher.publish(event);
@@ -106,12 +114,12 @@ class ObserverUnitTest {
     void publisherIgnoraNoSoporta() {
         class TestObserver implements EventoObserver {
             boolean recibido = false;
-            @Override public void onEvento(com.example.observer.DomainEvent event) { recibido = true; }
+            @Override public void onEvento(com.example.observer.core.DomainEvent event) { recibido = true; }
             @Override public boolean soporta(String tipo) { return false; }
         }
         var obs = new TestObserver();
-        var publisher = new com.example.observer.DomainEventPublisher(java.util.List.of(obs));
-        var event = new com.example.observer.DomainEvent() {
+        var publisher = new com.example.observer.core.DomainEventPublisher(java.util.List.of(obs));
+        var event = new com.example.observer.core.DomainEvent() {
             @Override public String tipo() { return "NINGUNO"; }
         };
         publisher.publish(event);
@@ -121,8 +129,8 @@ class ObserverUnitTest {
     @Test
     @DisplayName("CreditoEstadoCambiadoEvent retorna tipo y credito")
     void creditoEstadoCambiadoEvent() {
-        var credito = new com.example.model.Credito();
-        var event = new com.example.observer.CreditoEstadoCambiadoEvent(credito);
+        var credito = new com.example.model.credito.Credito();
+        var event = new com.example.observer.eventos.CreditoEstadoCambiadoEvent(credito);
         assertEquals("CREDITO_ESTADO_CAMBIADO", event.tipo());
         assertEquals(credito, event.getCredito());
     }
