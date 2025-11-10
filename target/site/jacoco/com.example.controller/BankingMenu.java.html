@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>BankingMenu.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Sistema Bancario</a> &gt; <a href="index.source.html" class="el_package">com.example.controller</a> &gt; <span class="el_source">BankingMenu.java</span></div><h1>BankingMenu.java</h1><pre class="source lang-java linenums">package com.example.controller;
+
+import com.example.service.cliente.ClienteService;
+import java.util.Scanner;
+
+public class BankingMenu {
+    private final ClienteController clienteController;
+    private final CuentaController cuentaController;
+    private final CreditoController creditoController;
+    private final TransaccionController transaccionController;
+
+<span class="fc" id="L12">    public BankingMenu(ClienteController clienteController, CuentaController cuentaController, CreditoController creditoController, TransaccionController transaccionController) {</span>
+<span class="fc" id="L13">        this.clienteController = clienteController;</span>
+<span class="fc" id="L14">        this.cuentaController = cuentaController;</span>
+<span class="fc" id="L15">        this.creditoController = creditoController;</span>
+<span class="fc" id="L16">        this.transaccionController = transaccionController;</span>
+<span class="fc" id="L17">    }</span>
+
+    public void run() {
+<span class="nc" id="L20">        run(new Scanner(System.in));</span>
+<span class="nc" id="L21">    }</span>
+
+    // Permite inyectar Scanner externo para pruebas
+    public void run(Scanner sc) {
+<span class="fc" id="L25">        boolean running = true;</span>
+<span class="fc bfc" id="L26" title="All 2 branches covered.">        while (running) {</span>
+<span class="fc" id="L27">            mostrarMenu();</span>
+<span class="fc" id="L28">            System.out.print(&quot;\nOpción: &quot;);</span>
+<span class="fc" id="L29">            String opcion = sc.nextLine().trim();</span>
+<span class="pc bpc" id="L30" title="15 of 17 branches missed.">            switch (opcion) {</span>
+<span class="fc" id="L31">                case &quot;1&quot; -&gt; clienteController.crearCliente(sc);</span>
+<span class="nc" id="L32">                case &quot;2&quot; -&gt; clienteController.listarClientes();</span>
+<span class="nc" id="L33">                case &quot;3&quot; -&gt; cuentaController.abrirCuenta(sc);</span>
+<span class="nc" id="L34">                case &quot;4&quot; -&gt; cuentaController.listarCuentasCliente(sc);</span>
+<span class="nc" id="L35">                case &quot;5&quot; -&gt; cuentaController.depositar(sc);</span>
+<span class="nc" id="L36">                case &quot;6&quot; -&gt; cuentaController.retirar(sc);</span>
+<span class="nc" id="L37">                case &quot;7&quot; -&gt; cuentaController.transferir(sc);</span>
+<span class="nc" id="L38">                case &quot;8&quot; -&gt; cuentaController.consultarSaldo(sc);</span>
+<span class="nc" id="L39">                case &quot;9&quot; -&gt; transaccionController.crearTransaccion(sc);</span>
+<span class="nc" id="L40">                case &quot;10&quot; -&gt; creditoController.solicitarCredito(sc);</span>
+<span class="nc" id="L41">                case &quot;11&quot; -&gt; creditoController.listarCreditosCliente(sc);</span>
+<span class="nc" id="L42">                case &quot;12&quot; -&gt; creditoController.pagarCuotaCredito(sc);</span>
+<span class="nc" id="L43">                case &quot;13&quot; -&gt; transaccionController.listarTransaccionesCuenta(sc);</span>
+<span class="nc" id="L44">                case &quot;14&quot; -&gt; clienteController.cambiarScoreCliente(sc);</span>
+<span class="nc" id="L45">                case &quot;15&quot; -&gt; cuentaController.consultarScoreCliente(sc);</span>
+<span class="fc" id="L46">                case &quot;0&quot; -&gt; running = false;</span>
+<span class="nc" id="L47">                default -&gt; System.out.println(&quot;Opción inválida&quot;);</span>
+            }
+<span class="fc bfc" id="L49" title="All 2 branches covered.">            if (running) {</span>
+<span class="fc" id="L50">                System.out.println(&quot;\nPresione ENTER para continuar...&quot;);</span>
+<span class="fc" id="L51">                sc.nextLine();</span>
+            }
+        }
+<span class="fc" id="L54">        System.out.println(&quot;\n¡Hasta pronto!&quot;);</span>
+<span class="fc" id="L55">        sc.close();</span>
+<span class="fc" id="L56">    }</span>
+
+    private void mostrarMenu() {
+<span class="fc" id="L59">        System.out.println(&quot;\n==============================&quot;);</span>
+<span class="fc" id="L60">        System.out.println(&quot;MENÚ PRINCIPAL&quot;);</span>
+<span class="fc" id="L61">        System.out.println(&quot;==============================&quot;);</span>
+<span class="fc" id="L62">        System.out.println(&quot;1. Crear cliente&quot;);</span>
+<span class="fc" id="L63">        System.out.println(&quot;2. Listar clientes&quot;);</span>
+<span class="fc" id="L64">        System.out.println(&quot;3. Abrir cuenta&quot;);</span>
+<span class="fc" id="L65">        System.out.println(&quot;4. Listar cuentas de cliente&quot;);</span>
+<span class="fc" id="L66">        System.out.println(&quot;5. Depósito en cuenta&quot;);</span>
+<span class="fc" id="L67">        System.out.println(&quot;6. Retiro de cuenta&quot;);</span>
+<span class="fc" id="L68">        System.out.println(&quot;7. Transferencia entre cuentas&quot;);</span>
+<span class="fc" id="L69">        System.out.println(&quot;8. Consultar saldo&quot;);</span>
+<span class="fc" id="L70">        System.out.println(&quot;9. Crear transacción&quot;);</span>
+<span class="fc" id="L71">        System.out.println(&quot;10. Solicitar crédito&quot;);</span>
+<span class="fc" id="L72">        System.out.println(&quot;11. Listar créditos de cliente&quot;);</span>
+<span class="fc" id="L73">        System.out.println(&quot;12. Pagar cuota de crédito&quot;);</span>
+<span class="fc" id="L74">        System.out.println(&quot;13. Listar transacciones de cuenta&quot;);</span>
+<span class="fc" id="L75">    System.out.println(&quot;14. Cambiar score de cliente&quot;);</span>
+<span class="fc" id="L76">    System.out.println(&quot;15. Consultar score de cliente&quot;);</span>
+<span class="fc" id="L77">        System.out.println(&quot;0. Salir&quot;);</span>
+<span class="fc" id="L78">        System.out.println(&quot;==============================&quot;);</span>
+<span class="fc" id="L79">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

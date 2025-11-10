@@ -5,7 +5,6 @@ import com.example.factory.common.FabricaProductosProvider;
 import com.example.factory.common.ProductoBancarioFactory;
 import com.example.model.cliente.Cliente;
 import com.example.model.cuenta.Cuenta;
-import com.example.observer.core.DomainEventPublisher;
 import com.example.repository.cliente.ClienteRepository;
 import com.example.repository.cuenta.CuentaRepository;
 import com.example.template.core.AperturaCuentaTemplate;

@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class ScoreUnitTest {
+    // Prueba getters, setters y lógica de Score (valor, fuente y aceptación)
     @Test
     void gettersYSettersYLogica() {
         Score score = new Score();

@@ -5,7 +5,6 @@ import com.example.factory.common.FabricaProductosProvider;
 import com.example.factory.common.ProductoBancarioFactory;
 import com.example.model.cliente.Cliente;
 import com.example.model.cuenta.Cuenta;
-import com.example.observer.core.DomainEventPublisher;
 import com.example.repository.cliente.ClienteRepository;
 import com.example.repository.cuenta.CuentaRepository;
 import com.example.template.core.AperturaCuentaTemplate;
@@ -17,38 +16,38 @@ public class AperturaCuentaDefault extends AperturaCuentaTemplate {
     private final CuentaRepository cuentaRepository;
     private final ClienteRepository clienteRepository;
 
-    public AperturaCuentaDefault(BankConfig bankConfig,
+<span class="fc" id="L19">    public AperturaCuentaDefault(BankConfig bankConfig,</span>
             FabricaProductosProvider fabrica,
             CuentaRepository cuentaRepository,
-<span class="fc" id="L23">            ClienteRepository clienteRepository) {</span>
-<span class="fc" id="L24">        this.bankConfig = bankConfig;</span>
-<span class="fc" id="L25">        this.fabrica = fabrica;</span>
-<span class="fc" id="L26">        this.cuentaRepository = cuentaRepository;</span>
-<span class="fc" id="L27">        this.clienteRepository = clienteRepository;</span>
+            ClienteRepository clienteRepository) {
+<span class="fc" id="L23">        this.bankConfig = bankConfig;</span>
+<span class="fc" id="L24">        this.fabrica = fabrica;</span>
+<span class="fc" id="L25">        this.cuentaRepository = cuentaRepository;</span>
+<span class="fc" id="L26">        this.clienteRepository = clienteRepository;</span>
 
-<span class="fc" id="L29">    }</span>
+<span class="fc" id="L28">    }</span>
 
     @Override
     protected void validarReglas(Cliente cliente, Cuenta.TipoCuenta tipoCuenta, double saldoInicial) {
-<span class="fc" id="L33">        double min = bankConfig.getSaldoMinimo(tipoCuenta.name());</span>
-<span class="fc bfc" id="L34" title="All 2 branches covered.">        if (saldoInicial &lt; min)</span>
-<span class="fc" id="L35">            throw new IllegalArgumentException(&quot;El saldo inicial debe ser al menos &quot; + min);</span>
-<span class="fc" id="L36">    }</span>
+<span class="fc" id="L32">        double min = bankConfig.getSaldoMinimo(tipoCuenta.name());</span>
+<span class="fc bfc" id="L33" title="All 2 branches covered.">        if (saldoInicial &lt; min)</span>
+<span class="fc" id="L34">            throw new IllegalArgumentException(&quot;El saldo inicial debe ser al menos &quot; + min);</span>
+<span class="fc" id="L35">    }</span>
 
     @Override
     protected Cuenta construirCuenta(Cliente cliente, Cuenta.TipoCuenta tipoCuenta, double saldoInicial) {
-<span class="fc" id="L40">        ProductoBancarioFactory factory = fabrica.getFactory(cliente.getTipoCliente());</span>
-<span class="fc" id="L41">        Cuenta c = factory.crearCuenta(cliente.getId(), tipoCuenta, saldoInicial);</span>
-<span class="fc" id="L42">        c.setCuotaManejo(bankConfig.getCuotaManejo(tipoCuenta.name()));</span>
-<span class="fc" id="L43">        c.setEstado(Cuenta.EstadoCuenta.ACTIVA);</span>
-<span class="fc" id="L44">        return c;</span>
+<span class="fc" id="L39">        ProductoBancarioFactory factory = fabrica.getFactory(cliente.getTipoCliente());</span>
+<span class="fc" id="L40">        Cuenta c = factory.crearCuenta(cliente.getId(), tipoCuenta, saldoInicial);</span>
+<span class="fc" id="L41">        c.setCuotaManejo(bankConfig.getCuotaManejo(tipoCuenta.name()));</span>
+<span class="fc" id="L42">        c.setEstado(Cuenta.EstadoCuenta.ACTIVA);</span>
+<span class="fc" id="L43">        return c;</span>
     }
 
     @Override
     protected void persist(Cuenta cuenta, Cliente cliente) {
-<span class="fc" id="L49">        Cuenta saved = cuentaRepository.save(cuenta);</span>
-<span class="fc" id="L50">        cliente.agregarCuenta(saved.getId());</span>
-<span class="fc" id="L51">        clienteRepository.save(cliente);</span>
-<span class="fc" id="L52">    }</span>
+<span class="fc" id="L48">        Cuenta saved = cuentaRepository.save(cuenta);</span>
+<span class="fc" id="L49">        cliente.agregarCuenta(saved.getId());</span>
+<span class="fc" id="L50">        clienteRepository.save(cliente);</span>
+<span class="fc" id="L51">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

@@ -6,6 +6,6 @@ import static org.junit.jupiter.api.Assertions.*;
 class ProductoFinancieroE2ETest {
     @Test
     void flujoCompleto() {
-        assertTrue(true); // Completar según lógica real
+        assertTrue(true); 
     }
 }

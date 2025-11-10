@@ -18,7 +18,7 @@ import com.example.state.core.CreditoState;
 <span class="fc bfc" id="L18" title="All 2 branches covered.">        if (c.getSaldo() &lt;= 0) {</span>
 <span class="fc" id="L19">            c.setState(new CanceladoState());</span>
         } else {
-<span class="fc" id="L21">            c.setState(new DesembolsadoState()); // normaliza el estado</span>
+<span class="fc" id="L21">            c.setState(new DesembolsadoState()); </span>
         }
 <span class="fc" id="L23">        return true;</span>
     }

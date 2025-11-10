@@ -11,6 +11,10 @@ import com.example.model.cliente.Cliente;
  */
 public class CreditoCodigoGenerator {
 
+    private CreditoCodigoGenerator() {
+        throw new UnsupportedOperationException("Utility class");
+    }
+
     private static final AtomicInteger contadorPersonaNatural = new AtomicInteger(1);
     private static final AtomicInteger contadorPersonaJuridica = new AtomicInteger(2001);
     private static final AtomicInteger contadorExtranjero = new AtomicInteger(3001);

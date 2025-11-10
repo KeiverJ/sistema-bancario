@@ -33,52 +33,45 @@ public class SolicitudCreditoDefault extends SolicitudCreditoTemplate {
 
     @Override
     protected Credito construirCredito(Cliente cliente, Credito.TipoCredito tipo, double monto, int plazo) {
-        // Crear un crédito base
-<span class="fc" id="L37">        Credito credito = new Credito();</span>
+<span class="fc" id="L36">        Credito credito = new Credito();</span>
 
-        // Generar ID único
-<span class="fc" id="L40">        credito.setId(UUID.randomUUID().toString());</span>
+<span class="fc" id="L38">        credito.setId(UUID.randomUUID().toString());</span>
 
-        // Generar código basado en el tipo de cliente
-<span class="fc" id="L43">        credito.setCodigo(CreditoCodigoGenerator.generarCodigo(cliente.getTipoCliente()));</span>
+<span class="fc" id="L40">        credito.setCodigo(CreditoCodigoGenerator.generarCodigo(cliente.getTipoCliente()));</span>
 
-        // Configurar datos básicos
-<span class="fc" id="L46">        credito.setClienteId(cliente.getId());</span>
-<span class="fc" id="L47">        credito.setTipoCredito(tipo);</span>
-<span class="fc" id="L48">        credito.setMonto(monto);</span>
-<span class="fc" id="L49">        credito.setPlazoMeses(plazo);</span>
-<span class="fc" id="L50">        credito.setSaldo(monto); // El saldo inicial es igual al monto</span>
-<span class="fc" id="L51">        credito.setEstadoActual(Credito.EstadoCredito.SOLICITADO); // Estado inicial</span>
+<span class="fc" id="L42">        credito.setClienteId(cliente.getId());</span>
+<span class="fc" id="L43">        credito.setTipoCredito(tipo);</span>
+<span class="fc" id="L44">        credito.setMonto(monto);</span>
+<span class="fc" id="L45">        credito.setPlazoMeses(plazo);</span>
+<span class="fc" id="L46">        credito.setSaldo(monto); </span>
+<span class="fc" id="L47">        credito.setEstadoActual(Credito.EstadoCredito.SOLICITADO);</span>
 
-        // Usar el builder para configuraciones adicionales específicas del tipo
-<span class="fc" id="L54">        CreditoBuilder builder = builderRegistry.get(tipo);</span>
-<span class="fc" id="L55">        return builder.desdeBase(credito).build();</span>
+<span class="fc" id="L49">        CreditoBuilder builder = builderRegistry.get(tipo);</span>
+<span class="fc" id="L50">        return builder.desdeBase(credito).build();</span>
     }
 
     @Override
     protected void configurarTasaYExtras(Credito credito, Cliente cliente) {
-        // Calcular tasa usando el registry
-<span class="fc" id="L61">        double tasa = strategyRegistry.tasaPara(credito, cliente, bankConfig);</span>
-<span class="fc" id="L62">        credito.setTasaInteres(tasa);</span>
+<span class="fc" id="L55">        double tasa = strategyRegistry.tasaPara(credito, cliente, bankConfig);</span>
+<span class="fc" id="L56">        credito.setTasaInteres(tasa);</span>
 
-        // Configurar extras según tipo
-<span class="pc bpc" id="L65" title="3 of 4 branches missed.">        switch (credito.getTipoCredito()) {</span>
+<span class="pc bpc" id="L58" title="3 of 4 branches missed.">        switch (credito.getTipoCredito()) {</span>
             case HIPOTECARIO:
-<span class="nc" id="L67">                credito.setGarantia(&quot;HIPOTECA&quot;);</span>
-<span class="nc" id="L68">                credito.setSeguroVida(true);</span>
-<span class="nc" id="L69">                credito.setCostoApertura(credito.getMonto() * 0.01); // 1%</span>
-<span class="nc" id="L70">                break;</span>
+<span class="nc" id="L60">                credito.setGarantia(&quot;HIPOTECA&quot;);</span>
+<span class="nc" id="L61">                credito.setSeguroVida(true);</span>
+<span class="nc" id="L62">                credito.setCostoApertura(credito.getMonto() * 0.01); </span>
+<span class="nc" id="L63">                break;</span>
             case VEHICULO:
-<span class="nc" id="L72">                credito.setGarantia(&quot;PRENDA&quot;);</span>
-<span class="nc" id="L73">                credito.setSeguroVida(true);</span>
-<span class="nc" id="L74">                credito.setCostoApertura(credito.getMonto() * 0.005); // 0.5%</span>
-<span class="nc" id="L75">                break;</span>
+<span class="nc" id="L65">                credito.setGarantia(&quot;PRENDA&quot;);</span>
+<span class="nc" id="L66">                credito.setSeguroVida(true);</span>
+<span class="nc" id="L67">                credito.setCostoApertura(credito.getMonto() * 0.005);</span>
+<span class="nc" id="L68">                break;</span>
             case CONSUMO:
             case LIBRE_INVERSION:
-<span class="fc" id="L78">                credito.setGarantia(&quot;SIN_GARANTIA&quot;);</span>
-<span class="fc" id="L79">                credito.setCuotaAdministracion(10000.0);</span>
+<span class="fc" id="L71">                credito.setGarantia(&quot;SIN_GARANTIA&quot;);</span>
+<span class="fc" id="L72">                credito.setCuotaAdministracion(10000.0);</span>
                 break;
         }
-<span class="fc" id="L82">    }</span>
+<span class="fc" id="L75">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

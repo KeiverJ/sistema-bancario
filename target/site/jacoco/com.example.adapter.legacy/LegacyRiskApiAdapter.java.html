@@ -8,7 +8,7 @@ import com.example.model.score.Score;
 <span class="fc" id="L8">    private final LegacyRiskApi legacyApi = new LegacyRiskApi();</span>
 
     @Override
-    public Score obtenerScore(String clienteId) { // ⭐ String, no Cliente
+    public Score obtenerScore(String clienteId) {
 <span class="fc" id="L12">        int riskLevel = legacyApi.getRiskLevel(clienteId);</span>
 
 <span class="fc" id="L14">        Score score = new Score();</span>

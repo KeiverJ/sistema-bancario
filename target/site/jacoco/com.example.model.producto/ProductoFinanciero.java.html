@@ -4,10 +4,6 @@ import java.time.LocalDateTime;
 
 /**
  * Clase base para productos financieros.
- * Se evita exponer getEstado()/setEstado() genéricos para no colisionar con
- * hijas
- * que usan enums u otros tipos. Usar estadoCodigo si se requiere un estado
- * textual común.
  */
 public abstract class ProductoFinanciero {
     protected String id;
@@ -15,37 +11,36 @@ public abstract class ProductoFinanciero {
     protected String estadoCodigo;
     protected LocalDateTime fechaCreacion;
 
-<span class="fc" id="L18">    protected ProductoFinanciero() {</span>
-<span class="fc" id="L19">        this.fechaCreacion = LocalDateTime.now();</span>
-<span class="fc" id="L20">    }</span>
+<span class="fc" id="L14">    protected ProductoFinanciero() {</span>
+<span class="fc" id="L15">        this.fechaCreacion = LocalDateTime.now();</span>
+<span class="fc" id="L16">    }</span>
 
     public String getId() {
-<span class="fc" id="L23">        return id;</span>
+<span class="fc" id="L19">        return id;</span>
     }
 
     public void setId(String id) {
-<span class="fc" id="L27">        this.id = id;</span>
-<span class="fc" id="L28">    }</span>
+<span class="fc" id="L23">        this.id = id;</span>
+<span class="fc" id="L24">    }</span>
 
     public String getClienteId() {
-<span class="fc" id="L31">        return clienteId;</span>
+<span class="fc" id="L27">        return clienteId;</span>
     }
 
     public void setClienteId(String clienteId) {
-<span class="fc" id="L35">        this.clienteId = clienteId;</span>
-<span class="fc" id="L36">    }</span>
+<span class="fc" id="L31">        this.clienteId = clienteId;</span>
+<span class="fc" id="L32">    }</span>
 
     public LocalDateTime getFechaCreacion() {
-<span class="fc" id="L39">        return fechaCreacion;</span>
+<span class="fc" id="L35">        return fechaCreacion;</span>
     }
 
-    // Estado genérico opcional (texto), para auditoría/reportes comunes
     public String getEstadoCodigo() {
-<span class="fc" id="L44">        return estadoCodigo;</span>
+<span class="fc" id="L39">        return estadoCodigo;</span>
     }
 
     public void setEstadoCodigo(String estadoCodigo) {
-<span class="fc" id="L48">        this.estadoCodigo = estadoCodigo;</span>
-<span class="fc" id="L49">    }</span>
+<span class="fc" id="L43">        this.estadoCodigo = estadoCodigo;</span>
+<span class="fc" id="L44">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

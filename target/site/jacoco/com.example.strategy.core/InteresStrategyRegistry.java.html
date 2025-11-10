@@ -7,20 +7,20 @@ import com.example.strategy.impl.InteresConsumoStrategy;
 import com.example.strategy.impl.InteresLibreInversionStrategy;
 import com.example.strategy.impl.InteresHipotecarioStrategy;
 
-<span class="nc" id="L10">public class InteresStrategyRegistry {</span>
+<span class="fc" id="L10">public class InteresStrategyRegistry {</span>
 
-<span class="nc" id="L12">    private final CalculoInteresStrategy consumo = new InteresConsumoStrategy();</span>
-<span class="nc" id="L13">    private final CalculoInteresStrategy libre = new InteresLibreInversionStrategy();</span>
-<span class="nc" id="L14">    private final CalculoInteresStrategy hipotecario = new InteresHipotecarioStrategy();</span>
+<span class="fc" id="L12">    private final CalculoInteresStrategy consumo = new InteresConsumoStrategy();</span>
+<span class="fc" id="L13">    private final CalculoInteresStrategy libre = new InteresLibreInversionStrategy();</span>
+<span class="fc" id="L14">    private final CalculoInteresStrategy hipotecario = new InteresHipotecarioStrategy();</span>
 
     public double tasaPara(Credito credito, Cliente cliente, BankConfig config) {
-<span class="nc bnc" id="L17" title="All 2 branches missed.">        if (credito.getTipoCredito() == null)</span>
-<span class="nc" id="L18">            return config.getTasaInteresBase();</span>
-<span class="nc bnc" id="L19" title="All 4 branches missed.">        return switch (credito.getTipoCredito()) {</span>
-<span class="nc" id="L20">            case CONSUMO -&gt; consumo.calcularTasaAnual(credito, cliente, config);</span>
-<span class="nc" id="L21">            case LIBRE_INVERSION -&gt; libre.calcularTasaAnual(credito, cliente, config);</span>
-<span class="nc" id="L22">            case HIPOTECARIO -&gt; hipotecario.calcularTasaAnual(credito, cliente, config);</span>
-<span class="nc" id="L23">            case VEHICULO -&gt; consumo.calcularTasaAnual(credito, cliente, config); // por defecto</span>
+<span class="fc bfc" id="L17" title="All 2 branches covered.">        if (credito.getTipoCredito() == null)</span>
+<span class="fc" id="L18">            return config.getTasaInteresBase();</span>
+<span class="fc bfc" id="L19" title="All 4 branches covered.">        return switch (credito.getTipoCredito()) {</span>
+<span class="fc" id="L20">            case CONSUMO -&gt; consumo.calcularTasaAnual(credito, cliente, config);</span>
+<span class="fc" id="L21">            case LIBRE_INVERSION -&gt; libre.calcularTasaAnual(credito, cliente, config);</span>
+<span class="fc" id="L22">            case HIPOTECARIO -&gt; hipotecario.calcularTasaAnual(credito, cliente, config);</span>
+<span class="fc" id="L23">            case VEHICULO -&gt; consumo.calcularTasaAnual(credito, cliente, config); // por defecto</span>
         };
     }
 }

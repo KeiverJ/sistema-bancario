@@ -11,18 +11,18 @@
     @Override
     public void handle(ApprovalContext ctx) {
 <span class="pc bpc" id="L13" title="1 of 2 branches missed.">        if (ctx.isAprobado())</span>
-<span class="nc" id="L14">            return; // ya aprobado final</span>
+<span class="nc" id="L14">            return;</span>
 <span class="pc bpc" id="L15" title="1 of 2 branches missed.">        if (!precondicion(ctx))</span>
-<span class="nc" id="L16">            return; // rechaza</span>
+<span class="nc" id="L16">            return;</span>
 <span class="fc" id="L17">        procesar(ctx);</span>
 <span class="pc bpc" id="L18" title="2 of 6 branches missed.">        if (next != null &amp;&amp; !ctx.isAprobado() &amp;&amp; ctx.getMotivoRechazo() == null) {</span>
 <span class="fc" id="L19">            next.handle(ctx);</span>
         }
 <span class="fc" id="L21">    }</span>
 
-    protected abstract boolean precondicion(ApprovalContext ctx); // valida, puede rechazar
+    protected abstract boolean precondicion(ApprovalContext ctx);
 
     protected void procesar(ApprovalContext ctx) {
-<span class="fc" id="L26">        /* opcional */ }</span>
+<span class="fc" id="L26">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

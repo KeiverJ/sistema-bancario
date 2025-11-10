@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>BankingSystemContext.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Sistema Bancario</a> &gt; <a href="index.source.html" class="el_package">com.example</a> &gt; <span class="el_source">BankingSystemContext.java</span></div><h1>BankingSystemContext.java</h1><pre class="source lang-java linenums">package com.example;
+
+import com.example.config.BankConfig;
+import com.example.repository.cliente.ClienteRepository;
+import com.example.repository.cuenta.CuentaRepository;
+import com.example.repository.credito.CreditoRepository;
+import com.example.repository.transaccion.TransaccionRepository;
+import com.example.factory.common.FabricaProductosProvider;
+import com.example.strategy.core.InteresStrategyRegistry;
+import com.example.builder.credito.CreditoBuilderRegistry;
+import com.example.chain.core.ApprovalChainBuilder;
+import com.example.adapter.score.ScoreProviderRegistry;
+import com.example.adapter.buro.BuroFinancieroAdapter;
+import com.example.adapter.legacy.LegacyRiskApiAdapter;
+import com.example.observer.core.DomainEventPublisher;
+import com.example.service.cliente.ClienteService;
+import com.example.service.cuenta.CuentaService;
+import com.example.service.credito.CreditoService;
+import com.example.service.transaccion.TransaccionService;
+
+public class BankingSystemContext {
+    public final ClienteService clienteService;
+    public final CuentaService cuentaService;
+    public final CreditoService creditoService;
+    public final TransaccionService transaccionService;
+    public final com.example.controller.ClienteController clienteController;
+    public final com.example.controller.CuentaController cuentaController;
+    public final com.example.controller.CreditoController creditoController;
+    public final com.example.controller.TransaccionController transaccionController;
+
+<span class="nc" id="L31">    public BankingSystemContext() {</span>
+        // Configuración y repositorios
+<span class="nc" id="L33">        BankConfig bankConfig = new BankConfig();</span>
+<span class="nc" id="L34">        ClienteRepository clienteRepository = new ClienteRepository();</span>
+<span class="nc" id="L35">        CuentaRepository cuentaRepository = new CuentaRepository();</span>
+<span class="nc" id="L36">        CreditoRepository creditoRepository = new CreditoRepository();</span>
+<span class="nc" id="L37">        TransaccionRepository transaccionRepository = new TransaccionRepository();</span>
+
+        // Factories y providers
+<span class="nc" id="L40">        FabricaProductosProvider fabricaProductosProvider = new FabricaProductosProvider();</span>
+<span class="nc" id="L41">        InteresStrategyRegistry interesStrategyRegistry = new InteresStrategyRegistry();</span>
+<span class="nc" id="L42">        CreditoBuilderRegistry creditoBuilderRegistry = new CreditoBuilderRegistry();</span>
+<span class="nc" id="L43">        ApprovalChainBuilder approvalChainBuilder = new ApprovalChainBuilder();</span>
+<span class="nc" id="L44">        ScoreProviderRegistry scoreProviderRegistry = new ScoreProviderRegistry(</span>
+<span class="nc" id="L45">                new BuroFinancieroAdapter(clienteRepository),</span>
+<span class="nc" id="L46">                new LegacyRiskApiAdapter());</span>
+
+        // Observers y publisher
+<span class="nc" id="L49">        DomainEventPublisher publisher = new DomainEventPublisher(java.util.List.of(</span>
+<span class="nc" id="L50">                new com.example.observer.impl.LoggingObserver(),</span>
+<span class="nc" id="L51">                new com.example.observer.impl.FraudeObserver(),</span>
+<span class="nc" id="L52">                new com.example.observer.impl.NotificacionObserver()));</span>
+
+        // Templates
+<span class="nc" id="L55">        com.example.template.impl.SolicitudCreditoDefault solicitudCreditoTemplate = new com.example.template.impl.SolicitudCreditoDefault(</span>
+<span class="nc" id="L56">                creditoBuilderRegistry,</span>
+<span class="nc" id="L57">                interesStrategyRegistry,</span>
+<span class="nc" id="L58">                approvalChainBuilder,</span>
+<span class="nc" id="L59">                creditoRepository,</span>
+<span class="nc" id="L60">                clienteRepository,</span>
+<span class="nc" id="L61">                publisher,</span>
+<span class="nc" id="L62">                scoreProviderRegistry,</span>
+<span class="nc" id="L63">                bankConfig);</span>
+
+        // Servicios
+<span class="nc" id="L66">        clienteService = new ClienteService(clienteRepository, bankConfig);</span>
+<span class="nc" id="L67">        cuentaService = new CuentaService(cuentaRepository, clienteRepository, bankConfig,</span>
+<span class="nc" id="L68">                fabricaProductosProvider, publisher);</span>
+<span class="nc" id="L69">        creditoService = new CreditoService(creditoRepository, clienteRepository, bankConfig,</span>
+<span class="nc" id="L70">                fabricaProductosProvider, interesStrategyRegistry, scoreProviderRegistry, creditoBuilderRegistry,</span>
+<span class="nc" id="L71">                approvalChainBuilder, publisher, solicitudCreditoTemplate);</span>
+<span class="nc" id="L72">        transaccionService = new TransaccionService(transaccionRepository, bankConfig, publisher,</span>
+<span class="nc" id="L73">                cuentaService);</span>
+
+        // Controladores
+<span class="nc" id="L76">        clienteController = new com.example.controller.ClienteController(clienteService);</span>
+<span class="nc" id="L77">        cuentaController = new com.example.controller.CuentaController(cuentaService, clienteService, clienteRepository);</span>
+<span class="nc" id="L78">        creditoController = new com.example.controller.CreditoController(creditoService, clienteService);</span>
+<span class="nc" id="L79">        transaccionController = new com.example.controller.TransaccionController(transaccionService, cuentaService);</span>
+<span class="nc" id="L80">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

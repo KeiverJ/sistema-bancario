@@ -1,12 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>BankConfig.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Sistema Bancario</a> &gt; <a href="index.source.html" class="el_package">com.example.config</a> &gt; <span class="el_source">BankConfig.java</span></div><h1>BankConfig.java</h1><pre class="source lang-java linenums">package com.example.config;
 
-
 import java.util.Properties;
 
-/**
- * BankConfig - Configuración del banco.
- * Spring Boot maneja automáticamente el Singleton.
- */
 public class BankConfig {
 
     private final Properties properties;
@@ -19,191 +14,190 @@ public class BankConfig {
     private double montoMaximoCredito;
     private double ratioEndeudamientoMaximo;
 
-<span class="fc" id="L22">    public BankConfig() {</span>
-<span class="fc" id="L23">        this.properties = new Properties();</span>
-        // Valores por defecto
-<span class="fc" id="L25">        this.name = &quot;Banco del Futuro&quot;;</span>
-<span class="fc" id="L26">        this.code = &quot;BDF-001&quot;;</span>
-<span class="fc" id="L27">        this.country = &quot;Colombia&quot;;</span>
-<span class="fc" id="L28">        this.currency = &quot;COP&quot;;</span>
-<span class="fc" id="L29">        this.tasaInteresBase = 12.5;</span>
-<span class="fc" id="L30">        this.scoreMinimo = 650;</span>
-<span class="fc" id="L31">        this.montoMaximoCredito = 500000000.0;</span>
-<span class="fc" id="L32">        this.ratioEndeudamientoMaximo = 0.40;</span>
+<span class="fc" id="L17">    public BankConfig() {</span>
+<span class="fc" id="L18">        this.properties = new Properties();</span>
+<span class="fc" id="L19">        this.name = &quot;Banco de Keiverinho&quot;;</span>
+<span class="fc" id="L20">        this.code = &quot;BDF-001&quot;;</span>
+<span class="fc" id="L21">        this.country = &quot;Colombia&quot;;</span>
+<span class="fc" id="L22">        this.currency = &quot;COP&quot;;</span>
+<span class="fc" id="L23">        this.tasaInteresBase = 12.5;</span>
+<span class="fc" id="L24">        this.scoreMinimo = 650;</span>
+<span class="fc" id="L25">        this.montoMaximoCredito = 500000000.0;</span>
+<span class="fc" id="L26">        this.ratioEndeudamientoMaximo = 0.40;</span>
 
-<span class="fc" id="L34">        loadDefaultProperties();</span>
-<span class="fc" id="L35">    }</span>
+<span class="fc" id="L28">        loadDefaultProperties();</span>
+<span class="fc" id="L29">    }</span>
 
     private void loadDefaultProperties() {
-<span class="fc" id="L38">        properties.setProperty(&quot;bank.name&quot;, name);</span>
-<span class="fc" id="L39">        properties.setProperty(&quot;bank.code&quot;, code);</span>
-<span class="fc" id="L40">        properties.setProperty(&quot;bank.country&quot;, country);</span>
-<span class="fc" id="L41">        properties.setProperty(&quot;bank.currency&quot;, currency);</span>
-<span class="fc" id="L42">        properties.setProperty(&quot;credito.tasa.base&quot;, String.valueOf(tasaInteresBase));</span>
-<span class="fc" id="L43">        properties.setProperty(&quot;credito.score.minimo&quot;, String.valueOf(scoreMinimo));</span>
-<span class="fc" id="L44">        properties.setProperty(&quot;credito.monto.maximo&quot;, String.valueOf(montoMaximoCredito));</span>
-<span class="fc" id="L45">        properties.setProperty(&quot;credito.ratio.endeudamiento&quot;, String.valueOf(ratioEndeudamientoMaximo));</span>
-<span class="fc" id="L46">        properties.setProperty(&quot;credito.plazo.maximo&quot;, &quot;360&quot;);</span>
-<span class="fc" id="L47">        properties.setProperty(&quot;cuenta.saldo.minimo.ahorros&quot;, &quot;50000&quot;);</span>
-<span class="fc" id="L48">        properties.setProperty(&quot;cuenta.saldo.minimo.corriente&quot;, &quot;100000&quot;);</span>
-<span class="fc" id="L49">        properties.setProperty(&quot;cuenta.cuota.manejo.ahorros&quot;, &quot;10000&quot;);</span>
-<span class="fc" id="L50">        properties.setProperty(&quot;cuenta.cuota.manejo.corriente&quot;, &quot;15000&quot;);</span>
-<span class="fc" id="L51">        properties.setProperty(&quot;transaccion.limite.diario&quot;, &quot;10000000&quot;);</span>
-<span class="fc" id="L52">        properties.setProperty(&quot;transaccion.limite.mensual&quot;, &quot;50000000&quot;);</span>
-<span class="fc" id="L53">        properties.setProperty(&quot;transaccion.comision.transferencia&quot;, &quot;3000&quot;);</span>
-<span class="fc" id="L54">    }</span>
+<span class="fc" id="L32">        properties.setProperty(&quot;bank.name&quot;, name);</span>
+<span class="fc" id="L33">        properties.setProperty(&quot;bank.code&quot;, code);</span>
+<span class="fc" id="L34">        properties.setProperty(&quot;bank.country&quot;, country);</span>
+<span class="fc" id="L35">        properties.setProperty(&quot;bank.currency&quot;, currency);</span>
+<span class="fc" id="L36">        properties.setProperty(&quot;credito.tasa.base&quot;, String.valueOf(tasaInteresBase));</span>
+<span class="fc" id="L37">        properties.setProperty(&quot;credito.score.minimo&quot;, String.valueOf(scoreMinimo));</span>
+<span class="fc" id="L38">        properties.setProperty(&quot;credito.monto.maximo&quot;, String.valueOf(montoMaximoCredito));</span>
+<span class="fc" id="L39">        properties.setProperty(&quot;credito.ratio.endeudamiento&quot;, String.valueOf(ratioEndeudamientoMaximo));</span>
+<span class="fc" id="L40">        properties.setProperty(&quot;credito.plazo.maximo&quot;, &quot;360&quot;);</span>
+<span class="fc" id="L41">        properties.setProperty(&quot;cuenta.saldo.minimo.ahorros&quot;, &quot;50000&quot;);</span>
+<span class="fc" id="L42">        properties.setProperty(&quot;cuenta.saldo.minimo.corriente&quot;, &quot;100000&quot;);</span>
+<span class="fc" id="L43">        properties.setProperty(&quot;cuenta.cuota.manejo.ahorros&quot;, &quot;10000&quot;);</span>
+<span class="fc" id="L44">        properties.setProperty(&quot;cuenta.cuota.manejo.corriente&quot;, &quot;15000&quot;);</span>
+<span class="fc" id="L45">        properties.setProperty(&quot;transaccion.limite.diario&quot;, &quot;10000000&quot;);</span>
+<span class="fc" id="L46">        properties.setProperty(&quot;transaccion.limite.mensual&quot;, &quot;50000000&quot;);</span>
+<span class="fc" id="L47">        properties.setProperty(&quot;transaccion.comision.transferencia&quot;, &quot;3000&quot;);</span>
+<span class="fc" id="L48">    }</span>
 
     // Getters y Setters
 
     public String getName() {
-<span class="fc" id="L59">        return name;</span>
+<span class="fc" id="L53">        return name;</span>
     }
 
     public void setName(String name) {
-<span class="fc" id="L63">        this.name = name;</span>
-<span class="fc" id="L64">        properties.setProperty(&quot;bank.name&quot;, name);</span>
-<span class="fc" id="L65">    }</span>
+<span class="fc" id="L57">        this.name = name;</span>
+<span class="fc" id="L58">        properties.setProperty(&quot;bank.name&quot;, name);</span>
+<span class="fc" id="L59">    }</span>
 
     public String getCode() {
-<span class="fc" id="L68">        return code;</span>
+<span class="fc" id="L62">        return code;</span>
     }
 
     public void setCode(String code) {
-<span class="fc" id="L72">        this.code = code;</span>
-<span class="fc" id="L73">        properties.setProperty(&quot;bank.code&quot;, code);</span>
-<span class="fc" id="L74">    }</span>
+<span class="fc" id="L66">        this.code = code;</span>
+<span class="fc" id="L67">        properties.setProperty(&quot;bank.code&quot;, code);</span>
+<span class="fc" id="L68">    }</span>
 
     public String getCountry() {
-<span class="fc" id="L77">        return country;</span>
+<span class="fc" id="L71">        return country;</span>
     }
 
     public void setCountry(String country) {
-<span class="fc" id="L81">        this.country = country;</span>
-<span class="fc" id="L82">        properties.setProperty(&quot;bank.country&quot;, country);</span>
-<span class="fc" id="L83">    }</span>
+<span class="fc" id="L75">        this.country = country;</span>
+<span class="fc" id="L76">        properties.setProperty(&quot;bank.country&quot;, country);</span>
+<span class="fc" id="L77">    }</span>
 
     public String getCurrency() {
-<span class="fc" id="L86">        return currency;</span>
+<span class="fc" id="L80">        return currency;</span>
     }
 
     public void setCurrency(String currency) {
-<span class="fc" id="L90">        this.currency = currency;</span>
-<span class="fc" id="L91">        properties.setProperty(&quot;bank.currency&quot;, currency);</span>
-<span class="fc" id="L92">    }</span>
+<span class="fc" id="L84">        this.currency = currency;</span>
+<span class="fc" id="L85">        properties.setProperty(&quot;bank.currency&quot;, currency);</span>
+<span class="fc" id="L86">    }</span>
 
     public double getTasaInteresBase() {
-<span class="fc" id="L95">        return tasaInteresBase;</span>
+<span class="fc" id="L89">        return tasaInteresBase;</span>
     }
 
     public void setTasaInteresBase(double tasaInteresBase) {
-<span class="fc" id="L99">        this.tasaInteresBase = tasaInteresBase;</span>
-<span class="fc" id="L100">        properties.setProperty(&quot;credito.tasa.base&quot;, String.valueOf(tasaInteresBase));</span>
-<span class="fc" id="L101">    }</span>
+<span class="fc" id="L93">        this.tasaInteresBase = tasaInteresBase;</span>
+<span class="fc" id="L94">        properties.setProperty(&quot;credito.tasa.base&quot;, String.valueOf(tasaInteresBase));</span>
+<span class="fc" id="L95">    }</span>
 
     public int getScoreMinimo() {
-<span class="fc" id="L104">        return scoreMinimo;</span>
+<span class="fc" id="L98">        return scoreMinimo;</span>
     }
 
     public void setScoreMinimo(int scoreMinimo) {
-<span class="fc" id="L108">        this.scoreMinimo = scoreMinimo;</span>
-<span class="fc" id="L109">        properties.setProperty(&quot;credito.score.minimo&quot;, String.valueOf(scoreMinimo));</span>
-<span class="fc" id="L110">    }</span>
+<span class="fc" id="L102">        this.scoreMinimo = scoreMinimo;</span>
+<span class="fc" id="L103">        properties.setProperty(&quot;credito.score.minimo&quot;, String.valueOf(scoreMinimo));</span>
+<span class="fc" id="L104">    }</span>
 
     public double getMontoMaximoCredito() {
-<span class="fc" id="L113">        return montoMaximoCredito;</span>
+<span class="fc" id="L107">        return montoMaximoCredito;</span>
     }
 
     public void setMontoMaximoCredito(double montoMaximoCredito) {
-<span class="fc" id="L117">        this.montoMaximoCredito = montoMaximoCredito;</span>
-<span class="fc" id="L118">        properties.setProperty(&quot;credito.monto.maximo&quot;, String.valueOf(montoMaximoCredito));</span>
-<span class="fc" id="L119">    }</span>
+<span class="fc" id="L111">        this.montoMaximoCredito = montoMaximoCredito;</span>
+<span class="fc" id="L112">        properties.setProperty(&quot;credito.monto.maximo&quot;, String.valueOf(montoMaximoCredito));</span>
+<span class="fc" id="L113">    }</span>
 
     public double getRatioEndeudamientoMaximo() {
-<span class="fc" id="L122">        return ratioEndeudamientoMaximo;</span>
+<span class="fc" id="L116">        return ratioEndeudamientoMaximo;</span>
     }
 
     public void setRatioEndeudamientoMaximo(double ratio) {
-<span class="fc" id="L126">        this.ratioEndeudamientoMaximo = ratio;</span>
-<span class="fc" id="L127">        properties.setProperty(&quot;credito.ratio.endeudamiento&quot;, String.valueOf(ratio));</span>
-<span class="fc" id="L128">    }</span>
+<span class="fc" id="L120">        this.ratioEndeudamientoMaximo = ratio;</span>
+<span class="fc" id="L121">        properties.setProperty(&quot;credito.ratio.endeudamiento&quot;, String.valueOf(ratio));</span>
+<span class="fc" id="L122">    }</span>
 
     public String getProperty(String key) {
-<span class="fc bfc" id="L131" title="All 2 branches covered.">        return key == null ? null : properties.getProperty(key);</span>
+<span class="fc bfc" id="L125" title="All 2 branches covered.">        return key == null ? null : properties.getProperty(key);</span>
     }
 
     public Properties getAllProperties() {
-<span class="fc" id="L135">        return new Properties(properties);</span>
+<span class="fc" id="L129">        return new Properties(properties);</span>
     }
 
     // Métodos de negocio
 
     public double getSaldoMinimo(String tipoCuenta) {
-<span class="fc" id="L141">        String key = &quot;cuenta.saldo.minimo.&quot; + tipoCuenta.toLowerCase();</span>
-<span class="fc" id="L142">        return getDoubleProperty(key, 0.0);</span>
+<span class="fc" id="L135">        String key = &quot;cuenta.saldo.minimo.&quot; + tipoCuenta.toLowerCase();</span>
+<span class="fc" id="L136">        return getDoubleProperty(key, 0.0);</span>
     }
 
     public double getCuotaManejo(String tipoCuenta) {
-<span class="fc" id="L146">        String key = &quot;cuenta.cuota.manejo.&quot; + tipoCuenta.toLowerCase();</span>
-<span class="fc" id="L147">        return getDoubleProperty(key, 0.0);</span>
+<span class="fc" id="L140">        String key = &quot;cuenta.cuota.manejo.&quot; + tipoCuenta.toLowerCase();</span>
+<span class="fc" id="L141">        return getDoubleProperty(key, 0.0);</span>
     }
 
     public double getLimiteDiario() {
-<span class="fc" id="L151">        return getDoubleProperty(&quot;transaccion.limite.diario&quot;, 10000000.0);</span>
+<span class="fc" id="L145">        return getDoubleProperty(&quot;transaccion.limite.diario&quot;, 10000000.0);</span>
     }
 
     public double getLimiteMensual() {
-<span class="nc" id="L155">        return getDoubleProperty(&quot;transaccion.limite.mensual&quot;, 50000000.0);</span>
+<span class="nc" id="L149">        return getDoubleProperty(&quot;transaccion.limite.mensual&quot;, 50000000.0);</span>
     }
 
     public double getComisionTransferencia() {
-<span class="nc" id="L159">        return getDoubleProperty(&quot;transaccion.comision.transferencia&quot;, 3000.0);</span>
+<span class="nc" id="L153">        return getDoubleProperty(&quot;transaccion.comision.transferencia&quot;, 3000.0);</span>
     }
 
     public int getPlazoMaximoCredito() {
-<span class="fc" id="L163">        return getIntProperty(&quot;credito.plazo.maximo&quot;, 360);</span>
+<span class="fc" id="L157">        return getIntProperty(&quot;credito.plazo.maximo&quot;, 360);</span>
     }
 
     private double getDoubleProperty(String key, double defaultValue) {
-<span class="fc" id="L167">        String value = properties.getProperty(key, String.valueOf(defaultValue));</span>
+<span class="fc" id="L161">        String value = properties.getProperty(key, String.valueOf(defaultValue));</span>
         try {
-<span class="fc" id="L169">            return Double.parseDouble(value);</span>
-<span class="nc" id="L170">        } catch (NumberFormatException e) {</span>
-<span class="nc" id="L171">            return defaultValue;</span>
+<span class="fc" id="L163">            return Double.parseDouble(value);</span>
+<span class="nc" id="L164">        } catch (NumberFormatException e) {</span>
+<span class="nc" id="L165">            return defaultValue;</span>
         }
     }
 
     private int getIntProperty(String key, int defaultValue) {
-<span class="fc" id="L176">        String value = properties.getProperty(key, String.valueOf(defaultValue));</span>
+<span class="fc" id="L170">        String value = properties.getProperty(key, String.valueOf(defaultValue));</span>
         try {
-<span class="fc" id="L178">            return Integer.parseInt(value);</span>
-<span class="nc" id="L179">        } catch (NumberFormatException e) {</span>
-<span class="nc" id="L180">            return defaultValue;</span>
+<span class="fc" id="L172">            return Integer.parseInt(value);</span>
+<span class="nc" id="L173">        } catch (NumberFormatException e) {</span>
+<span class="nc" id="L174">            return defaultValue;</span>
         }
     }
 
     public boolean isMontoValido(double monto) {
-<span class="fc bfc" id="L185" title="All 4 branches covered.">        return monto &gt; 0 &amp;&amp; monto &lt;= montoMaximoCredito;</span>
+<span class="fc bfc" id="L179" title="All 4 branches covered.">        return monto &gt; 0 &amp;&amp; monto &lt;= montoMaximoCredito;</span>
     }
 
     public boolean isScoreAceptable(int score) {
-<span class="fc bfc" id="L189" title="All 2 branches covered.">        return score &gt;= scoreMinimo;</span>
+<span class="fc bfc" id="L183" title="All 2 branches covered.">        return score &gt;= scoreMinimo;</span>
     }
 
     public double calcularTasaPorScore(int score) {
-<span class="fc bfc" id="L193" title="All 2 branches covered.">        if (score &gt;= 800)</span>
-<span class="fc" id="L194">            return tasaInteresBase * 0.7;</span>
-<span class="fc bfc" id="L195" title="All 2 branches covered.">        if (score &gt;= 750)</span>
-<span class="fc" id="L196">            return tasaInteresBase * 0.85;</span>
-<span class="fc bfc" id="L197" title="All 2 branches covered.">        if (score &gt;= 700)</span>
-<span class="fc" id="L198">            return tasaInteresBase;</span>
-<span class="fc bfc" id="L199" title="All 2 branches covered.">        if (score &gt;= 650)</span>
-<span class="fc" id="L200">            return tasaInteresBase * 1.2;</span>
-<span class="fc" id="L201">        return tasaInteresBase * 1.5;</span>
+<span class="fc bfc" id="L187" title="All 2 branches covered.">        if (score &gt;= 800)</span>
+<span class="fc" id="L188">            return tasaInteresBase * 0.7;</span>
+<span class="fc bfc" id="L189" title="All 2 branches covered.">        if (score &gt;= 750)</span>
+<span class="fc" id="L190">            return tasaInteresBase * 0.85;</span>
+<span class="fc bfc" id="L191" title="All 2 branches covered.">        if (score &gt;= 700)</span>
+<span class="fc" id="L192">            return tasaInteresBase;</span>
+<span class="fc bfc" id="L193" title="All 2 branches covered.">        if (score &gt;= 650)</span>
+<span class="fc" id="L194">            return tasaInteresBase * 1.2;</span>
+<span class="fc" id="L195">        return tasaInteresBase * 1.5;</span>
     }
 
     public boolean isValidConfiguration() {
-<span class="pc bpc" id="L205" title="2 of 6 branches missed.">        return name != null &amp;&amp; !name.isEmpty() &amp;&amp;</span>
-<span class="fc bfc" id="L206" title="All 12 branches covered.">                code != null &amp;&amp; !code.isEmpty() &amp;&amp;</span>
+<span class="pc bpc" id="L199" title="2 of 6 branches missed.">        return name != null &amp;&amp; !name.isEmpty() &amp;&amp;</span>
+<span class="fc bfc" id="L200" title="All 12 branches covered.">                code != null &amp;&amp; !code.isEmpty() &amp;&amp;</span>
                 tasaInteresBase &gt; 0 &amp;&amp;
                 scoreMinimo &gt; 0 &amp;&amp;
                 montoMaximoCredito &gt; 0 &amp;&amp;
@@ -212,8 +206,8 @@ public class BankConfig {
 
     @Override
     public String toString() {
-<span class="fc" id="L215">        return String.format(&quot;BankConfig{name='%s', code='%s', tasaBase=%.2f%%, scoreMin=%d}&quot;,</span>
-<span class="fc" id="L216">                name, code, tasaInteresBase, scoreMinimo);</span>
+<span class="fc" id="L209">        return String.format(&quot;BankConfig{name='%s', code='%s', tasaBase=%.2f%%, scoreMin=%d}&quot;,</span>
+<span class="fc" id="L210">                name, code, tasaInteresBase, scoreMinimo);</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

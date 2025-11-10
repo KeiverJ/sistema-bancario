@@ -21,7 +21,13 @@ public class BaseProductoComponent implements ProductoFinancieroComponent {
 
     @Override
     public String getId() {
-        return cuenta != null ? cuenta.getId() : (credito != null ? credito.getId() : null);
+        if (cuenta != null) {
+            return cuenta.getId();
+        } else if (credito != null) {
+            return credito.getId();
+        } else {
+            return null;
+        }
     }
 
     @Override

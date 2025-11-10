@@ -9,6 +9,7 @@ com\example\observer\impl\NotificacionObserver.class
 com\example\observer\core\EventoObserver.class
 com\example\template\impl\SolicitudCreditoDefault$1.class
 com\example\strategy\impl\InteresConsumoStrategy.class
+com\example\controller\ClienteController.class
 com\example\factory\retiro\RetiroFactory.class
 com\example\decorator\core\ProductoDecorator.class
 com\example\factory\persona\FactoryPersonaJuridica.class
@@ -20,12 +21,13 @@ com\example\template\core\AperturaCuentaTemplate.class
 com\example\chain\handlers\ScoreHandler.class
 com\example\model\solicitud\Solicitud.class
 com\example\state\impl\RechazadoState.class
-com\example\BankingSystemApp$1.class
+com\example\controller\CreditoController.class
 com\example\factory\common\FabricaProductosProvider$1.class
 com\example\chain\core\AbstractApprovalHandler.class
 com\example\chain\handlers\PlazoHandler.class
 com\example\state\core\CreditoState.class
 com\example\adapter\legacy\LegacyRiskApiAdapter.class
+com\example\controller\TransaccionController.class
 com\example\model\credito\Credito$EstadoCredito.class
 com\example\factory\deposito\DepositoFactory.class
 com\example\composite\PaqueteProductos.class
@@ -36,6 +38,7 @@ com\example\state\impl\EnMoraState.class
 com\example\repository\credito\CreditoRepository.class
 com\example\util\CreditoCodigoGenerator$1.class
 com\example\chain\core\ApprovalChainBuilder.class
+com\example\controller\InputUtils.class
 com\example\chain\core\ApprovalHandler.class
 com\example\chain\handlers\AprobacionFinalHandler.class
 com\example\strategy\core\InteresStrategyRegistry.class
@@ -83,7 +86,9 @@ com\example\adapter\legacy\LegacyRiskApi.class
 com\example\observer\eventos\CuentaSaldoActualizadoEvent.class
 com\example\factory\validacion\ValidadorPasaporte.class
 com\example\model\transacccion\Transaccion$EstadoTransaccion.class
+com\example\BankingSystemContext.class
 com\example\repository\cliente\ClienteRepository.class
+com\example\controller\BankingMenu.class
 com\example\state\impl\SolicitadoState.class
 com\example\builder\credito\CreditoBuilder.class
 com\example\repository\transaccion\TransaccionRepository.class
@@ -97,6 +102,7 @@ com\example\chain\handlers\EndeudamientoHandler.class
 com\example\state\impl\AprobadoState.class
 com\example\service\cuenta\CuentaService.class
 com\example\builder\credito\tipos\LibreInversionCreditoBuilder.class
+com\example\controller\CuentaController.class
 com\example\model\credito\Credito$TipoCredito.class
 com\example\builder\credito\tipos\HipotecarioCreditoBuilder.class
 com\example\BankingSystemApp.class

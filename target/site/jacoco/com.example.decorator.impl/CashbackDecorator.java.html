@@ -6,25 +6,24 @@ import com.example.decorator.core.ProductoFinancieroComponent;
 public class CashbackDecorator extends ProductoDecorator {
     
     private static final double COSTO_ADICIONAL = 5000.0;
-    private static final double BENEFICIO_CASHBACK = 20000.0; // promedio 2% en compras
-    
+    private static final double BENEFICIO_CASHBACK = 20000.0; 
     public CashbackDecorator(ProductoFinancieroComponent componente) {
-<span class="fc" id="L12">        super(componente);</span>
-<span class="fc" id="L13">    }</span>
+<span class="fc" id="L11">        super(componente);</span>
+<span class="fc" id="L12">    }</span>
     
     @Override
     public String getDescripcion() {
-<span class="fc" id="L17">        return super.getDescripcion() + &quot;\n  + Cashback 2% en compras (hasta $50K/mes)&quot;;</span>
+<span class="fc" id="L16">        return super.getDescripcion() + &quot;\n  + Cashback 2% en compras (hasta $50K/mes)&quot;;</span>
     }
     
     @Override
     public double getCostoMensual() {
-<span class="fc" id="L22">        return super.getCostoMensual() + COSTO_ADICIONAL;</span>
+<span class="fc" id="L21">        return super.getCostoMensual() + COSTO_ADICIONAL;</span>
     }
     
     @Override
     public double getBeneficioMensual() {
-<span class="fc" id="L27">        return super.getBeneficioMensual() + BENEFICIO_CASHBACK;</span>
+<span class="fc" id="L26">        return super.getBeneficioMensual() + BENEFICIO_CASHBACK;</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

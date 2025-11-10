@@ -7,6 +7,7 @@ import com.example.model.transacccion.Transaccion;
 import static org.junit.jupiter.api.Assertions.*;
 
 class TransaccionUnitTest {
+    // Prueba getters y setters básicos de Transaccion
     @Test
     void gettersYSettersBasicos() {
         Transaccion t = new Transaccion();
@@ -18,6 +19,7 @@ class TransaccionUnitTest {
         assertEquals(Transaccion.EstadoTransaccion.PENDIENTE, t.getEstado());
     }
 
+    // Prueba la ejecución y validación de una transacción (casos de éxito y fallo)
     @Test
     void ejecutarYValidar() {
         Transaccion t = new Transaccion();

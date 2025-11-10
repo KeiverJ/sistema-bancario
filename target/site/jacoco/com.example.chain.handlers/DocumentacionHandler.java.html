@@ -6,12 +6,11 @@ import com.example.chain.core.ApprovalContext;
 <span class="fc" id="L6">public class DocumentacionHandler extends AbstractApprovalHandler {</span>
     @Override
     protected boolean precondicion(ApprovalContext ctx) {
-        // Simulación mínima: documento cliente no nulo
-<span class="pc bpc" id="L10" title="1 of 2 branches missed.">        if (ctx.getCliente().getNumeroDocumento() == null) {</span>
-<span class="nc" id="L11">            ctx.rechazar(&quot;Documentación incompleta&quot;);</span>
-<span class="nc" id="L12">            return false;</span>
+<span class="pc bpc" id="L9" title="1 of 2 branches missed.">        if (ctx.getCliente().getNumeroDocumento() == null) {</span>
+<span class="nc" id="L10">            ctx.rechazar(&quot;Documentación incompleta&quot;);</span>
+<span class="nc" id="L11">            return false;</span>
         }
-<span class="fc" id="L14">        return true;</span>
+<span class="fc" id="L13">        return true;</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

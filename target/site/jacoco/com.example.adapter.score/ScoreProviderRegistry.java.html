@@ -12,18 +12,17 @@ public class ScoreProviderRegistry {
 
     private final Map&lt;String, ScoreProvider&gt; providers;
 
-    // ✅ Inyectar los providers como dependencias
     public ScoreProviderRegistry(BuroFinancieroAdapter buroAdapter,
-<span class="nc" id="L17">            LegacyRiskApiAdapter legacyAdapter) {</span>
-<span class="nc" id="L18">        this.providers = new HashMap&lt;&gt;();</span>
-<span class="nc" id="L19">        providers.put(&quot;BURO&quot;, buroAdapter);</span>
-<span class="nc" id="L20">        providers.put(&quot;LEGACY&quot;, legacyAdapter);</span>
-<span class="nc" id="L21">    }</span>
+<span class="fc" id="L16">            LegacyRiskApiAdapter legacyAdapter) {</span>
+<span class="fc" id="L17">        this.providers = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L18">        providers.put(&quot;BURO&quot;, buroAdapter);</span>
+<span class="fc" id="L19">        providers.put(&quot;LEGACY&quot;, legacyAdapter);</span>
+<span class="fc" id="L20">    }</span>
 
     public Score obtenerScoreParaCliente(Cliente cliente) {
-<span class="nc" id="L24">        ScoreProvider provider = providers.get(&quot;BURO&quot;);</span>
-<span class="nc" id="L25">        Score score = provider.obtenerScore(cliente.getId());</span>
-<span class="nc" id="L26">        return score;</span>
+<span class="fc" id="L23">        ScoreProvider provider = providers.get(&quot;BURO&quot;);</span>
+<span class="fc" id="L24">        Score score = provider.obtenerScore(cliente.getId());</span>
+<span class="fc" id="L25">        return score;</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

@@ -11,13 +11,12 @@ public class ExencionCuotaDecorator extends ProductoDecorator {
 
     @Override
     public double getCostoMensual() {
-        // Remueve cuota manejo (asumimos wrappee incluye cuota)
-<span class="fc" id="L15">        return Math.max(0, super.getCostoMensual() - super.getCostoMensual());</span>
+<span class="fc" id="L14">        return Math.max(0, super.getCostoMensual() - super.getCostoMensual());</span>
     }
 
     @Override
     public String getDescripcion() {
-<span class="fc" id="L20">        return super.getDescripcion() + &quot; + ExenciónCuotaManejo&quot;;</span>
+<span class="fc" id="L19">        return super.getDescripcion() + &quot; + ExenciónCuotaManejo&quot;;</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

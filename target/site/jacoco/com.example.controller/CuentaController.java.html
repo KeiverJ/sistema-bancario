@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CuentaController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Sistema Bancario</a> &gt; <a href="index.source.html" class="el_package">com.example.controller</a> &gt; <span class="el_source">CuentaController.java</span></div><h1>CuentaController.java</h1><pre class="source lang-java linenums">package com.example.controller;
+
+import com.example.adapter.buro.BuroFinancieroAdapter;
+import com.example.adapter.legacy.LegacyRiskApiAdapter;
+import com.example.adapter.score.ScoreProviderRegistry;
+import com.example.repository.cliente.ClienteRepository;
+import com.example.model.score.Score;
+import com.example.model.cuenta.Cuenta;
+import com.example.model.cliente.Cliente;
+import com.example.service.cuenta.CuentaService;
+import com.example.service.cliente.ClienteService;
+import java.util.Optional;
+import java.util.Scanner;
+
+public class CuentaController {
+    private final CuentaService cuentaService;
+    private final ClienteService clienteService;
+    private final ScoreProviderRegistry scoreProviderRegistry;
+
+<span class="fc" id="L20">    public CuentaController(CuentaService cuentaService, ClienteService clienteService, ClienteRepository clienteRepository) {</span>
+<span class="fc" id="L21">        this.cuentaService = cuentaService;</span>
+<span class="fc" id="L22">        this.clienteService = clienteService;</span>
+<span class="fc" id="L23">        this.scoreProviderRegistry = new ScoreProviderRegistry(</span>
+<span class="fc" id="L24">            new BuroFinancieroAdapter(clienteRepository), new LegacyRiskApiAdapter()</span>
+        );
+<span class="fc" id="L26">    }</span>
+    public void consultarScoreCliente(Scanner sc) {
+<span class="nc" id="L28">        System.out.println(&quot;\nCONSULTA DE SCORE DEL CLIENTE\n&quot;);</span>
+<span class="nc bnc" id="L29" title="All 2 branches missed.">        String codigoCliente = clienteService.listarTodos().isEmpty() ? null</span>
+<span class="nc" id="L30">                : InputUtils.solicitarTexto(sc, &quot;Código de cliente&quot;, true);</span>
+<span class="nc bnc" id="L31" title="All 2 branches missed.">        if (codigoCliente == null)</span>
+<span class="nc" id="L32">            return;</span>
+<span class="nc" id="L33">        Optional&lt;Cliente&gt; clienteOpt = clienteService.obtenerClientePorCodigo(codigoCliente);</span>
+<span class="nc bnc" id="L34" title="All 2 branches missed.">        if (clienteOpt.isEmpty()) {</span>
+<span class="nc" id="L35">            System.err.println(&quot;Cliente no encontrado&quot;);</span>
+<span class="nc" id="L36">            return;</span>
+        }
+<span class="nc" id="L38">        Cliente cliente = clienteOpt.get();</span>
+<span class="nc" id="L39">        Score score = scoreProviderRegistry.obtenerScoreParaCliente(cliente);</span>
+<span class="nc" id="L40">        System.out.println(&quot;Score actual: &quot; + score.getValor() + &quot; (Fuente: &quot; + score.getFuente() + &quot;)&quot;);</span>
+<span class="nc" id="L41">    }</span>
+
+    // ...existing code...
+
+    public void listarCuentasCliente(Scanner sc) {
+<span class="fc" id="L46">        System.out.println(&quot;\nCUENTAS DEL CLIENTE\n&quot;);</span>
+<span class="pc bpc" id="L47" title="1 of 2 branches missed.">        String codigoCliente = clienteService.listarTodos().isEmpty() ? null</span>
+<span class="fc" id="L48">                : InputUtils.solicitarTexto(sc, &quot;Código de cliente&quot;, true);</span>
+<span class="pc bpc" id="L49" title="1 of 2 branches missed.">        if (codigoCliente == null)</span>
+<span class="nc" id="L50">            return;</span>
+<span class="fc" id="L51">        Optional&lt;Cliente&gt; clienteOpt = clienteService.obtenerClientePorCodigo(codigoCliente);</span>
+<span class="fc bfc" id="L52" title="All 2 branches covered.">        if (clienteOpt.isEmpty()) {</span>
+<span class="fc" id="L53">            System.err.println(&quot;Cliente no encontrado&quot;);</span>
+<span class="fc" id="L54">            return;</span>
+        }
+<span class="fc" id="L56">        Cliente cliente = clienteOpt.get();</span>
+<span class="fc bfc" id="L57" title="All 2 branches covered.">        if (cliente.getCuentaIds().isEmpty()) {</span>
+<span class="fc" id="L58">            System.out.println(&quot;El cliente no tiene cuentas&quot;);</span>
+<span class="fc" id="L59">            return;</span>
+        }
+<span class="fc" id="L61">        System.out.println(&quot;Cliente: &quot; + cliente.getNombre() + &quot;\n&quot;);</span>
+<span class="fc" id="L62">        System.out</span>
+<span class="fc" id="L63">                .println(String.format(&quot;%-12s %-20s %-12s %15s %-12s&quot;, &quot;CÓDIGO&quot;, &quot;NÚMERO&quot;, &quot;TIPO&quot;, &quot;SALDO&quot;, &quot;ESTADO&quot;));</span>
+<span class="fc" id="L64">        System.out.println(&quot;-&quot;.repeat(75));</span>
+<span class="fc bfc" id="L65" title="All 2 branches covered.">        for (String cuentaId : cliente.getCuentaIds()) {</span>
+<span class="fc" id="L66">            cuentaService.obtenerCuenta(cuentaId)</span>
+<span class="fc" id="L67">                    .ifPresent(cuenta -&gt; System.out.println(String.format(&quot;%-12s %-20s %-12s $%,14.2f %-12s&quot;,</span>
+<span class="fc" id="L68">                            cuenta.getCodigo(), cuenta.getNumeroCuenta(), cuenta.getTipoCuenta(), cuenta.getSaldo(),</span>
+<span class="fc" id="L69">                            cuenta.getEstado())));</span>
+        }
+<span class="fc" id="L71">        System.out.println(&quot;-&quot;.repeat(75));</span>
+<span class="fc" id="L72">    }</span>
+
+    public void depositar(Scanner sc) {
+<span class="fc" id="L75">        System.out.println(&quot;\nDEPÓSITO EN CUENTA\n&quot;);</span>
+<span class="pc bpc" id="L76" title="1 of 2 branches missed.">        String codigoCliente = clienteService.listarTodos().isEmpty() ? null</span>
+<span class="fc" id="L77">                : InputUtils.solicitarTexto(sc, &quot;Código de cliente&quot;, true);</span>
+<span class="pc bpc" id="L78" title="1 of 2 branches missed.">        if (codigoCliente == null)</span>
+<span class="nc" id="L79">            return;</span>
+<span class="fc" id="L80">        Optional&lt;Cliente&gt; clienteOpt = clienteService.obtenerClientePorCodigo(codigoCliente);</span>
+<span class="pc bpc" id="L81" title="1 of 2 branches missed.">        if (clienteOpt.isEmpty()) {</span>
+<span class="nc" id="L82">            System.err.println(&quot;Cliente no encontrado&quot;);</span>
+<span class="nc" id="L83">            return;</span>
+        }
+<span class="fc" id="L85">        Cliente cliente = clienteOpt.get();</span>
+<span class="pc bpc" id="L86" title="1 of 2 branches missed.">        if (cliente.getCuentaIds().isEmpty()) {</span>
+<span class="nc" id="L87">            System.out.println(&quot;El cliente no tiene cuentas&quot;);</span>
+<span class="nc" id="L88">            return;</span>
+        }
+<span class="fc" id="L90">        String cuentaId = InputUtils.solicitarTexto(sc, &quot;Código de cuenta&quot;, true);</span>
+<span class="pc bpc" id="L91" title="1 of 2 branches missed.">        if (cuentaId == null)</span>
+<span class="nc" id="L92">            return;</span>
+<span class="fc" id="L93">        Optional&lt;Cuenta&gt; cuentaOpt = cuentaService.obtenerCuenta(cuentaId);</span>
+<span class="pc bpc" id="L94" title="1 of 2 branches missed.">        if (cuentaOpt.isEmpty()) {</span>
+<span class="nc" id="L95">            System.err.println(&quot;Cuenta no encontrada&quot;);</span>
+<span class="nc" id="L96">            return;</span>
+        }
+<span class="fc" id="L98">        Double monto = InputUtils.solicitarMonto(sc, &quot;Monto a depositar&quot;);</span>
+<span class="pc bpc" id="L99" title="1 of 2 branches missed.">        if (monto == null)</span>
+<span class="nc" id="L100">            return;</span>
+        try {
+<span class="fc" id="L102">            cuentaService.depositar(cuentaId, monto);</span>
+<span class="fc" id="L103">            System.out.println(&quot;Depósito realizado correctamente&quot;);</span>
+<span class="fc" id="L104">        } catch (Exception e) {</span>
+<span class="fc" id="L105">            System.err.println(&quot;Error: &quot; + e.getMessage());</span>
+        }
+<span class="fc" id="L107">    }</span>
+
+    public void retirar(Scanner sc) {
+<span class="fc" id="L110">        System.out.println(&quot;\nRETIRO DE CUENTA\n&quot;);</span>
+<span class="pc bpc" id="L111" title="1 of 2 branches missed.">        String codigoCliente = clienteService.listarTodos().isEmpty() ? null</span>
+<span class="fc" id="L112">                : InputUtils.solicitarTexto(sc, &quot;Código de cliente&quot;, true);</span>
+<span class="pc bpc" id="L113" title="1 of 2 branches missed.">        if (codigoCliente == null)</span>
+<span class="nc" id="L114">            return;</span>
+<span class="fc" id="L115">        Optional&lt;Cliente&gt; clienteOpt = clienteService.obtenerClientePorCodigo(codigoCliente);</span>
+<span class="pc bpc" id="L116" title="1 of 2 branches missed.">        if (clienteOpt.isEmpty()) {</span>
+<span class="nc" id="L117">            System.err.println(&quot;Cliente no encontrado&quot;);</span>
+<span class="nc" id="L118">            return;</span>
+        }
+<span class="fc" id="L120">        Cliente cliente = clienteOpt.get();</span>
+<span class="pc bpc" id="L121" title="1 of 2 branches missed.">        if (cliente.getCuentaIds().isEmpty()) {</span>
+<span class="nc" id="L122">            System.out.println(&quot;El cliente no tiene cuentas&quot;);</span>
+<span class="nc" id="L123">            return;</span>
+        }
+<span class="fc" id="L125">        String cuentaId = InputUtils.solicitarTexto(sc, &quot;Código de cuenta&quot;, true);</span>
+<span class="pc bpc" id="L126" title="1 of 2 branches missed.">        if (cuentaId == null)</span>
+<span class="nc" id="L127">            return;</span>
+<span class="fc" id="L128">        Optional&lt;Cuenta&gt; cuentaOpt = cuentaService.obtenerCuenta(cuentaId);</span>
+<span class="pc bpc" id="L129" title="1 of 2 branches missed.">        if (cuentaOpt.isEmpty()) {</span>
+<span class="nc" id="L130">            System.err.println(&quot;Cuenta no encontrada&quot;);</span>
+<span class="nc" id="L131">            return;</span>
+        }
+<span class="fc" id="L133">        Double monto = InputUtils.solicitarMonto(sc, &quot;Monto a retirar&quot;);</span>
+<span class="pc bpc" id="L134" title="1 of 2 branches missed.">        if (monto == null)</span>
+<span class="nc" id="L135">            return;</span>
+        try {
+<span class="fc" id="L137">            cuentaService.retirar(cuentaId, monto);</span>
+<span class="fc" id="L138">            System.out.println(&quot;Retiro realizado correctamente&quot;);</span>
+<span class="fc" id="L139">        } catch (Exception e) {</span>
+<span class="fc" id="L140">            System.err.println(&quot;Error: &quot; + e.getMessage());</span>
+        }
+<span class="fc" id="L142">    }</span>
+
+    public void transferir(Scanner sc) {
+<span class="nc" id="L145">        System.out.println(&quot;\nTRANSFERENCIA ENTRE CUENTAS\n&quot;);</span>
+<span class="nc" id="L146">        String cuentaOrigen = InputUtils.solicitarTexto(sc, &quot;Código de cuenta origen&quot;, true);</span>
+<span class="nc bnc" id="L147" title="All 2 branches missed.">        if (cuentaOrigen == null)</span>
+<span class="nc" id="L148">            return;</span>
+<span class="nc" id="L149">        String cuentaDestino = InputUtils.solicitarTexto(sc, &quot;Código de cuenta destino&quot;, true);</span>
+<span class="nc bnc" id="L150" title="All 2 branches missed.">        if (cuentaDestino == null)</span>
+<span class="nc" id="L151">            return;</span>
+<span class="nc" id="L152">        Double monto = InputUtils.solicitarMonto(sc, &quot;Monto a transferir&quot;);</span>
+<span class="nc bnc" id="L153" title="All 2 branches missed.">        if (monto == null)</span>
+<span class="nc" id="L154">            return;</span>
+        try {
+<span class="nc" id="L156">            cuentaService.transferir(cuentaOrigen, cuentaDestino, monto);</span>
+<span class="nc" id="L157">            System.out.println(&quot;Transferencia realizada correctamente&quot;);</span>
+<span class="nc" id="L158">        } catch (Exception e) {</span>
+<span class="nc" id="L159">            System.err.println(&quot;Error: &quot; + e.getMessage());</span>
+        }
+<span class="nc" id="L161">    }</span>
+
+    public void consultarSaldo(Scanner sc) {
+<span class="fc" id="L164">        System.out.println(&quot;\nCONSULTA DE SALDO\n&quot;);</span>
+<span class="fc" id="L165">        String cuentaId = InputUtils.solicitarTexto(sc, &quot;Código de cuenta&quot;, true);</span>
+<span class="pc bpc" id="L166" title="1 of 2 branches missed.">        if (cuentaId == null)</span>
+<span class="nc" id="L167">            return;</span>
+<span class="fc" id="L168">        Optional&lt;Cuenta&gt; cuentaOpt = cuentaService.obtenerCuenta(cuentaId);</span>
+<span class="fc bfc" id="L169" title="All 2 branches covered.">        if (cuentaOpt.isEmpty()) {</span>
+<span class="fc" id="L170">            System.err.println(&quot;Cuenta no encontrada&quot;);</span>
+<span class="fc" id="L171">            return;</span>
+        }
+<span class="fc" id="L173">        Cuenta cuenta = cuentaOpt.get();</span>
+<span class="fc" id="L174">        System.out.println(&quot;Saldo actual: $&quot; + String.format(&quot;%,.2f&quot;, cuenta.getSaldo()));</span>
+<span class="fc" id="L175">    }</span>
+
+    public void abrirCuenta(Scanner sc) {
+<span class="fc" id="L178">        System.out.println(&quot;\nAPERTURA DE CUENTA\n&quot;);</span>
+<span class="pc bpc" id="L179" title="1 of 2 branches missed.">        String codigoCliente = clienteService.listarTodos().isEmpty() ? null</span>
+<span class="fc" id="L180">                : InputUtils.solicitarTexto(sc, &quot;Código de cliente&quot;, true);</span>
+<span class="pc bpc" id="L181" title="1 of 2 branches missed.">        if (codigoCliente == null)</span>
+<span class="nc" id="L182">            return;</span>
+<span class="fc" id="L183">        Optional&lt;Cliente&gt; clienteOpt = clienteService.obtenerClientePorCodigo(codigoCliente);</span>
+<span class="fc bfc" id="L184" title="All 2 branches covered.">        if (clienteOpt.isEmpty()) {</span>
+<span class="fc" id="L185">            System.err.println(&quot;Cliente no encontrado&quot;);</span>
+<span class="fc" id="L186">            return;</span>
+        }
+<span class="fc" id="L188">        Cuenta.TipoCuenta tipo = InputUtils.solicitarEnum(sc, &quot;Tipo de cuenta&quot;, Cuenta.TipoCuenta.class);</span>
+<span class="fc bfc" id="L189" title="All 2 branches covered.">        if (tipo == null)</span>
+<span class="fc" id="L190">            return;</span>
+<span class="fc" id="L191">        Double saldoInicial = InputUtils.solicitarMonto(sc, &quot;Saldo inicial&quot;);</span>
+<span class="fc bfc" id="L192" title="All 2 branches covered.">        if (saldoInicial == null)</span>
+<span class="fc" id="L193">            return;</span>
+        try {
+<span class="fc" id="L195">            Cuenta cuenta = cuentaService.abrirCuenta(clienteOpt.get().getId(), tipo, saldoInicial);</span>
+<span class="fc" id="L196">            System.out.println(&quot;\nCuenta creada exitosamente&quot;);</span>
+<span class="fc" id="L197">            System.out.println(&quot;Código: &quot; + cuenta.getCodigo());</span>
+<span class="fc" id="L198">            System.out.println(&quot;Número: &quot; + cuenta.getNumeroCuenta());</span>
+<span class="fc" id="L199">            System.out.println(&quot;Saldo: $&quot; + String.format(&quot;%,.2f&quot;, cuenta.getSaldo()));</span>
+<span class="fc" id="L200">        } catch (Exception e) {</span>
+<span class="fc" id="L201">            System.err.println(&quot;Error: &quot; + e.getMessage());</span>
+        }
+
+<span class="fc" id="L204">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

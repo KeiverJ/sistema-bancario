@@ -9,19 +9,23 @@ import com.example.model.cliente.Cliente;
  * Mantiene contadores independientes por tipo para consistencia con el patrón
  * Factory.
  */
-<span class="nc" id="L12">public class CreditoCodigoGenerator {</span>
+public class CreditoCodigoGenerator {
 
-<span class="fc" id="L14">    private static final AtomicInteger contadorPersonaNatural = new AtomicInteger(1);</span>
-<span class="fc" id="L15">    private static final AtomicInteger contadorPersonaJuridica = new AtomicInteger(2001);</span>
-<span class="fc" id="L16">    private static final AtomicInteger contadorExtranjero = new AtomicInteger(3001);</span>
+<span class="nc" id="L14">    private CreditoCodigoGenerator() {</span>
+<span class="nc" id="L15">        throw new UnsupportedOperationException(&quot;Utility class&quot;);</span>
+    }
+
+<span class="fc" id="L18">    private static final AtomicInteger contadorPersonaNatural = new AtomicInteger(1);</span>
+<span class="fc" id="L19">    private static final AtomicInteger contadorPersonaJuridica = new AtomicInteger(2001);</span>
+<span class="fc" id="L20">    private static final AtomicInteger contadorExtranjero = new AtomicInteger(3001);</span>
 
     public static String generarCodigo(Cliente.TipoCliente tipoCliente) {
-<span class="pc bpc" id="L19" title="2 of 3 branches missed.">        int numero = switch (tipoCliente) {</span>
-<span class="fc" id="L20">            case PERSONA_NATURAL -&gt; contadorPersonaNatural.getAndIncrement();</span>
-<span class="nc" id="L21">            case PERSONA_JURIDICA -&gt; contadorPersonaJuridica.getAndIncrement();</span>
-<span class="pc" id="L22">            case EXTRANJERO -&gt; contadorExtranjero.getAndIncrement();</span>
+<span class="pc bpc" id="L23" title="2 of 3 branches missed.">        int numero = switch (tipoCliente) {</span>
+<span class="fc" id="L24">            case PERSONA_NATURAL -&gt; contadorPersonaNatural.getAndIncrement();</span>
+<span class="nc" id="L25">            case PERSONA_JURIDICA -&gt; contadorPersonaJuridica.getAndIncrement();</span>
+<span class="pc" id="L26">            case EXTRANJERO -&gt; contadorExtranjero.getAndIncrement();</span>
         };
-<span class="fc" id="L24">        return &quot;CRE-&quot; + String.format(&quot;%04d&quot;, numero);</span>
+<span class="fc" id="L28">        return &quot;CRE-&quot; + String.format(&quot;%04d&quot;, numero);</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

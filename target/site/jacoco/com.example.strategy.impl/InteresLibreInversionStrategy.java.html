@@ -5,12 +5,11 @@ import com.example.model.credito.Credito;
 import com.example.strategy.core.CalculoInteresStrategy;
 import com.example.config.BankConfig;
 
-<span class="nc" id="L8">public class InteresLibreInversionStrategy implements CalculoInteresStrategy {</span>
+<span class="fc" id="L8">public class InteresLibreInversionStrategy implements CalculoInteresStrategy {</span>
     @Override
     public double calcularTasaAnual(Credito credito, Cliente cliente, BankConfig config) {
-<span class="nc" id="L11">        double base = config.getTasaInteresBase();</span>
-        // Libre inversión: moderado
-<span class="nc" id="L13">        return base + 1.5;</span>
+<span class="fc" id="L11">        double base = config.getTasaInteresBase();</span>
+<span class="fc" id="L12">        return base + 1.5;</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

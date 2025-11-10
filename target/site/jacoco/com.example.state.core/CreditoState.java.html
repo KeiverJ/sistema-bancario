@@ -10,23 +10,23 @@ public interface CreditoState {
     }
 
     default void rechazar(Credito c, String motivo) {
-<span class="nc" id="L13">        throw new IllegalStateException(&quot;No se puede rechazar en estado &quot; + nombre());</span>
+<span class="fc" id="L13">        throw new IllegalStateException(&quot;No se puede rechazar en estado &quot; + nombre());</span>
     }
 
     default void desembolsar(Credito c) {
-<span class="nc" id="L17">        throw new IllegalStateException(&quot;No se puede desembolsar en estado &quot; + nombre());</span>
+<span class="fc" id="L17">        throw new IllegalStateException(&quot;No se puede desembolsar en estado &quot; + nombre());</span>
     }
 
     default boolean pagar(Credito c, double monto) {
-<span class="nc" id="L21">        throw new IllegalStateException(&quot;No se puede pagar en estado &quot; + nombre());</span>
+<span class="fc" id="L21">        throw new IllegalStateException(&quot;No se puede pagar en estado &quot; + nombre());</span>
     }
 
     default void marcarMora(Credito c) {
-<span class="nc" id="L25">        throw new IllegalStateException(&quot;No se puede marcar mora en estado &quot; + nombre());</span>
+<span class="fc" id="L25">        throw new IllegalStateException(&quot;No se puede marcar mora en estado &quot; + nombre());</span>
     }
 
     default void cerrar(Credito c) {
-<span class="nc" id="L29">        throw new IllegalStateException(&quot;No se puede cerrar en estado &quot; + nombre());</span>
+<span class="fc" id="L29">        throw new IllegalStateException(&quot;No se puede cerrar en estado &quot; + nombre());</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

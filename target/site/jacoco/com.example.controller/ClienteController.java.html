@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ClienteController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Sistema Bancario</a> &gt; <a href="index.source.html" class="el_package">com.example.controller</a> &gt; <span class="el_source">ClienteController.java</span></div><h1>ClienteController.java</h1><pre class="source lang-java linenums">package com.example.controller;
+
+import com.example.model.cliente.Cliente;
+import com.example.service.cliente.ClienteService;
+import java.util.List;
+import java.util.Optional;
+import java.util.Scanner;
+
+public class ClienteController {
+    private final ClienteService clienteService;
+
+<span class="fc" id="L12">    public ClienteController(ClienteService clienteService) {</span>
+<span class="fc" id="L13">        this.clienteService = clienteService;</span>
+<span class="fc" id="L14">    }</span>
+
+    public void crearCliente(Scanner sc) {
+<span class="fc" id="L17">        System.out.println(&quot;\nCREAR NUEVO CLIENTE\n&quot;);</span>
+<span class="fc" id="L18">        String nombre = InputUtils.solicitarTexto(sc, &quot;Nombre completo&quot;, true);</span>
+<span class="fc bfc" id="L19" title="All 2 branches covered.">        if (nombre == null) return;</span>
+<span class="fc" id="L20">        String tipoDoc = InputUtils.solicitarOpcion(sc, &quot;Tipo de documento&quot;, new String[]{&quot;CC&quot;, &quot;NIT&quot;, &quot;PASAPORTE&quot;});</span>
+<span class="fc bfc" id="L21" title="All 2 branches covered.">        if (tipoDoc == null) return;</span>
+<span class="fc" id="L22">        String numDoc = InputUtils.solicitarTexto(sc, &quot;Número de documento&quot;, true);</span>
+<span class="fc bfc" id="L23" title="All 2 branches covered.">        if (numDoc == null) return;</span>
+<span class="fc" id="L24">        Cliente.TipoCliente tipoCliente = InputUtils.solicitarEnum(sc, &quot;Tipo de cliente&quot;, Cliente.TipoCliente.class);</span>
+<span class="fc bfc" id="L25" title="All 2 branches covered.">        if (tipoCliente == null) return;</span>
+        try {
+<span class="fc" id="L27">            Cliente cliente = clienteService.crearCliente(nombre, tipoDoc, numDoc, tipoCliente);</span>
+<span class="fc" id="L28">            System.out.println(&quot;\nCliente creado exitosamente&quot;);</span>
+<span class="fc" id="L29">            System.out.println(&quot;Código: &quot; + cliente.getCodigo());</span>
+<span class="fc" id="L30">            System.out.println(&quot;Tipo: &quot; + cliente.getTipoCliente());</span>
+<span class="fc" id="L31">        } catch (Exception e) {</span>
+<span class="fc" id="L32">            System.err.println(&quot;Error: &quot; + e.getMessage());</span>
+<span class="fc" id="L33">        }</span>
+<span class="fc" id="L34">    }</span>
+
+    public void listarClientes() {
+<span class="fc" id="L37">        System.out.println(&quot;\nLISTADO DE CLIENTES\n&quot;);</span>
+<span class="fc" id="L38">        List&lt;Cliente&gt; clientes = clienteService.listarTodos();</span>
+<span class="fc bfc" id="L39" title="All 2 branches covered.">        if (clientes.isEmpty()) {</span>
+<span class="fc" id="L40">            System.out.println(&quot;No hay clientes registrados&quot;);</span>
+<span class="fc" id="L41">            return;</span>
+        }
+<span class="fc" id="L43">        System.out.println(String.format(&quot;%-12s %-30s %-20s %-15s&quot;, &quot;CÓDIGO&quot;, &quot;NOMBRE&quot;, &quot;TIPO&quot;, &quot;DOCUMENTO&quot;));</span>
+<span class="fc" id="L44">        System.out.println(&quot;-&quot;.repeat(80));</span>
+<span class="fc" id="L45">        clientes.forEach(c -&gt; System.out.println(</span>
+<span class="fc" id="L46">            String.format(&quot;%-12s %-30s %-20s %-15s&quot;, c.getCodigo(), truncar(c.getNombre(), 30), c.getTipoCliente(), c.getNumeroDocumento())));</span>
+<span class="fc" id="L47">        System.out.println(&quot;-&quot;.repeat(80));</span>
+<span class="fc" id="L48">        System.out.println(&quot;Total: &quot; + clientes.size() + &quot; cliente(s)&quot;);</span>
+<span class="fc" id="L49">    }</span>
+
+    public String seleccionarCliente(Scanner sc) {
+<span class="fc" id="L52">        List&lt;Cliente&gt; clientes = clienteService.listarTodos();</span>
+<span class="fc bfc" id="L53" title="All 2 branches covered.">        if (clientes.isEmpty()) {</span>
+<span class="fc" id="L54">            System.err.println(&quot;No hay clientes. Cree un cliente primero&quot;);</span>
+<span class="fc" id="L55">            return null;</span>
+        }
+<span class="fc" id="L57">        System.out.println(&quot;\nClientes:&quot;);</span>
+<span class="fc" id="L58">        System.out.println(String.format(&quot;%-12s %-30s&quot;, &quot;CÓDIGO&quot;, &quot;NOMBRE&quot;));</span>
+<span class="fc" id="L59">        System.out.println(&quot;-&quot;.repeat(45));</span>
+<span class="fc" id="L60">        clientes.forEach(c -&gt; System.out.println(</span>
+<span class="fc" id="L61">            String.format(&quot;%-12s %-30s&quot;, c.getCodigo(), truncar(c.getNombre(), 30))));</span>
+<span class="fc" id="L62">        System.out.println(&quot;-&quot;.repeat(45));</span>
+<span class="fc" id="L63">        String codigo = InputUtils.solicitarTexto(sc, &quot;\nCódigo del cliente&quot;, true);</span>
+<span class="pc bpc" id="L64" title="1 of 4 branches missed.">        if (codigo != null &amp;&amp; clienteService.obtenerClientePorCodigo(codigo).isEmpty()) {</span>
+<span class="fc" id="L65">            System.err.println(&quot;Cliente no encontrado&quot;);</span>
+<span class="fc" id="L66">            return null;</span>
+        }
+<span class="fc" id="L68">        return codigo;</span>
+    }
+
+    public Optional&lt;Cliente&gt; obtenerClientePorCodigo(String codigo) {
+<span class="nc" id="L72">        return clienteService.obtenerClientePorCodigo(codigo);</span>
+    }
+
+    private String truncar(String texto, int longitud) {
+<span class="fc bfc" id="L76" title="All 2 branches covered.">        if (texto == null) return &quot;&quot;;</span>
+<span class="pc bpc" id="L77" title="1 of 2 branches missed.">        return texto.length() &gt; longitud ? texto.substring(0, longitud - 3) + &quot;...&quot; : texto;</span>
+    }
+
+    public void cambiarScoreCliente(Scanner sc) {
+<span class="fc" id="L81">        System.out.println(&quot;\nCAMBIAR SCORE DE CLIENTE\n&quot;);</span>
+<span class="fc" id="L82">        String codigo = InputUtils.solicitarTexto(sc, &quot;Código de cliente&quot;, true);</span>
+<span class="fc bfc" id="L83" title="All 2 branches covered.">        if (codigo == null) return;</span>
+<span class="fc" id="L84">        Optional&lt;Cliente&gt; clienteOpt = clienteService.obtenerClientePorCodigo(codigo);</span>
+<span class="pc bpc" id="L85" title="1 of 2 branches missed.">        if (clienteOpt.isEmpty()) {</span>
+<span class="nc" id="L86">            System.err.println(&quot;Cliente no encontrado&quot;);</span>
+<span class="nc" id="L87">            return;</span>
+        }
+<span class="fc" id="L89">        Integer nuevoScore = InputUtils.solicitarEnteroPositivo(sc, &quot;Nuevo score (300-850)&quot;);</span>
+<span class="pc bpc" id="L90" title="1 of 2 branches missed.">        if (nuevoScore == null) return;</span>
+        try {
+<span class="fc" id="L92">            Cliente actualizado = clienteService.actualizarScorePorCodigo(codigo, nuevoScore);</span>
+<span class="nc" id="L93">            System.out.println(&quot;Score actualizado correctamente. Nuevo score: &quot; + actualizado.getScoreActual());</span>
+<span class="fc" id="L94">        } catch (Exception e) {</span>
+<span class="fc" id="L95">            System.err.println(&quot;Error: &quot; + e.getMessage());</span>
+<span class="nc" id="L96">        }</span>
+<span class="fc" id="L97">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

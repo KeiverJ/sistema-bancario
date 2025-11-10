@@ -8,68 +8,66 @@ import com.example.model.transacccion.Transaccion;
 
 /**
  * Repository para gestión de Transacciones.
- * 
- * @Repository hace que Spring Boot cree UNA sola instancia (Singleton).
  */
 public class TransaccionRepository {
 
     private final Map&lt;String, Transaccion&gt; transacciones;
 
-<span class="fc" id="L18">    public TransaccionRepository() {</span>
-<span class="fc" id="L19">        this.transacciones = new ConcurrentHashMap&lt;&gt;();</span>
-<span class="fc" id="L20">    }</span>
+<span class="fc" id="L16">    public TransaccionRepository() {</span>
+<span class="fc" id="L17">        this.transacciones = new ConcurrentHashMap&lt;&gt;();</span>
+<span class="fc" id="L18">    }</span>
 
     public Transaccion save(Transaccion transaccion) {
-<span class="pc bpc" id="L23" title="1 of 4 branches missed.">        if (transaccion.getId() == null || transaccion.getId().isEmpty()) {</span>
-<span class="fc" id="L24">            transaccion.setId(UUID.randomUUID().toString());</span>
+<span class="pc bpc" id="L21" title="1 of 4 branches missed.">        if (transaccion.getId() == null || transaccion.getId().isEmpty()) {</span>
+<span class="fc" id="L22">            transaccion.setId(UUID.randomUUID().toString());</span>
         }
-<span class="fc" id="L26">        transacciones.put(transaccion.getId(), transaccion);</span>
-<span class="fc" id="L27">        return transaccion;</span>
+<span class="fc" id="L24">        transacciones.put(transaccion.getId(), transaccion);</span>
+<span class="fc" id="L25">        return transaccion;</span>
     }
 
     public Optional&lt;Transaccion&gt; findById(String id) {
-<span class="fc" id="L31">        return Optional.ofNullable(transacciones.get(id));</span>
+<span class="fc" id="L29">        return Optional.ofNullable(transacciones.get(id));</span>
     }
 
     public List&lt;Transaccion&gt; findByCuentaId(String cuentaId) {
-<span class="fc" id="L35">        return transacciones.values().stream()</span>
-<span class="fc bfc" id="L36" title="All 2 branches covered.">                .filter(t -&gt; cuentaId.equals(t.getCuentaOrigenId())</span>
-<span class="fc bfc" id="L37" title="All 2 branches covered.">                        || cuentaId.equals(t.getCuentaDestinoId()))</span>
-<span class="fc" id="L38">                .toList();</span>
+<span class="fc" id="L33">        return transacciones.values().stream()</span>
+<span class="fc bfc" id="L34" title="All 2 branches covered.">                .filter(t -&gt; cuentaId.equals(t.getCuentaOrigenId())</span>
+<span class="fc bfc" id="L35" title="All 2 branches covered.">                        || cuentaId.equals(t.getCuentaDestinoId()))</span>
+<span class="fc" id="L36">                .toList();</span>
     }
 
     public List&lt;Transaccion&gt; findByTipo(Transaccion.TipoTransaccion tipo) {
-<span class="fc" id="L42">        return transacciones.values().stream()</span>
-<span class="fc bfc" id="L43" title="All 2 branches covered.">                .filter(t -&gt; t.getTipo() == tipo)</span>
-<span class="fc" id="L44">                .toList();</span>
+<span class="fc" id="L40">        return transacciones.values().stream()</span>
+<span class="fc bfc" id="L41" title="All 2 branches covered.">                .filter(t -&gt; t.getTipo() == tipo)</span>
+<span class="fc" id="L42">                .toList();</span>
     }
 
     public List&lt;Transaccion&gt; findByEstado(Transaccion.EstadoTransaccion estado) {
-<span class="fc" id="L48">        return transacciones.values().stream()</span>
-<span class="fc bfc" id="L49" title="All 2 branches covered.">                .filter(t -&gt; t.getEstado() == estado)</span>
-<span class="fc" id="L50">                .toList();</span>
+<span class="fc" id="L46">        return transacciones.values().stream()</span>
+<span class="fc bfc" id="L47" title="All 2 branches covered.">                .filter(t -&gt; t.getEstado() == estado)</span>
+<span class="fc" id="L48">                .toList();</span>
     }
 
     public List&lt;Transaccion&gt; findByFechaRange(LocalDateTime inicio, LocalDateTime fin) {
-<span class="fc" id="L54">        return transacciones.values().stream()</span>
-<span class="pc bpc" id="L55" title="1 of 4 branches missed.">                .filter(t -&gt; !t.getFecha().isBefore(inicio) &amp;&amp; !t.getFecha().isAfter(fin))</span>
-<span class="fc" id="L56">                .toList();</span>
+<span class="fc" id="L52">        return transacciones.values().stream()</span>
+<span class="pc bpc" id="L53" title="1 of 4 branches missed.">                .filter(t -&gt; !t.getFecha().isBefore(inicio) &amp;&amp; !t.getFecha().isAfter(fin))</span>
+<span class="fc" id="L54">                .toList();</span>
     }
 
     public List&lt;Transaccion&gt; findAll() {
-<span class="fc" id="L60">        return new ArrayList&lt;&gt;(transacciones.values());</span>
+<span class="fc" id="L58">        return new ArrayList&lt;&gt;(transacciones.values());</span>
     }
 
     public void delete(String id) {
-<span class="fc" id="L64">        transacciones.remove(id);</span>
-<span class="fc" id="L65">    }</span>
+<span class="fc" id="L62">        transacciones.remove(id);</span>
+<span class="fc" id="L63">    }</span>
 
     public void deleteAll() {
-<span class="fc" id="L68">        transacciones.clear();</span>
-<span class="fc" id="L69">    }</span>
+<span class="fc" id="L66">        transacciones.clear();</span>
+<span class="fc" id="L67">    }</span>
 
     public long count() {
-<span class="fc" id="L72">        return transacciones.size();</span>
+<span class="fc" id="L70">        return transacciones.size();</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

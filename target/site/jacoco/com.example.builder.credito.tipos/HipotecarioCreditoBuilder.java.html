@@ -49,13 +49,11 @@ public class HipotecarioCreditoBuilder implements CreditoBuilder {
 
     @Override
     public Credito build() {
-        // Configuración específica para hipotecario
-<span class="pc bpc" id="L53" title="1 of 2 branches missed.">        if (credito.getGarantia() == null) {</span>
-<span class="fc" id="L54">            credito.setGarantia(&quot;HIPOTECA&quot;);</span>
+<span class="pc bpc" id="L52" title="1 of 2 branches missed.">        if (credito.getGarantia() == null) {</span>
+<span class="fc" id="L53">            credito.setGarantia(&quot;HIPOTECA&quot;);</span>
         }
-        // Los créditos hipotecarios suelen tener seguro de vida obligatorio
-<span class="fc" id="L57">        credito.setSeguroVida(true);</span>
-<span class="fc" id="L58">        return credito;</span>
+<span class="fc" id="L55">        credito.setSeguroVida(true);</span>
+<span class="fc" id="L56">        return credito;</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

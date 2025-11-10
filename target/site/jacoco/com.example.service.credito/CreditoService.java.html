@@ -80,26 +80,26 @@ public class CreditoService {
     }
 
     public List&lt;Credito&gt; listarCreditosClientePorCodigo(String codigoCliente) {
-<span class="nc" id="L83">        var clienteOpt = clienteRepository.findAll().stream()</span>
-<span class="nc" id="L84">                .filter(c -&gt; codigoCliente.equals(c.getCodigo()))</span>
-<span class="nc" id="L85">                .findFirst();</span>
-<span class="nc bnc" id="L86" title="All 2 branches missed.">        if (clienteOpt.isEmpty())</span>
-<span class="nc" id="L87">            throw new IllegalArgumentException(&quot;Cliente no encontrado&quot;);</span>
-<span class="nc" id="L88">        String clienteId = clienteOpt.get().getId();</span>
-<span class="nc" id="L89">        return creditoRepository.findAll().stream()</span>
-<span class="nc" id="L90">                .filter(cr -&gt; clienteId.equals(cr.getClienteId()))</span>
-<span class="nc" id="L91">                .collect(Collectors.toList());</span>
+<span class="fc" id="L83">        var clienteOpt = clienteRepository.findAll().stream()</span>
+<span class="fc" id="L84">                .filter(c -&gt; codigoCliente.equals(c.getCodigo()))</span>
+<span class="fc" id="L85">                .findFirst();</span>
+<span class="fc bfc" id="L86" title="All 2 branches covered.">        if (clienteOpt.isEmpty())</span>
+<span class="fc" id="L87">            throw new IllegalArgumentException(&quot;Cliente no encontrado&quot;);</span>
+<span class="fc" id="L88">        String clienteId = clienteOpt.get().getId();</span>
+<span class="fc" id="L89">        return creditoRepository.findAll().stream()</span>
+<span class="fc" id="L90">                .filter(cr -&gt; clienteId.equals(cr.getClienteId()))</span>
+<span class="fc" id="L91">                .collect(Collectors.toList());</span>
     }
 
     public boolean pagarCuota(String creditoId, double montoPago) {
-<span class="nc" id="L95">        Credito credito = creditoRepository.findById(creditoId)</span>
-<span class="nc" id="L96">                .orElseThrow(() -&gt; new IllegalArgumentException(&quot;Crédito no encontrado&quot;));</span>
-<span class="nc" id="L97">        boolean ok = credito.pagarCuota(montoPago);</span>
-<span class="nc bnc" id="L98" title="All 2 branches missed.">        if (ok) {</span>
-<span class="nc" id="L99">            Credito saved = creditoRepository.save(credito);</span>
-<span class="nc" id="L100">            publisher.publish(new CreditoEstadoCambiadoEvent(saved));</span>
+<span class="fc" id="L95">        Credito credito = creditoRepository.findById(creditoId)</span>
+<span class="fc" id="L96">                .orElseThrow(() -&gt; new IllegalArgumentException(&quot;Crédito no encontrado&quot;));</span>
+<span class="fc" id="L97">        boolean ok = credito.pagarCuota(montoPago);</span>
+<span class="fc bfc" id="L98" title="All 2 branches covered.">        if (ok) {</span>
+<span class="fc" id="L99">            Credito saved = creditoRepository.save(credito);</span>
+<span class="fc" id="L100">            publisher.publish(new CreditoEstadoCambiadoEvent(saved));</span>
         }
-<span class="nc" id="L102">        return ok;</span>
+<span class="fc" id="L102">        return ok;</span>
     }
 
     public double consultarSaldo(String creditoId) {
@@ -109,26 +109,23 @@ public class CreditoService {
     }
 
     public double getTotalEndeudamiento(String clienteId) {
-<span class="nc" id="L112">        return creditoRepository.getTotalSaldoByClienteId(clienteId);</span>
+<span class="fc" id="L112">        return creditoRepository.getTotalSaldoByClienteId(clienteId);</span>
     }
 
     public double calcularInteresMensual(String creditoId) {
-<span class="nc" id="L116">        Credito credito = creditoRepository.findById(creditoId)</span>
-<span class="nc" id="L117">                .orElseThrow(() -&gt; new IllegalArgumentException(&quot;Crédito no encontrado&quot;));</span>
-<span class="nc" id="L118">        return credito.getSaldo() * (credito.getTasaInteres() / 12.0) / 100.0;</span>
+<span class="fc" id="L116">        Credito credito = creditoRepository.findById(creditoId)</span>
+<span class="fc" id="L117">                .orElseThrow(() -&gt; new IllegalArgumentException(&quot;Crédito no encontrado&quot;));</span>
+<span class="fc" id="L118">        return credito.getSaldo() * (credito.getTasaInteres() / 12.0) / 100.0;</span>
     }
 
     public List&lt;Credito&gt; listarTodosCreditos() {
-<span class="nc" id="L122">        return creditoRepository.findAll();</span>
+<span class="fc" id="L122">        return creditoRepository.findAll();</span>
     }
 
-    /**
-     * Guarda un crédito y publica el evento de cambio de estado
-     */
     public Credito guardar(Credito credito) {
-<span class="nc" id="L129">        Credito saved = creditoRepository.save(credito);</span>
-<span class="nc" id="L130">        publisher.publish(new CreditoEstadoCambiadoEvent(saved));</span>
-<span class="nc" id="L131">        return saved;</span>
+<span class="fc" id="L126">        Credito saved = creditoRepository.save(credito);</span>
+<span class="fc" id="L127">        publisher.publish(new CreditoEstadoCambiadoEvent(saved));</span>
+<span class="fc" id="L128">        return saved;</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

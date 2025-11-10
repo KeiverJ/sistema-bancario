@@ -5,13 +5,12 @@ import com.example.model.credito.Credito;
 import com.example.strategy.core.CalculoInteresStrategy;
 import com.example.config.BankConfig;
 
-<span class="nc" id="L8">public class InteresHipotecarioStrategy implements CalculoInteresStrategy {</span>
+<span class="fc" id="L8">public class InteresHipotecarioStrategy implements CalculoInteresStrategy {</span>
     @Override
     public double calcularTasaAnual(Credito credito, Cliente cliente, BankConfig config) {
-<span class="nc" id="L11">        double base = config.getTasaInteresBase();</span>
-        // Hipotecario: más bajo para PN, un ajuste para PJ
-<span class="nc bnc" id="L13" title="All 2 branches missed.">        double ajuste = (cliente.getTipoCliente() == Cliente.TipoCliente.PERSONA_JURIDICA) ? -1.0 : -2.0;</span>
-<span class="nc" id="L14">        return Math.max(0.0, base + ajuste);</span>
+<span class="fc" id="L11">        double base = config.getTasaInteresBase();</span>
+<span class="pc bpc" id="L12" title="1 of 2 branches missed.">        double ajuste = (cliente.getTipoCliente() == Cliente.TipoCliente.PERSONA_JURIDICA) ? -1.0 : -2.0;</span>
+<span class="fc" id="L13">        return Math.max(0.0, base + ajuste);</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

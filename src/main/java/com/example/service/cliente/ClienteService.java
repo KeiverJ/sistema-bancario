@@ -16,12 +16,10 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class ClienteService {
 
   private final ClienteRepository clienteRepository;
-  private final BankConfig bankConfig;
   private final AtomicInteger contadorCliente = new AtomicInteger(1);
 
   public ClienteService(ClienteRepository clienteRepository, BankConfig bankConfig) {
     this.clienteRepository = clienteRepository;
-    this.bankConfig = bankConfig;
   }
 
   public Cliente crearCliente(String nombre, String tipoDocumento,

@@ -1,4 +1,5 @@
 package com.example.state;
+import com.example.state.core.CreditoState;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -15,6 +16,61 @@ import com.example.state.impl.SolicitadoState;
 import static org.junit.jupiter.api.Assertions.*;
 
 class StateUnitTest {
+
+    @Test
+    @DisplayName("CreditoState: rechazar lanza excepción por defecto")
+    void creditoStateRechazarDefault() {
+        CreditoState state = new CreditoState() {
+            public String nombre() { return "SOLICITADO"; }
+        };
+        Credito c = new Credito();
+        Exception ex = assertThrows(IllegalStateException.class, () -> state.rechazar(c, "motivo"));
+        assertTrue(ex.getMessage().contains("No se puede rechazar"));
+    }
+
+    @Test
+    @DisplayName("CreditoState: desembolsar lanza excepción por defecto")
+    void creditoStateDesembolsarDefault() {
+        CreditoState state = new CreditoState() {
+            public String nombre() { return "SOLICITADO"; }
+        };
+        Credito c = new Credito();
+        Exception ex = assertThrows(IllegalStateException.class, () -> state.desembolsar(c));
+        assertTrue(ex.getMessage().contains("No se puede desembolsar"));
+    }
+
+    @Test
+    @DisplayName("CreditoState: pagar lanza excepción por defecto")
+    void creditoStatePagarDefault() {
+        CreditoState state = new CreditoState() {
+            public String nombre() { return "SOLICITADO"; }
+        };
+        Credito c = new Credito();
+        Exception ex = assertThrows(IllegalStateException.class, () -> state.pagar(c, 100));
+        assertTrue(ex.getMessage().contains("No se puede pagar"));
+    }
+
+    @Test
+    @DisplayName("CreditoState: marcarMora lanza excepción por defecto")
+    void creditoStateMarcarMoraDefault() {
+        CreditoState state = new CreditoState() {
+            public String nombre() { return "SOLICITADO"; }
+        };
+        Credito c = new Credito();
+        Exception ex = assertThrows(IllegalStateException.class, () -> state.marcarMora(c));
+        assertTrue(ex.getMessage().contains("No se puede marcar mora"));
+    }
+
+    @Test
+    @DisplayName("CreditoState: cerrar lanza excepción por defecto")
+    void creditoStateCerrarDefault() {
+        CreditoState state = new CreditoState() {
+            public String nombre() { return "SOLICITADO"; }
+        };
+        Credito c = new Credito();
+        Exception ex = assertThrows(IllegalStateException.class, () -> state.cerrar(c));
+        assertTrue(ex.getMessage().contains("No se puede cerrar"));
+    }
 
     // Verifica que el crédito pasa de SOLICITADO a CANCELADO manualmente
     @Test

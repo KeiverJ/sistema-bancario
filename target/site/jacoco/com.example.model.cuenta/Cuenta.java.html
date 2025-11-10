@@ -4,7 +4,6 @@ import com.example.model.producto.ProductoFinanciero;
 
 <span class="fc" id="L5">public class Cuenta extends ProductoFinanciero {</span>
 
-    // Eliminar el campo id duplicado; usar el id heredado de ProductoFinanciero
     private String codigo;
     private String numeroCuenta;
     private TipoCuenta tipoCuenta;
@@ -12,76 +11,75 @@ import com.example.model.producto.ProductoFinanciero;
     private double cuotaManejo;
     private EstadoCuenta estado;
 
-<span class="fc" id="L15">    public enum TipoCuenta {</span>
-<span class="fc" id="L16">        AHORROS, CORRIENTE</span>
+<span class="fc" id="L14">    public enum TipoCuenta {</span>
+<span class="fc" id="L15">        AHORROS, CORRIENTE</span>
     }
 
-<span class="fc" id="L19">    public enum EstadoCuenta {</span>
-<span class="fc" id="L20">        ACTIVA, INACTIVA, BLOQUEADA</span>
+<span class="fc" id="L18">    public enum EstadoCuenta {</span>
+<span class="fc" id="L19">        ACTIVA, INACTIVA, BLOQUEADA</span>
     }
 
-    // Métodos getId/setId heredados directamente de ProductoFinanciero
 
     public String getCodigo() {
-<span class="fc" id="L26">        return codigo;</span>
+<span class="fc" id="L24">        return codigo;</span>
     }
 
     public void setCodigo(String codigo) {
-<span class="fc" id="L30">        this.codigo = codigo;</span>
-<span class="fc" id="L31">    }</span>
+<span class="fc" id="L28">        this.codigo = codigo;</span>
+<span class="fc" id="L29">    }</span>
 
     public String getNumeroCuenta() {
-<span class="fc" id="L34">        return numeroCuenta;</span>
+<span class="fc" id="L32">        return numeroCuenta;</span>
     }
 
     public void setNumeroCuenta(String numeroCuenta) {
-<span class="fc" id="L38">        this.numeroCuenta = numeroCuenta;</span>
-<span class="fc" id="L39">    }</span>
+<span class="fc" id="L36">        this.numeroCuenta = numeroCuenta;</span>
+<span class="fc" id="L37">    }</span>
 
     public TipoCuenta getTipoCuenta() {
-<span class="fc" id="L42">        return tipoCuenta;</span>
+<span class="fc" id="L40">        return tipoCuenta;</span>
     }
 
     public void setTipoCuenta(TipoCuenta tipoCuenta) {
-<span class="fc" id="L46">        this.tipoCuenta = tipoCuenta;</span>
-<span class="fc" id="L47">    }</span>
+<span class="fc" id="L44">        this.tipoCuenta = tipoCuenta;</span>
+<span class="fc" id="L45">    }</span>
 
     public double getSaldo() {
-<span class="fc" id="L50">        return saldo;</span>
+<span class="fc" id="L48">        return saldo;</span>
     }
 
     public void setSaldo(double saldo) {
-<span class="fc" id="L54">        this.saldo = saldo;</span>
-<span class="fc" id="L55">    }</span>
+<span class="fc" id="L52">        this.saldo = saldo;</span>
+<span class="fc" id="L53">    }</span>
 
     public double getCuotaManejo() {
-<span class="fc" id="L58">        return cuotaManejo;</span>
+<span class="fc" id="L56">        return cuotaManejo;</span>
     }
 
     public void setCuotaManejo(double cuotaManejo) {
-<span class="fc" id="L62">        this.cuotaManejo = cuotaManejo;</span>
-<span class="fc" id="L63">    }</span>
+<span class="fc" id="L60">        this.cuotaManejo = cuotaManejo;</span>
+<span class="fc" id="L61">    }</span>
 
     public EstadoCuenta getEstado() {
-<span class="fc" id="L66">        return estado;</span>
+<span class="fc" id="L64">        return estado;</span>
     }
 
     public void setEstado(EstadoCuenta estado) {
-<span class="fc" id="L70">        this.estado = estado;</span>
-<span class="fc" id="L71">    }</span>
+<span class="fc" id="L68">        this.estado = estado;</span>
+<span class="fc" id="L69">    }</span>
 
     public boolean depositar(double monto) {
-<span class="pc bpc" id="L74" title="2 of 4 branches missed.">        if (monto &lt;= 0 || estado != EstadoCuenta.ACTIVA)</span>
-<span class="nc" id="L75">            return false;</span>
-<span class="fc" id="L76">        this.saldo += monto;</span>
-<span class="fc" id="L77">        return true;</span>
+<span class="pc bpc" id="L72" title="2 of 4 branches missed.">        if (monto &lt;= 0 || estado != EstadoCuenta.ACTIVA)</span>
+<span class="nc" id="L73">            return false;</span>
+<span class="fc" id="L74">        this.saldo += monto;</span>
+<span class="fc" id="L75">        return true;</span>
     }
 
     public boolean retirar(double monto) {
-<span class="pc bpc" id="L81" title="2 of 6 branches missed.">        if (monto &lt;= 0 || estado != EstadoCuenta.ACTIVA || saldo &lt; monto)</span>
-<span class="fc" id="L82">            return false;</span>
-<span class="fc" id="L83">        this.saldo -= monto;</span>
-<span class="fc" id="L84">        return true;</span>
+<span class="pc bpc" id="L79" title="2 of 6 branches missed.">        if (monto &lt;= 0 || estado != EstadoCuenta.ACTIVA || saldo &lt; monto)</span>
+<span class="fc" id="L80">            return false;</span>
+<span class="fc" id="L81">        this.saldo -= monto;</span>
+<span class="fc" id="L82">        return true;</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

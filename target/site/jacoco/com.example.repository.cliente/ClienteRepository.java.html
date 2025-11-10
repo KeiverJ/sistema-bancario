@@ -7,60 +7,58 @@ import com.example.model.cliente.Cliente;
 
 /**
  * Repository para gestión de Clientes.
- * 
- * @Repository hace que Spring Boot cree UNA sola instancia (Singleton).
  */
 public class ClienteRepository {
 
   private final Map&lt;String, Cliente&gt; clientes;
 
-<span class="fc" id="L17">  public ClienteRepository() {</span>
-<span class="fc" id="L18">    this.clientes = new ConcurrentHashMap&lt;&gt;();</span>
-<span class="fc" id="L19">  }</span>
+<span class="fc" id="L15">  public ClienteRepository() {</span>
+<span class="fc" id="L16">    this.clientes = new ConcurrentHashMap&lt;&gt;();</span>
+<span class="fc" id="L17">  }</span>
 
   public Cliente save(Cliente cliente) {
-<span class="pc bpc" id="L22" title="1 of 4 branches missed.">    if (cliente.getId() == null || cliente.getId().isEmpty()) {</span>
-<span class="fc" id="L23">      cliente.setId(UUID.randomUUID().toString());</span>
+<span class="pc bpc" id="L20" title="1 of 4 branches missed.">    if (cliente.getId() == null || cliente.getId().isEmpty()) {</span>
+<span class="fc" id="L21">      cliente.setId(UUID.randomUUID().toString());</span>
     }
-<span class="fc" id="L25">    clientes.put(cliente.getId(), cliente);</span>
-<span class="fc" id="L26">    return cliente;</span>
+<span class="fc" id="L23">    clientes.put(cliente.getId(), cliente);</span>
+<span class="fc" id="L24">    return cliente;</span>
   }
 
   public Optional&lt;Cliente&gt; findById(String id) {
-<span class="fc" id="L30">    return Optional.ofNullable(clientes.get(id));</span>
+<span class="fc" id="L28">    return Optional.ofNullable(clientes.get(id));</span>
   }
 
   public Optional&lt;Cliente&gt; findByNumeroDocumento(String numeroDocumento) {
-<span class="fc" id="L34">    return clientes.values().stream()</span>
-<span class="fc" id="L35">        .filter(c -&gt; c.getNumeroDocumento().equals(numeroDocumento))</span>
-<span class="fc" id="L36">        .findFirst();</span>
+<span class="fc" id="L32">    return clientes.values().stream()</span>
+<span class="fc" id="L33">        .filter(c -&gt; c.getNumeroDocumento().equals(numeroDocumento))</span>
+<span class="fc" id="L34">        .findFirst();</span>
   }
 
   public List&lt;Cliente&gt; findAll() {
-<span class="fc" id="L40">    return new ArrayList&lt;&gt;(clientes.values());</span>
+<span class="fc" id="L38">    return new ArrayList&lt;&gt;(clientes.values());</span>
   }
 
   public List&lt;Cliente&gt; findByTipoCliente(Cliente.TipoCliente tipoCliente) {
-<span class="fc" id="L44">    return clientes.values().stream()</span>
-<span class="fc bfc" id="L45" title="All 2 branches covered.">        .filter(c -&gt; c.getTipoCliente() == tipoCliente)</span>
-<span class="fc" id="L46">        .toList();</span>
+<span class="fc" id="L42">    return clientes.values().stream()</span>
+<span class="fc bfc" id="L43" title="All 2 branches covered.">        .filter(c -&gt; c.getTipoCliente() == tipoCliente)</span>
+<span class="fc" id="L44">        .toList();</span>
   }
 
   public boolean existsByNumeroDocumento(String numeroDocumento) {
-<span class="fc" id="L50">    return clientes.values().stream()</span>
-<span class="fc" id="L51">        .anyMatch(c -&gt; c.getNumeroDocumento().equals(numeroDocumento));</span>
+<span class="fc" id="L48">    return clientes.values().stream()</span>
+<span class="fc" id="L49">        .anyMatch(c -&gt; c.getNumeroDocumento().equals(numeroDocumento));</span>
   }
 
   public void delete(String id) {
-<span class="fc" id="L55">    clientes.remove(id);</span>
-<span class="fc" id="L56">  }</span>
+<span class="fc" id="L53">    clientes.remove(id);</span>
+<span class="fc" id="L54">  }</span>
 
   public void deleteAll() {
-<span class="fc" id="L59">    clientes.clear();</span>
-<span class="fc" id="L60">  }</span>
+<span class="fc" id="L57">    clientes.clear();</span>
+<span class="fc" id="L58">  }</span>
 
   public long count() {
-<span class="fc" id="L63">    return clientes.size();</span>
+<span class="fc" id="L61">    return clientes.size();</span>
   }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

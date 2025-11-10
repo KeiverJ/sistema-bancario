@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class SolicitudUnitTest {
+    // Prueba el flujo de estados y comentarios en Solicitud
     @Test
     void flujoEstadosYComentarios() {
         Solicitud s = new Solicitud();

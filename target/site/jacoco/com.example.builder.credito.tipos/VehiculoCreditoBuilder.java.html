@@ -49,13 +49,11 @@ public class VehiculoCreditoBuilder implements CreditoBuilder {
 
     @Override
     public Credito build() {
-        // Configuración específica para vehículo
-<span class="fc bfc" id="L53" title="All 2 branches covered.">        if (credito.getGarantia() == null) {</span>
-<span class="fc" id="L54">            credito.setGarantia(&quot;PRENDA&quot;);</span>
+<span class="fc bfc" id="L52" title="All 2 branches covered.">        if (credito.getGarantia() == null) {</span>
+<span class="fc" id="L53">            credito.setGarantia(&quot;PRENDA&quot;);</span>
         }
-        // Los créditos de vehículo suelen tener seguro de vida
-<span class="fc" id="L57">        credito.setSeguroVida(true);</span>
-<span class="fc" id="L58">        return credito;</span>
+<span class="fc" id="L55">        credito.setSeguroVida(true);</span>
+<span class="fc" id="L56">        return credito;</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

@@ -54,7 +54,7 @@ public class PaqueteProductos implements ProductoFinancieroComponent {
     @Override
     public String getDescripcion() {
 <span class="fc" id="L56">        StringBuilder sb = new StringBuilder();</span>
-<span class="fc" id="L57">        sb.append(&quot;📦 Paquete: &quot;).append(nombre).append(&quot;\n&quot;);</span>
+<span class="fc" id="L57">        sb.append(&quot;Paquete: &quot;).append(nombre).append(&quot;\n&quot;);</span>
 <span class="fc" id="L58">        sb.append(&quot;Productos incluidos:\n&quot;);</span>
 <span class="fc bfc" id="L59" title="All 2 branches covered.">        for (ProductoFinancieroComponent comp : items) {</span>
 <span class="fc" id="L60">            sb.append(&quot;\n&quot;).append(comp.getDescripcion());</span>
