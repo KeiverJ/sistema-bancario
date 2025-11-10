@@ -58,7 +58,7 @@ Sistema Bancario,com.example.builder.credito.tipos,LibreInversionCreditoBuilder,
 Sistema Bancario,com.example.model.solicitud,Solicitud,24,60,5,5,10,20,12,7,7,7
 Sistema Bancario,com.example.model.solicitud,Solicitud.EstadoSolicitud,0,27,0,0,0,2,0,1,0,1
 Sistema Bancario,com.example.model.solicitud,Solicitud.TipoSolicitud,21,0,0,0,2,0,1,0,1,0
-Sistema Bancario,com.example.service.credito,CreditoService,0,210,0,4,0,47,0,20,0,18
+Sistema Bancario,com.example.service.credito,CreditoService,0,192,0,4,0,41,0,20,0,18
 Sistema Bancario,com.example.decorator.impl,ExencionCuotaDecorator,0,16,0,0,0,4,0,3,0,3
 Sistema Bancario,com.example.decorator.impl,SeguroVidaDecorator,0,13,0,0,0,4,0,3,0,3
 Sistema Bancario,com.example.decorator.impl,BeneficioVipDecorator,0,18,0,0,0,5,0,4,0,4
@@ -80,7 +80,7 @@ Sistema Bancario,com.example.state.impl,SolicitadoState,0,17,0,0,0,6,0,4,0,4
 Sistema Bancario,com.example.state.impl,EnMoraState,2,37,1,3,1,9,1,4,0,3
 Sistema Bancario,com.example.state.impl,AprobadoState,0,17,0,0,0,6,0,4,0,4
 Sistema Bancario,com.example.service.cuenta,CuentaService,0,328,0,12,0,71,0,27,0,21
-Sistema Bancario,com.example,BankingSystemContext,151,0,0,0,22,0,1,0,1,0
+Sistema Bancario,com.example,BankingSystemContext,135,0,0,0,17,0,1,0,1,0
 Sistema Bancario,com.example.model.cuenta,Cuenta,2,84,4,6,1,26,4,16,0,15
 Sistema Bancario,com.example.model.cuenta,Cuenta.EstadoCuenta,0,21,0,0,0,2,0,1,0,1
 Sistema Bancario,com.example.model.cuenta,Cuenta.TipoCuenta,0,15,0,0,0,2,0,1,0,1

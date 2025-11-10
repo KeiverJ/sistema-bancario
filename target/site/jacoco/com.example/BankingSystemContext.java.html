@@ -29,56 +29,49 @@ public class BankingSystemContext {
         public final com.example.controller.TransaccionController transaccionController;
 
 <span class="nc" id="L31">        public BankingSystemContext() {</span>
-                // Configuración y repositorios
-<span class="nc" id="L33">                BankConfig bankConfig = new BankConfig();</span>
-<span class="nc" id="L34">                ClienteRepository clienteRepository = new ClienteRepository();</span>
-<span class="nc" id="L35">                CuentaRepository cuentaRepository = new CuentaRepository();</span>
-<span class="nc" id="L36">                CreditoRepository creditoRepository = new CreditoRepository();</span>
-<span class="nc" id="L37">                TransaccionRepository transaccionRepository = new TransaccionRepository();</span>
 
-                // Factories y providers
-<span class="nc" id="L40">                FabricaProductosProvider fabricaProductosProvider = new FabricaProductosProvider();</span>
-<span class="nc" id="L41">                InteresStrategyRegistry interesStrategyRegistry = new InteresStrategyRegistry();</span>
-<span class="nc" id="L42">                CreditoBuilderRegistry creditoBuilderRegistry = new CreditoBuilderRegistry();</span>
-<span class="nc" id="L43">                ApprovalChainBuilder approvalChainBuilder = new ApprovalChainBuilder();</span>
-<span class="nc" id="L44">                ScoreProviderRegistry scoreProviderRegistry = new ScoreProviderRegistry(</span>
-                                new BuroFinancieroAdapter(clienteRepository),
-                                new LegacyRiskApiAdapter());
+                // Configuración y repositorios
+<span class="nc" id="L34">                BankConfig bankConfig = new BankConfig();</span>
+<span class="nc" id="L35">                ClienteRepository clienteRepository = new ClienteRepository();</span>
+<span class="nc" id="L36">                CuentaRepository cuentaRepository = new CuentaRepository();</span>
+<span class="nc" id="L37">                CreditoRepository creditoRepository = new CreditoRepository();</span>
+<span class="nc" id="L38">                TransaccionRepository transaccionRepository = new TransaccionRepository();</span>
 
                 // Observers y publisher
-<span class="nc" id="L49">                DomainEventPublisher publisher = new DomainEventPublisher(java.util.List.of(</span>
+<span class="nc" id="L41">                DomainEventPublisher publisher = new DomainEventPublisher(java.util.List.of(</span>
                                 new com.example.observer.impl.LoggingObserver(),
                                 new com.example.observer.impl.FraudeObserver(),
                                 new com.example.observer.impl.NotificacionObserver()));
 
-                // Templates
-<span class="nc" id="L55">                com.example.template.impl.SolicitudCreditoDefault solicitudCreditoTemplate = new com.example.template.impl.SolicitudCreditoDefault(</span>
-                                creditoBuilderRegistry,
-                                interesStrategyRegistry,
-                                approvalChainBuilder,
+                // Templates (mantener la construcción igual, aunque algunos argumentos no sean
+                // usados por CreditoService)
+<span class="nc" id="L48">                com.example.template.impl.SolicitudCreditoDefault solicitudCreditoTemplate = new com.example.template.impl.SolicitudCreditoDefault(</span>
+                                new CreditoBuilderRegistry(),
+                                new InteresStrategyRegistry(),
+                                new ApprovalChainBuilder(),
                                 creditoRepository,
                                 clienteRepository,
                                 publisher,
-                                scoreProviderRegistry,
+                                new ScoreProviderRegistry(
+                                                new BuroFinancieroAdapter(clienteRepository),
+                                                new LegacyRiskApiAdapter()),
                                 bankConfig);
 
                 // Servicios
-<span class="nc" id="L66">                clienteService = new ClienteService(clienteRepository, bankConfig);</span>
-<span class="nc" id="L67">                cuentaService = new CuentaService(cuentaRepository, clienteRepository, bankConfig,</span>
-                                fabricaProductosProvider, publisher);
-<span class="nc" id="L69">                creditoService = new CreditoService(creditoRepository, clienteRepository, bankConfig,</span>
-                                fabricaProductosProvider, interesStrategyRegistry, scoreProviderRegistry,
-                                creditoBuilderRegistry,
-                                approvalChainBuilder, publisher, solicitudCreditoTemplate);
-<span class="nc" id="L73">                transaccionService = new TransaccionService(transaccionRepository, bankConfig, publisher,</span>
+<span class="nc" id="L61">                clienteService = new ClienteService(clienteRepository, bankConfig);</span>
+<span class="nc" id="L62">                cuentaService = new CuentaService(cuentaRepository, clienteRepository, bankConfig,</span>
+                                new FabricaProductosProvider(), publisher);
+<span class="nc" id="L64">                creditoService = new CreditoService(creditoRepository, clienteRepository, publisher,</span>
+                                solicitudCreditoTemplate);
+<span class="nc" id="L66">                transaccionService = new TransaccionService(transaccionRepository, bankConfig, publisher,</span>
                                 cuentaService);
 
                 // Controladores
-<span class="nc" id="L77">                clienteController = new com.example.controller.ClienteController(clienteService);</span>
-<span class="nc" id="L78">                cuentaController = new com.example.controller.CuentaController(cuentaService, clienteService,</span>
+<span class="nc" id="L70">                clienteController = new com.example.controller.ClienteController(clienteService);</span>
+<span class="nc" id="L71">                cuentaController = new com.example.controller.CuentaController(cuentaService, clienteService,</span>
                                 clienteRepository);
-<span class="nc" id="L80">                creditoController = new com.example.controller.CreditoController(creditoService, clienteService);</span>
-<span class="nc" id="L81">                transaccionController = new com.example.controller.TransaccionController(transaccionService);</span>
-<span class="nc" id="L82">        }</span>
+<span class="nc" id="L73">                creditoController = new com.example.controller.CreditoController(creditoService, clienteService);</span>
+<span class="nc" id="L74">                transaccionController = new com.example.controller.TransaccionController(transaccionService);</span>
+<span class="nc" id="L75">        }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

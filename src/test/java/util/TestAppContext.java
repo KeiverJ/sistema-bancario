@@ -72,9 +72,7 @@ public class TestAppContext {
     public final CuentaService cuentaService = new CuentaService(
             cuentaRepository, clienteRepository, bankConfig, fabricaProductosProvider, publisher);
     public final CreditoService creditoService = new CreditoService(
-            creditoRepository, clienteRepository, bankConfig, fabricaProductosProvider,
-            interesStrategyRegistry, scoreProviderRegistry, creditoBuilderRegistry,
-            approvalChainBuilder, publisher, solicitudCreditoTemplate);
+            creditoRepository, clienteRepository, publisher, solicitudCreditoTemplate);
     public final TransaccionService transaccionService = new TransaccionService(
             transaccionRepository, bankConfig, publisher, cuentaService);
 

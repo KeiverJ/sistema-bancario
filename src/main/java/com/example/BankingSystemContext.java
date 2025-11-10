@@ -29,6 +29,7 @@ public class BankingSystemContext {
         public final com.example.controller.TransaccionController transaccionController;
 
         public BankingSystemContext() {
+
                 // Configuración y repositorios
                 BankConfig bankConfig = new BankConfig();
                 ClienteRepository clienteRepository = new ClienteRepository();
@@ -36,40 +37,32 @@ public class BankingSystemContext {
                 CreditoRepository creditoRepository = new CreditoRepository();
                 TransaccionRepository transaccionRepository = new TransaccionRepository();
 
-                // Factories y providers
-                FabricaProductosProvider fabricaProductosProvider = new FabricaProductosProvider();
-                InteresStrategyRegistry interesStrategyRegistry = new InteresStrategyRegistry();
-                CreditoBuilderRegistry creditoBuilderRegistry = new CreditoBuilderRegistry();
-                ApprovalChainBuilder approvalChainBuilder = new ApprovalChainBuilder();
-                ScoreProviderRegistry scoreProviderRegistry = new ScoreProviderRegistry(
-                                new BuroFinancieroAdapter(clienteRepository),
-                                new LegacyRiskApiAdapter());
-
                 // Observers y publisher
                 DomainEventPublisher publisher = new DomainEventPublisher(java.util.List.of(
                                 new com.example.observer.impl.LoggingObserver(),
                                 new com.example.observer.impl.FraudeObserver(),
                                 new com.example.observer.impl.NotificacionObserver()));
 
-                // Templates
+                // Templates (mantener la construcción igual, aunque algunos argumentos no sean
+                // usados por CreditoService)
                 com.example.template.impl.SolicitudCreditoDefault solicitudCreditoTemplate = new com.example.template.impl.SolicitudCreditoDefault(
-                                creditoBuilderRegistry,
-                                interesStrategyRegistry,
-                                approvalChainBuilder,
+                                new CreditoBuilderRegistry(),
+                                new InteresStrategyRegistry(),
+                                new ApprovalChainBuilder(),
                                 creditoRepository,
                                 clienteRepository,
                                 publisher,
-                                scoreProviderRegistry,
+                                new ScoreProviderRegistry(
+                                                new BuroFinancieroAdapter(clienteRepository),
+                                                new LegacyRiskApiAdapter()),
                                 bankConfig);
 
                 // Servicios
                 clienteService = new ClienteService(clienteRepository, bankConfig);
                 cuentaService = new CuentaService(cuentaRepository, clienteRepository, bankConfig,
-                                fabricaProductosProvider, publisher);
-                creditoService = new CreditoService(creditoRepository, clienteRepository, bankConfig,
-                                fabricaProductosProvider, interesStrategyRegistry, scoreProviderRegistry,
-                                creditoBuilderRegistry,
-                                approvalChainBuilder, publisher, solicitudCreditoTemplate);
+                                new FabricaProductosProvider(), publisher);
+                creditoService = new CreditoService(creditoRepository, clienteRepository, publisher,
+                                solicitudCreditoTemplate);
                 transaccionService = new TransaccionService(transaccionRepository, bankConfig, publisher,
                                 cuentaService);
 

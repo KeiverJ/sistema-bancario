@@ -2,15 +2,9 @@ package com.example.service.credito;
 
 import com.example.repository.cliente.ClienteRepository;
 import com.example.repository.credito.CreditoRepository;
-import com.example.strategy.core.InteresStrategyRegistry;
 import com.example.template.core.SolicitudCreditoTemplate;
-import com.example.config.BankConfig;
-import com.example.factory.common.FabricaProductosProvider;
 import com.example.model.cliente.Cliente;
 import com.example.model.credito.Credito;
-import com.example.adapter.score.ScoreProviderRegistry;
-import com.example.builder.credito.CreditoBuilderRegistry;
-import com.example.chain.core.ApprovalChainBuilder;
 import com.example.observer.core.DomainEventPublisher;
 import com.example.observer.eventos.CreditoEstadoCambiadoEvent;
 
@@ -21,33 +15,15 @@ public class CreditoService {
 
     private final CreditoRepository creditoRepository;
     private final ClienteRepository clienteRepository;
-    private final BankConfig bankConfig;
-    private final FabricaProductosProvider fabricaProductosProvider;
-    private final InteresStrategyRegistry interesStrategyRegistry;
-    private final ScoreProviderRegistry scoreProviderRegistry;
-    private final CreditoBuilderRegistry creditoBuilderRegistry;
-    private final ApprovalChainBuilder approvalChainBuilder;
     private final DomainEventPublisher publisher;
     private final SolicitudCreditoTemplate solicitudCreditoTemplate;
 
     public CreditoService(CreditoRepository creditoRepository,
             ClienteRepository clienteRepository,
-            BankConfig bankConfig,
-            FabricaProductosProvider fabricaProductosProvider,
-            InteresStrategyRegistry interesStrategyRegistry,
-            ScoreProviderRegistry scoreProviderRegistry,
-            CreditoBuilderRegistry creditoBuilderRegistry,
-            ApprovalChainBuilder approvalChainBuilder,
             DomainEventPublisher publisher,
             SolicitudCreditoTemplate solicitudCreditoTemplate) {
         this.creditoRepository = creditoRepository;
         this.clienteRepository = clienteRepository;
-        this.bankConfig = bankConfig;
-        this.fabricaProductosProvider = fabricaProductosProvider;
-        this.interesStrategyRegistry = interesStrategyRegistry;
-        this.scoreProviderRegistry = scoreProviderRegistry;
-        this.creditoBuilderRegistry = creditoBuilderRegistry;
-        this.approvalChainBuilder = approvalChainBuilder;
         this.publisher = publisher;
         this.solicitudCreditoTemplate = solicitudCreditoTemplate;
     }
