@@ -26,7 +26,6 @@ import java.util.List;
 
 /**
  * Construye el grafo de dependencias reales (Java puro) para pruebas de integración/E2E.
- * Úsalo en tests para obtener servicios y repositorios configurados.
  */
 public class TestAppContext {
 
