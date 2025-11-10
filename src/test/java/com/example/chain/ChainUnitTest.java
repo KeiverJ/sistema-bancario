@@ -18,6 +18,7 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 class ChainUnitTest {
 
+    // Verifica que la cadena de aprobación aprueba un crédito básico con score alto
     @Test
     @DisplayName("Cadena aprueba crédito básico con score alto")
     void cadenaApruebaCreditoBasico() {

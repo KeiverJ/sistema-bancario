@@ -12,6 +12,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class StrategyIntegrationTest {
 
+    // Verifica que el registry retorna la tasa específica según el tipo de crédito
     @Test
     @DisplayName("Registry retorna tasa específica según tipo de crédito")
     void registryRetornaTasaSegunTipo() {

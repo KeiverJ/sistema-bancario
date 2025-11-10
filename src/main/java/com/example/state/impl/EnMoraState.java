@@ -18,7 +18,7 @@ public class EnMoraState implements CreditoState {
         if (c.getSaldo() <= 0) {
             c.setState(new CanceladoState());
         } else {
-            c.setState(new DesembolsadoState()); // normaliza el estado
+            c.setState(new DesembolsadoState()); 
         }
         return true;
     }

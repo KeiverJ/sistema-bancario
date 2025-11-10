@@ -49,7 +49,6 @@ public class LibreInversionCreditoBuilder implements CreditoBuilder {
 
     @Override
     public Credito build() {
-        // Configuración específica para libre inversión
         if (credito.getGarantia() == null) {
             credito.setGarantia("SIN_GARANTIA");
         }

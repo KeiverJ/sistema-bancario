@@ -6,7 +6,7 @@ import com.example.model.score.Score;
 import com.example.repository.cliente.ClienteRepository;
 
 /**
- * Adaptador que obtiene el score del cliente desde la base de datos
+ * Adaptador que obtiene el score del cliente 
  */
 public class BuroFinancieroAdapter implements ScoreProvider {
 

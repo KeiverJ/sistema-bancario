@@ -4,10 +4,6 @@ import java.time.LocalDateTime;
 
 /**
  * Clase base para productos financieros.
- * Se evita exponer getEstado()/setEstado() genéricos para no colisionar con
- * hijas
- * que usan enums u otros tipos. Usar estadoCodigo si se requiere un estado
- * textual común.
  */
 public abstract class ProductoFinanciero {
     protected String id;
@@ -39,7 +35,6 @@ public abstract class ProductoFinanciero {
         return fechaCreacion;
     }
 
-    // Estado genérico opcional (texto), para auditoría/reportes comunes
     public String getEstadoCodigo() {
         return estadoCodigo;
     }

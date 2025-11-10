@@ -4,7 +4,6 @@ import com.example.model.producto.ProductoFinanciero;
 
 public class Cuenta extends ProductoFinanciero {
 
-    // Eliminar el campo id duplicado; usar el id heredado de ProductoFinanciero
     private String codigo;
     private String numeroCuenta;
     private TipoCuenta tipoCuenta;
@@ -20,7 +19,6 @@ public class Cuenta extends ProductoFinanciero {
         ACTIVA, INACTIVA, BLOQUEADA
     }
 
-    // Métodos getId/setId heredados directamente de ProductoFinanciero
 
     public String getCodigo() {
         return codigo;

@@ -12,7 +12,6 @@ public class EndeudamientoHandler extends AbstractApprovalHandler {
 
     @Override
     protected boolean precondicion(ApprovalContext ctx) {
-        // Simulación endeudamiento (monto / montoMax)
         double ratio = ctx.getCredito().getMonto() / ctx.getConfig().getMontoMaximoCredito();
         if (ratio > ratioMax) {
             ctx.rechazar(String.format("Ratio endeudamiento %.2f > %.2f", ratio, ratioMax));

@@ -11,6 +11,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class StrategyE2ETest {
 
+    // Verifica el flujo E2E: solicitud de crédito aplica estrategia de interés
     @Test
     @DisplayName("E2E solicitud crédito aplica estrategia de interés")
     void e2e_aplicaEstrategiaInteres() {

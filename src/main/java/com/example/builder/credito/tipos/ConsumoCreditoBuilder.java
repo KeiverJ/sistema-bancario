@@ -49,7 +49,6 @@ public class ConsumoCreditoBuilder implements CreditoBuilder {
 
     @Override
     public Credito build() {
-        // Configuración específica para crédito de consumo
         if (credito.getGarantia() == null) {
             credito.setGarantia("SIN_GARANTIA");
         }

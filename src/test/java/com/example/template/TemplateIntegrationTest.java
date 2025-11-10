@@ -11,6 +11,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class TemplateIntegrationTest {
 
+    // Verifica que SolicitudCreditoDefault arma y persiste un crédito correctamente
     @Test
     @DisplayName("SolicitudCreditoDefault arma y persiste crédito")
     void solicitudCreditoDefault_integration() {

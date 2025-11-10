@@ -1,4 +1,4 @@
-package com.example.service.Transaccion;
+package com.example.service.transaccion;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

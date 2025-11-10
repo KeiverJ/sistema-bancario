@@ -3,10 +3,6 @@ package com.example.config;
 
 import java.util.Properties;
 
-/**
- * DatabaseConfig - Configuración de base de datos.
- * Spring Boot maneja automáticamente el Singleton.
- */
 public class DatabaseConfig {
 
   private final Properties properties;
@@ -19,7 +15,7 @@ public class DatabaseConfig {
 
   public DatabaseConfig() {
     this.properties = new Properties();
-    // Valores por defecto
+    
     this.url = "jdbc:h2:mem:bankdb";
     this.username = "sa";
     this.password = "";
@@ -41,7 +37,7 @@ public class DatabaseConfig {
     properties.setProperty("database.poolSize", String.valueOf(poolSize));
   }
 
-  // Getters y Setters (Spring los usa para inyectar desde application.properties)
+  
 
   public String getUrl() {
     return url;

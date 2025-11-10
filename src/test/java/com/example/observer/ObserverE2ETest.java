@@ -11,6 +11,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class ObserverE2ETest {
 
+    // Verifica el flujo E2E: pagar cuota publica evento de cambio de estado
     @Test
     @DisplayName("E2E: pagar cuota publica evento de cambio estado")
     void e2e_pagoCreditoPublicaEvento() {

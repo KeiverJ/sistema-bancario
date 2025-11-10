@@ -8,7 +8,7 @@ public class LegacyRiskApiAdapter implements ScoreProvider {
     private final LegacyRiskApi legacyApi = new LegacyRiskApi();
 
     @Override
-    public Score obtenerScore(String clienteId) { // ⭐ String, no Cliente
+    public Score obtenerScore(String clienteId) {
         int riskLevel = legacyApi.getRiskLevel(clienteId);
 
         Score score = new Score();

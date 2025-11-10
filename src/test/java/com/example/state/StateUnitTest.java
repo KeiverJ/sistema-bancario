@@ -16,6 +16,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class StateUnitTest {
 
+    // Verifica que el crédito pasa de SOLICITADO a CANCELADO manualmente
     @Test
     @DisplayName("Crédito pasa de SOLICITADO a CANCELADO manualmente")
     void cambiaEstadoManual() {
@@ -25,6 +26,7 @@ class StateUnitTest {
         assertEquals(Credito.EstadoCredito.CANCELADO, c.getEstadoActual());
     }
 
+    // Verifica transiciones de estado en SolicitadoState (aprobar y rechazar)
     @Test
     @DisplayName("SolicitadoState: aprobar y rechazar cambian de estado")
     void solicitadoStateTransiciones() {
@@ -37,6 +39,7 @@ class StateUnitTest {
         assertEquals(Credito.EstadoCredito.RECHAZADO, c.getEstadoActual());
     }
 
+    // Verifica transiciones de estado en AprobadoState (desembolsar y rechazar)
     @Test
     @DisplayName("AprobadoState: desembolsar y rechazar cambian de estado")
     void aprobadoStateTransiciones() {
@@ -49,6 +52,7 @@ class StateUnitTest {
         assertEquals(Credito.EstadoCredito.RECHAZADO, c.getEstadoActual());
     }
 
+    // Verifica transiciones de estado en DesembolsadoState (pagar, marcar mora y cerrar)
     @Test
     @DisplayName("DesembolsadoState: pagar, marcar mora y cerrar")
     void desembolsadoStateTransiciones() {

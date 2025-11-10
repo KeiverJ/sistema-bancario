@@ -10,14 +10,16 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 class TemplateUnitTest {
 
-    @Test
+        // Verifica que existe la clase SolicitudCreditoDefault en el classpath
+        @Test
     @DisplayName("Existe clase SolicitudCreditoDefault en classpath")
     void existeSolicitudCreditoDefault() throws Exception {
         Class<?> cls = Class.forName("com.example.template.impl.SolicitudCreditoDefault");
         assertNotNull(cls);
     }
 
-    @Test
+        // Verifica el flujo exitoso de solicitud usando SolicitudCreditoDefault
+        @Test
     @DisplayName("SolicitudCreditoDefault: flujo exitoso de solicitud")
     void flujoExitosoSolicitud() {
         var builderRegistry = org.mockito.Mockito.mock(com.example.builder.credito.CreditoBuilderRegistry.class);

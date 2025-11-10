@@ -18,6 +18,7 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 class ChainIntegrationTest {
 
+    // Verifica que la cadena rechaza por monto muy alto respecto al score del cliente
     @Test
     @DisplayName("Cadena rechaza por monto muy alto respecto a score")
     void cadenaRechazaPorMonto() {

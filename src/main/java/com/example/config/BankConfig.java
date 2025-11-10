@@ -1,12 +1,7 @@
 package com.example.config;
 
-
 import java.util.Properties;
 
-/**
- * BankConfig - Configuración del banco.
- * Spring Boot maneja automáticamente el Singleton.
- */
 public class BankConfig {
 
     private final Properties properties;
@@ -21,8 +16,7 @@ public class BankConfig {
 
     public BankConfig() {
         this.properties = new Properties();
-        // Valores por defecto
-        this.name = "Banco del Futuro";
+        this.name = "Banco de Keiverinho";
         this.code = "BDF-001";
         this.country = "Colombia";
         this.currency = "COP";

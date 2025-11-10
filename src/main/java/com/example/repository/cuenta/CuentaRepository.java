@@ -7,8 +7,6 @@ import com.example.model.cuenta.Cuenta;
 
 /**
  * Repository para gestión de Cuentas.
- * 
- * @Repository hace que Spring Boot cree UNA sola instancia (Singleton).
  */
 public class CuentaRepository {
 

@@ -49,11 +49,9 @@ public class VehiculoCreditoBuilder implements CreditoBuilder {
 
     @Override
     public Credito build() {
-        // Configuración específica para vehículo
         if (credito.getGarantia() == null) {
             credito.setGarantia("PRENDA");
         }
-        // Los créditos de vehículo suelen tener seguro de vida
         credito.setSeguroVida(true);
         return credito;
     }

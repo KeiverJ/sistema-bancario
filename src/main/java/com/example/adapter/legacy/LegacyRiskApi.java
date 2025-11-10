@@ -7,23 +7,19 @@ import java.util.Random;
  */
 public class LegacyRiskApi {
 
-    // Devuelve un entero entre 300 y 900 (simulación)
     public int fetchRiskIndex(String doc) {
         return 300 + new Random().nextInt(601);
     }
 
-    // Fuente textual
     public String sourceName() {
         return "LEGACY-RISK-SERVICE";
     }
 
     public int getRiskLevel(String clienteId) {
-        // Simulación basada en hash del clienteId
         if (clienteId == null || clienteId.isEmpty()) {
-            return 3; // riesgo medio por defecto
+            return 3;
         }
 
-        // Usar hash para generar nivel consistente por cliente
         int hash = Math.abs(clienteId.hashCode());
         int nivel = (hash % 5) + 1; // 1-5
 

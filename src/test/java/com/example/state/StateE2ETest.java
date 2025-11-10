@@ -11,6 +11,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class StateE2ETest {
 
+    // Verifica el flujo E2E: pagar varias cuotas reduce saldo y conserva id
     @Test
     @DisplayName("E2E: pagar varias cuotas reduce saldo y conserva id")
     void e2e_pagosSecuenciales() {

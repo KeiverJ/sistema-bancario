@@ -7,8 +7,6 @@ import com.example.model.cliente.Cliente;
 
 /**
  * Repository para gestión de Clientes.
- * 
- * @Repository hace que Spring Boot cree UNA sola instancia (Singleton).
  */
 public class ClienteRepository {
 

@@ -49,11 +49,9 @@ public class HipotecarioCreditoBuilder implements CreditoBuilder {
 
     @Override
     public Credito build() {
-        // Configuración específica para hipotecario
         if (credito.getGarantia() == null) {
             credito.setGarantia("HIPOTECA");
         }
-        // Los créditos hipotecarios suelen tener seguro de vida obligatorio
         credito.setSeguroVida(true);
         return credito;
     }

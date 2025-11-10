@@ -14,6 +14,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class DecoratorIntegrationTest {
 
+    // Verifica que la cadena de decorators acumula correctamente costos y beneficios
     @Test
     @DisplayName("Cadena de decorators acumula costos y beneficios")
     void cadenaDecoratorsAcumula() {

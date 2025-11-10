@@ -11,17 +11,17 @@ public abstract class AbstractApprovalHandler implements ApprovalHandler {
     @Override
     public void handle(ApprovalContext ctx) {
         if (ctx.isAprobado())
-            return; // ya aprobado final
+            return;
         if (!precondicion(ctx))
-            return; // rechaza
+            return;
         procesar(ctx);
         if (next != null && !ctx.isAprobado() && ctx.getMotivoRechazo() == null) {
             next.handle(ctx);
         }
     }
 
-    protected abstract boolean precondicion(ApprovalContext ctx); // valida, puede rechazar
+    protected abstract boolean precondicion(ApprovalContext ctx);
 
     protected void procesar(ApprovalContext ctx) {
-        /* opcional */ }
+    }
 }

@@ -15,6 +15,7 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 class AdapterE2ETest {
 
+    // Verifica el flujo E2E: crear cliente, asignar score y solicitar crédito
     @Test
     @DisplayName("Flujo: crear cliente, asignar score y solicitar crédito")
     void e2e_scoreInfluyeCredito() {

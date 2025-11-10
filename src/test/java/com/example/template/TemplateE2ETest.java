@@ -11,6 +11,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class TemplateE2ETest {
 
+    // Verifica el flujo E2E: solicitud de crédito completa vía template
     @Test
     @DisplayName("E2E: Solicitud de crédito completa vía template")
     void e2e_solicitudCredito_template() {

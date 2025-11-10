@@ -12,9 +12,6 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * Service para operaciones de Cliente.
- * 
- * @Service hace que Spring Boot cree UNA sola instancia (Singleton).
- *          Usa Constructor Injection para inyectar dependencias.
  */
 public class ClienteService {
 
@@ -22,7 +19,6 @@ public class ClienteService {
   private final BankConfig bankConfig;
   private final AtomicInteger contadorCliente = new AtomicInteger(1);
 
-  // Constructor Injection - Spring Boot inyecta automáticamente
   public ClienteService(ClienteRepository clienteRepository, BankConfig bankConfig) {
     this.clienteRepository = clienteRepository;
     this.bankConfig = bankConfig;

@@ -33,45 +33,38 @@ public class SolicitudCreditoDefault extends SolicitudCreditoTemplate {
 
     @Override
     protected Credito construirCredito(Cliente cliente, Credito.TipoCredito tipo, double monto, int plazo) {
-        // Crear un crédito base
         Credito credito = new Credito();
 
-        // Generar ID único
         credito.setId(UUID.randomUUID().toString());
 
-        // Generar código basado en el tipo de cliente
         credito.setCodigo(CreditoCodigoGenerator.generarCodigo(cliente.getTipoCliente()));
 
-        // Configurar datos básicos
         credito.setClienteId(cliente.getId());
         credito.setTipoCredito(tipo);
         credito.setMonto(monto);
         credito.setPlazoMeses(plazo);
-        credito.setSaldo(monto); // El saldo inicial es igual al monto
-        credito.setEstadoActual(Credito.EstadoCredito.SOLICITADO); // Estado inicial
+        credito.setSaldo(monto); 
+        credito.setEstadoActual(Credito.EstadoCredito.SOLICITADO);
 
-        // Usar el builder para configuraciones adicionales específicas del tipo
         CreditoBuilder builder = builderRegistry.get(tipo);
         return builder.desdeBase(credito).build();
     }
 
     @Override
     protected void configurarTasaYExtras(Credito credito, Cliente cliente) {
-        // Calcular tasa usando el registry
         double tasa = strategyRegistry.tasaPara(credito, cliente, bankConfig);
         credito.setTasaInteres(tasa);
 
-        // Configurar extras según tipo
         switch (credito.getTipoCredito()) {
             case HIPOTECARIO:
                 credito.setGarantia("HIPOTECA");
                 credito.setSeguroVida(true);
-                credito.setCostoApertura(credito.getMonto() * 0.01); // 1%
+                credito.setCostoApertura(credito.getMonto() * 0.01); 
                 break;
             case VEHICULO:
                 credito.setGarantia("PRENDA");
                 credito.setSeguroVida(true);
-                credito.setCostoApertura(credito.getMonto() * 0.005); // 0.5%
+                credito.setCostoApertura(credito.getMonto() * 0.005);
                 break;
             case CONSUMO:
             case LIBRE_INVERSION:

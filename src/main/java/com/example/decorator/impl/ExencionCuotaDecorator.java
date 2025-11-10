@@ -11,7 +11,6 @@ public class ExencionCuotaDecorator extends ProductoDecorator {
 
     @Override
     public double getCostoMensual() {
-        // Remueve cuota manejo (asumimos wrappee incluye cuota)
         return Math.max(0, super.getCostoMensual() - super.getCostoMensual());
     }
 

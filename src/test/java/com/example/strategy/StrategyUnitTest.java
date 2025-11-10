@@ -11,6 +11,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class StrategyUnitTest {
 
+    // Verifica que InteresConsumoStrategy incrementa la tasa base en 3 puntos
     @Test
     @DisplayName("InteresConsumoStrategy aumenta base en 3 puntos")
     void consumoStrategyIncrementaBase() {

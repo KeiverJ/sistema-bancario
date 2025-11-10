@@ -54,7 +54,7 @@ public class PaqueteProductos implements ProductoFinancieroComponent {
     @Override
     public String getDescripcion() {
         StringBuilder sb = new StringBuilder();
-        sb.append("📦 Paquete: ").append(nombre).append("\n");
+        sb.append("Paquete: ").append(nombre).append("\n");
         sb.append("Productos incluidos:\n");
         for (ProductoFinancieroComponent comp : items) {
             sb.append("\n").append(comp.getDescripcion());

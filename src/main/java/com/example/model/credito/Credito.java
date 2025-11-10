@@ -24,9 +24,7 @@ public class Credito extends ProductoFinanciero {
         CANCELADO
     }
 
-    // id heredado de ProductoFinanciero
     private String codigo;
-    // clienteId se hereda de ProductoFinanciero
 
     private TipoCredito tipoCredito;
     private double monto;
@@ -42,10 +40,8 @@ public class Credito extends ProductoFinanciero {
 
     private EstadoCredito estadoActual = EstadoCredito.SOLICITADO;
 
-    // State (no serializable)
     private transient CreditoState state;
 
-    // getId/setId heredados directamente
 
     public String getCodigo() {
         return codigo;
@@ -54,9 +50,6 @@ public class Credito extends ProductoFinanciero {
     public void setCodigo(String codigo) {
         this.codigo = codigo;
     }
-
-    // clienteId se hereda de ProductoFinanciero
-    // No necesitamos redefinir getClienteId() y setClienteId()
 
     public TipoCredito getTipoCredito() {
         return tipoCredito;
@@ -104,10 +97,9 @@ public class Credito extends ProductoFinanciero {
 
     public void setEstadoActual(EstadoCredito estadoActual) {
         this.estadoActual = estadoActual;
-        this.state = null; // se reconstruye lazy
+        this.state = null; 
     }
 
-    // Sobrecarga para compatibilidad con String
     public void setEstadoActual(String estadoStr) {
         try {
             this.estadoActual = EstadoCredito.valueOf(estadoStr);
@@ -172,7 +164,6 @@ public class Credito extends ProductoFinanciero {
         this.estadoActual = EstadoCredito.valueOf(newState.nombre());
     }
 
-    // Acciones delegadas al estado
     public void aprobar() {
         initStateIfNull();
         state.aprobar(this);

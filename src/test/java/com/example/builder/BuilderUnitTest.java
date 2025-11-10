@@ -19,6 +19,7 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 class BuilderUnitTest {
 
+    // Verifica que VehiculoCreditoBuilder construye crédito con valores por defecto y sobreescritos
     @Test
     @DisplayName("VehiculoCreditoBuilder construye crédito con defaults y overrides")
     void vehiculoBuilder_creaCreditoConSeguroYGarantia() {
@@ -43,6 +44,7 @@ class BuilderUnitTest {
         assertEquals(35.0, credito.getCuotaAdministracion());
     }
 
+    // Verifica que ConsumoCreditoBuilder aplica valores por defecto y sobreescritos
     @Test
     @DisplayName("ConsumoCreditoBuilder: defaults y overrides")
     void consumoBuilder_defaultsYOverrides() {
@@ -68,6 +70,7 @@ class BuilderUnitTest {
         assertEquals("SIN_GARANTIA", credito.getGarantia());
     }
 
+    // Verifica que LibreInversionCreditoBuilder aplica garantía por default y sobreescritos
     @Test
     @DisplayName("LibreInversionCreditoBuilder: garantía por default y overrides")
     void libreInversionBuilder_defaultsYOverrides() {
@@ -93,6 +96,7 @@ class BuilderUnitTest {
         assertEquals("SIN_GARANTIA", credito.getGarantia());
     }
 
+    // Verifica que HipotecarioCreditoBuilder requiere garantía y seguro de vida obligatorios
     @Test
     @DisplayName("HipotecarioCreditoBuilder: garantía y seguro de vida obligatorios")
     void hipotecarioBuilder_defaultsYOverrides() {
@@ -117,6 +121,7 @@ class BuilderUnitTest {
         assertEquals("HIPOTECA", credito.getGarantia());
     }
 
+    // Verifica que VehiculoCreditoBuilder asigna valores por default
     @Test
     @DisplayName("VehiculoCreditoBuilder: garantía y seguro de vida por default")
     void vehiculoBuilder_defaults() {
@@ -129,6 +134,7 @@ class BuilderUnitTest {
         assertEquals("PRENDA", credito.getGarantia());
     }
 
+    // Verifica que BaseCreditoBuilder construye correctamente y asegura valores
     @Test
     @DisplayName("BaseCreditoBuilder: construcción básica y ensure")
     void baseBuilder_construccionBasica() {
@@ -148,6 +154,7 @@ class BuilderUnitTest {
         assertEquals(2.0, credito.getCuotaAdministracion());
     }
 
+    // Verifica que CreditoBuilderRegistry retorna el builder correcto para cada tipo de crédito
     @Test
     @DisplayName("CreditoBuilderRegistry: retorna builder correcto para cada tipo")
     void builderRegistry_retornaBuilderCorrecto() {

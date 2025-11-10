@@ -16,6 +16,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class FactoryIntegrationTest {
 
+    // Verifica que los validadores de documento validan los formatos esperados
     @Test
     @DisplayName("Validadores de documento validan formatos esperados")
     void validadoresValidanFormato() {
@@ -26,6 +27,7 @@ class FactoryIntegrationTest {
         assertTrue(vNit.validar("123456789-1"));
         assertFalse(vNit.validar("123456789"));
     }
+    // Verifica integración de FactoryPersonaNatural y ValidadorCedula
     @Test
     @DisplayName("FactoryPersonaNatural y ValidadorCedula integran correctamente")
     void personaNatural_factoryYValidador() {
@@ -38,6 +40,7 @@ class FactoryIntegrationTest {
         assertFalse(val.validar("ABC"));
     }
 
+    // Verifica integración de FactoryPersonaJuridica y ValidadorNIT
     @Test
     @DisplayName("FactoryPersonaJuridica y ValidadorNIT integran correctamente")
     void personaJuridica_factoryYValidador() {
@@ -50,6 +53,7 @@ class FactoryIntegrationTest {
         assertFalse(val.validar("123456789"));
     }
 
+    // Verifica integración de FactoryExtranjero y ValidadorPasaporte
     @Test
     @DisplayName("FactoryExtranjero y ValidadorPasaporte integran correctamente")
     void extranjero_factoryYValidador() {

@@ -5,7 +5,7 @@ public interface ProductoFinancieroComponent {
 
     String getDescripcion();
 
-    double getCostoMensual(); // costo adicional mensual (seguros, etc.)
+    double getCostoMensual(); 
 
-    double getBeneficioMensual(); // cashback / retorno
+    double getBeneficioMensual(); 
 }

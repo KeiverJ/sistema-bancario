@@ -11,6 +11,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class CompositeUnitTest {
 
+    // Verifica que el paquete suma correctamente los costos de los hijos
     @Test
     @DisplayName("Paquete suma costos de hijos")
     void paqueteSumaCostos() {
@@ -23,6 +24,7 @@ class CompositeUnitTest {
         assertEquals(12000, paquete.getCostoMensual(), 0.01);
     }
 
+    // Verifica que un paquete vacío retorna costo y beneficio cero
     @Test
     @DisplayName("Paquete vacío retorna costo y beneficio cero")
     void paqueteVacio() {
@@ -32,6 +34,7 @@ class CompositeUnitTest {
         assertTrue(paquete.getItems().isEmpty());
     }
 
+    // Verifica que add/remove maneja nulos y elimina correctamente
     @Test
     @DisplayName("Paquete add/remove maneja nulos y elimina correctamente")
     void paqueteAddRemove() {
@@ -44,6 +47,7 @@ class CompositeUnitTest {
         assertTrue(paquete.getItems().isEmpty());
     }
 
+    // Verifica que un paquete anidado suma correctamente costos y beneficios
     @Test
     @DisplayName("Paquete anidado suma costos y beneficios")
     void paqueteAnidado() {

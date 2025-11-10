@@ -15,8 +15,6 @@ import java.util.Optional;
 
 /**
  * Service para operaciones de Cuenta.
- * 
- * @Service hace que Spring Boot cree UNA sola instancia (Singleton).
  */
 public class CuentaService {
 
@@ -26,7 +24,6 @@ public class CuentaService {
     private final FabricaProductosProvider fabricaProductosProvider;
     private final DomainEventPublisher publisher;
 
-    // Constructor Injection
     public CuentaService(CuentaRepository cuentaRepository,
             ClienteRepository clienteRepository,
             BankConfig bankConfig,
@@ -49,7 +46,6 @@ public class CuentaService {
                     String.format("El saldo inicial debe ser al menos %.2f", saldoMinimo));
         }
 
-        // Abstract Factory según tipo de cliente
         ProductoBancarioFactory factory = fabricaProductosProvider.getFactory(cliente.getTipoCliente());
         Cuenta cuenta = factory.crearCuenta(clienteId, tipoCuenta, saldoInicial);
         cuenta.setCuotaManejo(bankConfig.getCuotaManejo(tipoCuenta.name()));

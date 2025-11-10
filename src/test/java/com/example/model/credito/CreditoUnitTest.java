@@ -2,12 +2,11 @@ package com.example.model.credito;
 
 import org.junit.jupiter.api.Test;
 
-import com.example.model.credito.Credito.EstadoCredito;
-import com.example.model.credito.Credito.TipoCredito;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 class CreditoUnitTest {
+    // Prueba que los getters y setters de Credito funcionan correctamente
+    // Prueba que los getters y setters de Credito funcionan correctamente
     @Test
     void gettersYSettersBasicos() {
         Credito credito = new Credito();

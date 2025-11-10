@@ -44,24 +44,17 @@ public abstract class SolicitudCreditoTemplate {
         this.bankConfig = bankConfig;
     }
 
-    // Template Method principal
     public final Credito solicitar(Cliente cliente, Credito.TipoCredito tipo, double monto, int plazo) {
-        // 1. Pre-evaluación
         preEvaluacion(cliente, tipo, monto, plazo);
 
-        // 2. Construir crédito
         Credito credito = construirCredito(cliente, tipo, monto, plazo);
 
-        // 3. Configurar tasa y extras
         configurarTasaYExtras(credito, cliente);
 
-        // 4. Persistir en estado SOLICITADO
         credito = creditoRepository.save(credito);
 
-        // 5. Evaluar aprobación
         ApprovalContext context = evaluarAprobacion(credito, cliente);
 
-        // 6. Procesar resultado
         if (context.isAprobado()) {
             credito.aprobar();
         } else {
@@ -69,16 +62,13 @@ public abstract class SolicitudCreditoTemplate {
             throw new IllegalStateException("Crédito rechazado: " + context.getMotivoRechazo());
         }
 
-        // 7. Persistir cambio de estado
         credito = persistir(credito, cliente);
 
-        // 8. Notificar
         notificar(credito, cliente);
 
         return credito;
     }
 
-    // Hooks con implementación por defecto
     protected void preEvaluacion(Cliente cliente, Credito.TipoCredito tipo, double monto, int plazo) {
         if (monto <= 0) {
             throw new IllegalArgumentException("El monto debe ser positivo");

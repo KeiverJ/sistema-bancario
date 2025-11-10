@@ -2,12 +2,10 @@ package com.example.model.cuenta;
 
 import org.junit.jupiter.api.Test;
 
-import com.example.model.cuenta.Cuenta.EstadoCuenta;
-import com.example.model.cuenta.Cuenta.TipoCuenta;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 class CuentaUnitTest {
+    // Prueba que los getters y setters de Cuenta funcionan correctamente
     @Test
     void gettersYSettersBasicos() {
         Cuenta cuenta = new Cuenta();
@@ -26,6 +24,7 @@ class CuentaUnitTest {
         assertEquals(Cuenta.EstadoCuenta.ACTIVA, cuenta.getEstado());
     }
 
+    // Prueba que depositar y retirar funcionan correctamente, incluyendo casos de saldo insuficiente
     @Test
     void depositarYRetirar() {
         Cuenta cuenta = new Cuenta();

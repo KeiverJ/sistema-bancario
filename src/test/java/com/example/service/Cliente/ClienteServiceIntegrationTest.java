@@ -1,4 +1,4 @@
-package com.example.service.Cliente;
+package com.example.service.cliente;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

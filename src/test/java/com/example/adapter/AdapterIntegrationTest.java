@@ -17,6 +17,7 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 class AdapterIntegrationTest {
 
+    // Verifica que el registry entrega el adapter de buro y retorna un score válido
     @Test
     @DisplayName("Registry entrega adapter de buro y retorna score válido")
     void registry_scoreProvider() {

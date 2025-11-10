@@ -14,6 +14,7 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 class ChainE2ETest {
 
+    // Verifica el flujo E2E completo de aprobación de crédito VEHICULO
     @Test
     @DisplayName("Flujo completo con aprobación de crédito VEHICULO")
     void e2e_aprobacionCreditoVehiculo() {

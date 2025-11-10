@@ -10,6 +10,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class StateIntegrationTest {
 
+    // Verifica que el pago de cuota reduce el saldo y puede cambiar el estado
     @Test
     @DisplayName("Pago de cuota reduce saldo y puede cambiar estado en lógica futura")
     void pagoCuotaReduceSaldo() {

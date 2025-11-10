@@ -1,4 +1,4 @@
-package com.example.service.Transaccion;
+package com.example.service.transaccion;
 
 import com.example.model.cliente.Cliente;
 import com.example.model.cuenta.Cuenta;

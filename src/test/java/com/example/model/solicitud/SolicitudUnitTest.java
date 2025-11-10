@@ -2,8 +2,6 @@ package com.example.model.solicitud;
 
 import org.junit.jupiter.api.Test;
 
-import com.example.model.solicitud.Solicitud.EstadoSolicitud;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 class SolicitudUnitTest {

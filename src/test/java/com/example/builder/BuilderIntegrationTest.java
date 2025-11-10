@@ -14,6 +14,7 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 class BuilderIntegrationTest {
 
+    // Verifica que el registro de builders permite registrar y construir correctamente
     @Test
     @DisplayName("Registro de builders y uso desde registry")
     void registry_registraYConstruye() {

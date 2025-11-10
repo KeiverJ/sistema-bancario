@@ -2,9 +2,7 @@ package com.example.builder.credito;
 
 import com.example.model.credito.Credito;
 
-/**
- * Builder base con fluent API.
- */
+
 public class BaseCreditoBuilder implements CreditoBuilder {
 
     protected Credito credito;

@@ -1,17 +1,20 @@
-package com.example;
 
+package com.example;
 import com.example.composite.PaqueteProductos;
-import com.example.decorator.impl.BaseProductoComponent;
 import com.example.decorator.core.ProductoFinancieroComponent;
+import com.example.decorator.impl.BaseProductoComponent;
 import com.example.decorator.impl.CashbackDecorator;
 import com.example.decorator.impl.ExencionCuotaDecorator;
 import com.example.decorator.impl.BeneficioVipDecorator;
 import com.example.decorator.impl.SeguroVidaDecorator;
-import com.example.model.cliente.Cliente;
-import com.example.model.credito.Credito;
-import com.example.model.cuenta.Cuenta;
-import com.example.model.transacccion.Transaccion;
 import java.util.ArrayList;
+import com.example.model.cliente.Cliente;
+import com.example.model.cuenta.Cuenta;
+import com.example.model.credito.Credito;
+import com.example.model.transacccion.Transaccion;
+import java.util.Optional;
+
+
 import com.example.service.cliente.ClienteService;
 import com.example.service.credito.CreditoService;
 import com.example.service.cuenta.CuentaService;
@@ -33,12 +36,7 @@ import com.example.observer.impl.FraudeObserver;
 import com.example.observer.impl.LoggingObserver;
 import com.example.observer.impl.NotificacionObserver;
 import com.example.template.impl.SolicitudCreditoDefault;
-
 import java.util.List;
-import java.util.Optional;
-import java.util.Scanner;
-import java.util.List;
-import java.util.Optional;
 import java.util.Scanner;
 
 public class BankingSystemApp {
@@ -46,56 +44,39 @@ public class BankingSystemApp {
   private static final String ABORTAR = "0";
 
   public static void main(String[] args) {
-    // Wiring manual (reemplaza el contenedor de Spring)
     BankConfig bankConfig = new BankConfig();
-    // DatabaseConfig instanciado si en el futuro se requiere info de conexión
-    // (opcional)
-
-    // Repositorios
     ClienteRepository clienteRepository = new ClienteRepository();
     CuentaRepository cuentaRepository = new CuentaRepository();
     CreditoRepository creditoRepository = new CreditoRepository();
     TransaccionRepository transaccionRepository = new TransaccionRepository();
-
-    // Componentes auxiliares / factories / registries
     FabricaProductosProvider fabricaProductosProvider = new FabricaProductosProvider();
     InteresStrategyRegistry interesStrategyRegistry = new InteresStrategyRegistry();
     CreditoBuilderRegistry creditoBuilderRegistry = new CreditoBuilderRegistry();
     ApprovalChainBuilder approvalChainBuilder = new ApprovalChainBuilder();
     ScoreProviderRegistry scoreProviderRegistry = new ScoreProviderRegistry(
-        new BuroFinancieroAdapter(clienteRepository),
-        new LegacyRiskApiAdapter());
-
-    // Observers y publisher
+      new BuroFinancieroAdapter(clienteRepository),
+      new LegacyRiskApiAdapter());
     DomainEventPublisher publisher = new DomainEventPublisher(List.of(
-        new LoggingObserver(),
-        new FraudeObserver(),
-        new NotificacionObserver()));
-
-    // Templates
+      new LoggingObserver(),
+      new FraudeObserver(),
+      new NotificacionObserver()));
     SolicitudCreditoDefault solicitudCreditoTemplate = new SolicitudCreditoDefault(
-        creditoBuilderRegistry,
-        interesStrategyRegistry,
-        approvalChainBuilder,
-        creditoRepository,
-        clienteRepository,
-        publisher,
-        scoreProviderRegistry,
-        bankConfig);
-    // Nota: Existe AperturaCuentaDefault para encapsular apertura de cuentas si
-    // deseas usar plantilla
-
-    // Servicios
+      creditoBuilderRegistry,
+      interesStrategyRegistry,
+      approvalChainBuilder,
+      creditoRepository,
+      clienteRepository,
+      publisher,
+      scoreProviderRegistry,
+      bankConfig);
     ClienteService clienteService = new ClienteService(clienteRepository, bankConfig);
     CuentaService cuentaService = new CuentaService(cuentaRepository, clienteRepository, bankConfig,
-        fabricaProductosProvider, publisher);
+      fabricaProductosProvider, publisher);
     CreditoService creditoService = new CreditoService(creditoRepository, clienteRepository, bankConfig,
-        fabricaProductosProvider, interesStrategyRegistry, scoreProviderRegistry,
-        creditoBuilderRegistry, approvalChainBuilder, publisher, solicitudCreditoTemplate);
+      fabricaProductosProvider, interesStrategyRegistry, scoreProviderRegistry,
+      creditoBuilderRegistry, approvalChainBuilder, publisher, solicitudCreditoTemplate);
     TransaccionService transaccionService = new TransaccionService(transaccionRepository, bankConfig, publisher,
-        cuentaService);
-
-    // Iniciar menú interactivo
+      cuentaService);
     new BankingSystemApp().runMenu(clienteService, cuentaService, creditoService, transaccionService);
   }
 
@@ -103,29 +84,25 @@ public class BankingSystemApp {
       CuentaService cuentaService,
       CreditoService creditoService,
       TransaccionService transaccionService) {
-    Scanner sc = new Scanner(System.in);
-    System.out.println("SISTEMA BANCARIO - PATRONES DE DISEÑO (Java Puro)");
+    System.out.println("SISTEMA BANCARIO");
     System.out.println();
-
+    Scanner sc = new Scanner(System.in);
     boolean running = true;
     while (running) {
       mostrarMenu();
       System.out.print("\nOpción: ");
       String opcion = sc.nextLine().trim();
-
       try {
         running = procesarOpcion(opcion, sc, clienteService, cuentaService,
             creditoService, transaccionService);
       } catch (Exception e) {
         System.err.println("\nError: " + e.getMessage());
       }
-
       if (running) {
         System.out.println("\nPresione ENTER para continuar...");
         sc.nextLine();
       }
     }
-
     System.out.println("\n¡Hasta pronto!");
     sc.close();
   }
@@ -201,7 +178,6 @@ public class BankingSystemApp {
     return true;
   }
 
-  // CLIENTES
 
   private void crearCliente(Scanner sc, ClienteService clienteService) {
     System.out.println("\nCREAR NUEVO CLIENTE\n");
@@ -259,7 +235,6 @@ public class BankingSystemApp {
     System.out.println("Total: " + clientes.size() + " cliente(s)");
   }
 
-  // CUENTAS
 
   private void abrirCuenta(Scanner sc, ClienteService clienteService, CuentaService cuentaService) {
     System.out.println("\nAPERTURA DE CUENTA\n");
@@ -482,7 +457,6 @@ public class BankingSystemApp {
     }
   }
 
-  // TRANSACCIONES
 
   private void crearTransaccion(Scanner sc, TransaccionService transaccionService,
       CuentaService cuentaService) {
@@ -513,8 +487,6 @@ public class BankingSystemApp {
     }
   }
 
-  // ...existing code... (métodos crearTransferencia, crearPagoServicio, etc.
-  // permanecen igual)
 
   private Transaccion crearTransferencia(Scanner sc, TransaccionService ts, CuentaService cs) {
     String origen = solicitarTexto(sc, "Código cuenta origen", true);
@@ -680,7 +652,6 @@ public class BankingSystemApp {
     System.out.println("-".repeat(60));
   }
 
-  // CRÉDITOS
 
   private void solicitarCredito(Scanner sc, ClienteService clienteService,
       CreditoService creditoService) {
@@ -873,7 +844,6 @@ public class BankingSystemApp {
     }
   }
 
-  // COMPOSITE + DECORATOR (permanece igual por su complejidad funcional)
 
   private void demoCompositeDecorator(Scanner sc, ClienteService clienteService,
       CuentaService cuentaService, CreditoService creditoService) {
@@ -1027,7 +997,6 @@ public class BankingSystemApp {
     System.out.println("=".repeat(60));
   }
 
-  // ACTUALIZAR SCORE
 
   private void actualizarScoreCliente(Scanner sc, ClienteService clienteService) {
     System.out.println("\nACTUALIZAR SCORE DE CLIENTE\n");
@@ -1082,7 +1051,6 @@ public class BankingSystemApp {
     return "MUY BAJO (difícil aprobación)";
   }
 
-  // MÉTODOS AUXILIARES
 
   private String solicitarTexto(Scanner sc, String mensaje, boolean obligatorio) {
     while (true) {

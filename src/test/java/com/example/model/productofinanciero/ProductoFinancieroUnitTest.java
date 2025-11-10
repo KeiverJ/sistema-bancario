@@ -7,6 +7,7 @@ import com.example.model.cuenta.Cuenta;
 import static org.junit.jupiter.api.Assertions.*;
 
 class ProductoFinancieroUnitTest {
+    // Prueba que los getters y setters de Cuenta funcionan correctamente en el contexto de ProductoFinanciero
     @Test
     void gettersYSettersBasicos() {
         Cuenta cuenta = new Cuenta();

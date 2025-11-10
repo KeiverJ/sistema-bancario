@@ -6,8 +6,7 @@ import com.example.decorator.core.ProductoFinancieroComponent;
 public class CashbackDecorator extends ProductoDecorator {
     
     private static final double COSTO_ADICIONAL = 5000.0;
-    private static final double BENEFICIO_CASHBACK = 20000.0; // promedio 2% en compras
-    
+    private static final double BENEFICIO_CASHBACK = 20000.0; 
     public CashbackDecorator(ProductoFinancieroComponent componente) {
         super(componente);
     }

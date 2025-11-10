@@ -15,6 +15,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class ObserverUnitTest {
 
+    // Verifica que NotificacionObserver solo soporta eventos de crédito y notifica correctamente
     @Test
     @DisplayName("NotificacionObserver solo soporta eventos de crédito y notifica correctamente")
     void notificacionObserverTest() {
@@ -28,6 +29,7 @@ class ObserverUnitTest {
         assertDoesNotThrow(() -> obs.onEvento(event));
     }
 
+    // Verifica que FraudeObserver detecta montos altos y solo soporta transacciones
     @Test
     @DisplayName("FraudeObserver detecta montos altos y soporta solo transacciones")
     void fraudeObserverTest() {
@@ -40,6 +42,7 @@ class ObserverUnitTest {
         assertDoesNotThrow(() -> obs.onEvento(event));
     }
 
+    // Verifica que LoggingObserver soporta e imprime cualquier evento
     @Test
     @DisplayName("LoggingObserver soporta e imprime cualquier evento")
     void loggingObserverCubreTodo() {
@@ -55,6 +58,7 @@ class ObserverUnitTest {
         assertDoesNotThrow(() -> obs.onEvento(event3));
     }
 
+    // Verifica que CuentaSaldoActualizadoEvent retorna tipo y cuenta correctamente
     @Test
     @DisplayName("CuentaSaldoActualizadoEvent retorna tipo y cuenta")
     void cuentaSaldoActualizadoEvent() {

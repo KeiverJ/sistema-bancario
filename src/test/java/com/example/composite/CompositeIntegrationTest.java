@@ -10,6 +10,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class CompositeIntegrationTest {
 
+    // Verifica que el paquete permite agregar y remover componentes correctamente
     @Test
     @DisplayName("Paquete permite agregar y remover componentes")
     void agregarYRemover() {

@@ -37,7 +37,6 @@ public class BaseProductoComponent implements ProductoFinancieroComponent {
 
     @Override
     public double getCostoMensual() {
-        // Base: cuota manejo cuenta o 0 para crédito
         if (cuenta != null)
             return cuenta.getCuotaManejo();
         return 0.0;

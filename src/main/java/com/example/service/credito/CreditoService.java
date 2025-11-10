@@ -122,9 +122,6 @@ public class CreditoService {
         return creditoRepository.findAll();
     }
 
-    /**
-     * Guarda un crédito y publica el evento de cambio de estado
-     */
     public Credito guardar(Credito credito) {
         Credito saved = creditoRepository.save(credito);
         publisher.publish(new CreditoEstadoCambiadoEvent(saved));

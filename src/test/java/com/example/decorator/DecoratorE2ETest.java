@@ -15,6 +15,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class DecoratorE2ETest {
 
+    // Verifica el flujo E2E: decorar cuenta en paquete de productos
     @Test
     @DisplayName("E2E: Decorar cuenta en paquete de productos")
     void e2e_decorarCuentaEnPaquete() {

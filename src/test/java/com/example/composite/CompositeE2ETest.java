@@ -14,6 +14,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class CompositeE2ETest {
 
+    // Verifica el flujo E2E: paquete con cuenta decorada calcula el costo total
     @Test
     @DisplayName("E2E: paquete con cuenta decorada calcula costo total")
     void e2e_paqueteCuentaDecorada() {

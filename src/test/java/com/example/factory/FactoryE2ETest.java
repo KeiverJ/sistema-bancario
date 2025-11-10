@@ -14,6 +14,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class FactoryE2ETest {
 
+    // Verifica el flujo E2E: abrir cuenta vía provider de fábrica
     @Test
     @DisplayName("E2E: abrir cuenta vía provider de fábrica")
     void e2e_abrirCuenta_viaFabrica() {
@@ -23,6 +24,7 @@ class FactoryE2ETest {
         assertNotNull(cuenta.getId());
         assertEquals(Cuenta.TipoCuenta.AHORROS, cuenta.getTipoCuenta());
     }
+    // Verifica el flujo E2E: abrir crédito vía provider de fábrica
     @Test
     @DisplayName("E2E: abrir crédito vía provider de fábrica")
     void e2e_abrirCredito_viaFabrica() {
@@ -34,6 +36,7 @@ class FactoryE2ETest {
         assertEquals(50_000, credito.getMonto());
     }
 
+    // Verifica el flujo E2E: crear transacción de transferencia usando factory
     @Test
     @DisplayName("E2E: crear transacción de transferencia usando factory")
     void e2e_transferenciaFactory() {
@@ -46,6 +49,7 @@ class FactoryE2ETest {
         assertTrue(t.getDescripcion().contains("Pago préstamo"));
     }
 
+    // Verifica el flujo E2E: crear depósito y pago de servicio usando factories
     @Test
     @DisplayName("E2E: crear depósito y pago de servicio usando factories")
     void e2e_depositoYPagoServicio() {

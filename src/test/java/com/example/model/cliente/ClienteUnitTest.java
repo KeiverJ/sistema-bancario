@@ -3,11 +3,10 @@ package com.example.model.cliente;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import com.example.model.cliente.Cliente.TipoCliente;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 class ClienteUnitTest {
+    // Prueba que los setters y getters de Cliente funcionan correctamente
     @Test
     @DisplayName("Setters y getters funcionan")
     void settersYGetters() {
@@ -30,6 +29,7 @@ class ClienteUnitTest {
         assertEquals("C-1", c.getCodigo());
     }
 
+    // Prueba que mejorarScore y reducirScore modifican el score del cliente
     @Test
     @DisplayName("Mejorar y reducir score funcionan")
     void scoreTest() {
@@ -41,6 +41,7 @@ class ClienteUnitTest {
         assertTrue(c.getScoreActual() >= 300);
     }
 
+    // Prueba que se pueden agregar cuentas y créditos a un cliente
     @Test
     @DisplayName("Agregar cuentas y créditos")
     void agregarCuentasYCreditos() {

@@ -47,7 +47,6 @@ public class TransaccionService {
         return saved;
     }
 
-    // Procesa una transacción pendiente y la marca EXITOSA/FALLIDA
     public Transaccion procesarTransaccion(String transaccionId) {
         Transaccion tx = transaccionRepository.findById(transaccionId)
                 .orElseThrow(() -> new IllegalArgumentException("Transacción no encontrada"));
@@ -66,7 +65,6 @@ public class TransaccionService {
         return transaccionRepository.save(tx);
     }
 
-    // Si quieres registrar y procesar en un solo paso
     public Transaccion registrarYProcesar(Transaccion t) {
         Transaccion saved = registrarTransaccion(t);
         return procesarTransaccion(saved.getId());
@@ -88,26 +86,24 @@ public class TransaccionService {
         return transaccionRepository.findByFechaRange(inicio, fin);
     }
 
-    // Factory Method helpers (déjalos como registrar o cámbialos a
-    // registrarYProcesar)
     public Transaccion crearTransferencia(String origenId, String destinoId, double monto, String descripcion) {
         Transaccion tx = new TransferenciaFactory(origenId, destinoId, monto, descripcion).nueva();
-        return registrarTransaccion(tx); // o registrarYProcesar(tx);
+        return registrarTransaccion(tx);
     }
 
     public Transaccion crearPagoServicio(String origenId, String codigoServicio, double monto, String referencia) {
         Transaccion tx = new PagoServicioFactory(origenId, codigoServicio, monto, referencia).nueva();
-        return registrarTransaccion(tx); // o registrarYProcesar(tx);
+        return registrarTransaccion(tx); 
     }
 
     public Transaccion crearRetiro(String origenId, double monto, String ubicacion) {
         Transaccion tx = new RetiroFactory(origenId, monto, ubicacion).nueva();
-        return registrarTransaccion(tx); // o registrarYProcesar(tx);
+        return registrarTransaccion(tx);
     }
 
     public Transaccion crearDeposito(String destinoId, double monto, String descripcion) {
         Transaccion tx = new DepositoFactory(destinoId, monto, descripcion).nueva();
-        return registrarTransaccion(tx); // o registrarYProcesar(tx);
+        return registrarTransaccion(tx);
     }
 
     public Optional<Transaccion> obtenerPorCodigo(String codigo) {

@@ -7,8 +7,6 @@ import com.example.model.credito.Credito;
 
 /**
  * Repository para gestión de Créditos.
- * 
- * @Repository hace que Spring Boot cree UNA sola instancia (Singleton).
  */
 public class CreditoRepository {
 

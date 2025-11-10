@@ -9,7 +9,6 @@ public class InteresLibreInversionStrategy implements CalculoInteresStrategy {
     @Override
     public double calcularTasaAnual(Credito credito, Cliente cliente, BankConfig config) {
         double base = config.getTasaInteresBase();
-        // Libre inversión: moderado
         return base + 1.5;
     }
 }

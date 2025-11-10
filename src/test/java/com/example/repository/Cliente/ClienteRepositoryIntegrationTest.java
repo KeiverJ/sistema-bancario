@@ -18,8 +18,6 @@ class ClienteRepositoryIntegrationTest {
     @DisplayName("findByNumeroDocumento y findByTipoCliente funcionan")
     void findByNumeroYTipoCliente() {
         TestAppContext ctx = TestAppContext.build();
-        Cliente c1 = ctx.clienteService.crearCliente("IntRepo", "CC", "12345", Cliente.TipoCliente.PERSONA_NATURAL);
-        Cliente c2 = ctx.clienteService.crearCliente("IntRepo2", "CC", "54321", Cliente.TipoCliente.PERSONA_JURIDICA);
         var encontrado = ctx.clienteRepository.findByNumeroDocumento("12345");
         assertTrue(encontrado.isPresent());
         var naturales = ctx.clienteRepository.findByTipoCliente(Cliente.TipoCliente.PERSONA_NATURAL);

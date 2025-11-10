@@ -14,6 +14,7 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 class BuilderE2ETest {
 
+    // Verifica el flujo E2E completo de solicitud de crédito VEHICULO usando contexto real
     @Test
     @DisplayName("Flujo completo solicitud crédito VEHICULO usando contexto real")
     void e2e_solicitudCreditoVehiculo() {

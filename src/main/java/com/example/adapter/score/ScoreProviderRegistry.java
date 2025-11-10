@@ -12,7 +12,6 @@ public class ScoreProviderRegistry {
 
     private final Map<String, ScoreProvider> providers;
 
-    // ✅ Inyectar los providers como dependencias
     public ScoreProviderRegistry(BuroFinancieroAdapter buroAdapter,
             LegacyRiskApiAdapter legacyAdapter) {
         this.providers = new HashMap<>();

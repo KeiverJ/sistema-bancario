@@ -1,8 +1,7 @@
-package com.example.service.Credito;
+package com.example.service.credito;
 
 import com.example.model.cliente.Cliente;
 import com.example.model.credito.Credito;
-import com.example.service.credito.CreditoService;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

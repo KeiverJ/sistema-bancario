@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class DatabaseConfigUnitTest {
+    // Verifica que los getters devuelven valores por defecto no nulos
     @Test
     @DisplayName("getters retornan valores por defecto")
     void gettersPorDefecto() {
@@ -15,6 +16,7 @@ class DatabaseConfigUnitTest {
         assertNotNull(config.getPassword());
     }
 
+    // Verifica que setters y getters funcionan correctamente y actualizan las propiedades
     @Test
     @DisplayName("Setters y getters funcionan y actualizan properties")
     void settersYGetters() {
@@ -34,6 +36,7 @@ class DatabaseConfigUnitTest {
         assertEquals("jdbc:mysql://localhost:3306/test", config.getProperty("database.url"));
     }
 
+    // Verifica que setProperty y getAllProperties funcionan correctamente
     @Test
     @DisplayName("setProperty y getAllProperties funcionan")
     void setPropertyYGetAllProperties() {
@@ -45,6 +48,7 @@ class DatabaseConfigUnitTest {
         assertNotNull(config.getAllProperties());
     }
 
+    // Verifica que isProductionEnvironment detecta correctamente el entorno de producción
     @Test
     @DisplayName("isProductionEnvironment detecta correctamente")
     void isProductionEnvironment_funciona() {
@@ -54,6 +58,7 @@ class DatabaseConfigUnitTest {
         assertTrue(config.isProductionEnvironment());
     }
 
+    // Verifica que isValidConfiguration cubre casos válidos e inválidos
     @Test
     @DisplayName("isValidConfiguration cubre ramas válidas e inválidas")
     void isValidConfiguration_ramas() {
@@ -71,6 +76,7 @@ class DatabaseConfigUnitTest {
         assertTrue(config.isValidConfiguration());
     }
 
+    // Verifica que getConnectionString retorna el formato esperado
     @Test
     @DisplayName("getConnectionString retorna formato esperado")
     void getConnectionString_funciona() {
@@ -80,6 +86,7 @@ class DatabaseConfigUnitTest {
         assertTrue(str.contains("PASSWORD="));
     }
 
+    // Verifica que toString retorna el formato esperado
     @Test
     @DisplayName("toString retorna formato esperado")
     void toString_funciona() {

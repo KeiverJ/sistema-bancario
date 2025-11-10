@@ -16,6 +16,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class ObserverIntegrationTest {
 
+    // Verifica que el publisher notifica a los observadores que soportan el tipo de evento
     @Test
     @DisplayName("Publisher notifica observadores que soportan el tipo")
     void publisherNotifica() {

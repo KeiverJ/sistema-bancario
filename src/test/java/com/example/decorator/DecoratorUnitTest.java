@@ -16,6 +16,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class DecoratorUnitTest {
 
+    // Verifica que SeguroVidaDecorator añade un costo fijo al producto
     @Test
     @DisplayName("SeguroVidaDecorator añade costo fijo")
     void seguroVidaAñadeCosto() {
@@ -26,6 +27,7 @@ class DecoratorUnitTest {
         assertEquals(10000 + 15000.0, decorado.getCostoMensual(), 0.01);
     }
 
+    // Verifica descripciones y costos de BaseProductoComponent para cuenta y crédito
     @Test
     @DisplayName("BaseProductoComponent: descripción y costo para cuenta y crédito")
     void baseProductoComponentDescripciones() {
@@ -46,6 +48,7 @@ class DecoratorUnitTest {
         assertEquals(0.0, baseCredito.getCostoMensual());
     }
 
+    // Verifica comportamiento de BaseProductoComponent cuando es nulo
     @Test
     @DisplayName("BaseProductoComponent: descripción y costo para nulo")
     void baseProductoComponentNull() {
@@ -54,6 +57,7 @@ class DecoratorUnitTest {
         assertEquals(0.0, base.getCostoMensual());
     }
 
+    // Verifica que ExencionCuotaDecorator elimina el costo mensual
     @Test
     @DisplayName("ExencionCuotaDecorator elimina costo mensual")
     void exencionCuotaDecorator() {
@@ -65,6 +69,7 @@ class DecoratorUnitTest {
         assertTrue(decorado.getDescripcion().contains("ExenciónCuotaManejo"));
     }
 
+    // Verifica que CashbackDecorator suma costo y beneficio correctamente
     @Test
     @DisplayName("CashbackDecorator suma costo y beneficio")
     void cashbackDecorator() {
@@ -77,6 +82,7 @@ class DecoratorUnitTest {
         assertTrue(decorado.getDescripcion().contains("Cashback"));
     }
 
+    // Verifica que BeneficioVipDecorator suma costo y beneficio correctamente
     @Test
     @DisplayName("BeneficioVipDecorator suma costo y beneficio")
     void beneficioVipDecorator() {
@@ -89,6 +95,7 @@ class DecoratorUnitTest {
         assertTrue(decorado.getDescripcion().contains("VIP"));
     }
 
+    // Verifica que ProductoDecorator delega correctamente a su componente base
     @Test
     @DisplayName("ProductoDecorator delega correctamente")
     void productoDecoratorDelegacion() {
@@ -104,6 +111,7 @@ class DecoratorUnitTest {
         assertEquals(base.getDescripcion(), decorador.getDescripcion());
     }
 
+    // Verifica que decoradores anidados combinan beneficios y costos
     @Test
     @DisplayName("Decoradores anidados: combinación de beneficios y costos")
     void decoradoresAnidados() {

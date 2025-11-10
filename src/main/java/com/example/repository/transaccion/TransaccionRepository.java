@@ -8,8 +8,6 @@ import com.example.model.transacccion.Transaccion;
 
 /**
  * Repository para gestión de Transacciones.
- * 
- * @Repository hace que Spring Boot cree UNA sola instancia (Singleton).
  */
 public class TransaccionRepository {
 
