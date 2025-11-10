@@ -1,9 +1,12 @@
 package com.example.config;
 
-
 import java.util.Properties;
 
 public class DatabaseConfig {
+
+  private static final String DATABASE_USERNAME = "database.username";
+  private static final String DATABASE_PASSWORD = "database.password";
+  private static final String DATABASE_URL = "database.url";
 
   private final Properties properties;
   private String url;
@@ -15,7 +18,7 @@ public class DatabaseConfig {
 
   public DatabaseConfig() {
     this.properties = new Properties();
-    
+
     this.url = "jdbc:h2:mem:bankdb";
     this.username = "sa";
     this.password = "";
@@ -27,29 +30,25 @@ public class DatabaseConfig {
   }
 
   private void loadDefaultProperties() {
-    properties.setProperty("database.driver", "org.h2.Driver");
-    properties.setProperty("database.url", url);
-    properties.setProperty("database.username", username);
-    properties.setProperty("database.password", password);
+    properties.setProperty(DATABASE_USERNAME, username);
+    properties.setProperty(DATABASE_URL, url);
+    properties.setProperty(DATABASE_PASSWORD, password);
     properties.setProperty("database.maxConnections", String.valueOf(maxConnections));
     properties.setProperty("database.autoCommit", "true");
     properties.setProperty("database.timeout", String.valueOf(timeout));
     properties.setProperty("database.poolSize", String.valueOf(poolSize));
   }
 
-  
-
   public String getUrl() {
     return url;
   }
 
-
   public void setUrl(String url) {
     this.url = url;
     if (url != null) {
-      properties.setProperty("database.url", url);
+      properties.setProperty(DATABASE_URL, url);
     } else {
-      properties.remove("database.url");
+      properties.remove(DATABASE_URL);
     }
   }
 
@@ -57,13 +56,12 @@ public class DatabaseConfig {
     return username;
   }
 
-
   public void setUsername(String username) {
     this.username = username;
     if (username != null) {
-      properties.setProperty("database.username", username);
+      properties.setProperty(DATABASE_USERNAME, username);
     } else {
-      properties.remove("database.username");
+      properties.remove(DATABASE_USERNAME);
     }
   }
 
@@ -71,20 +69,18 @@ public class DatabaseConfig {
     return password;
   }
 
-
   public void setPassword(String password) {
     this.password = password;
     if (password != null) {
-      properties.setProperty("database.password", password);
+      properties.setProperty(DATABASE_PASSWORD, password);
     } else {
-      properties.remove("database.password");
+      properties.remove(DATABASE_PASSWORD);
     }
   }
 
   public int getMaxConnections() {
     return maxConnections;
   }
-
 
   public void setMaxConnections(int maxConnections) {
     this.maxConnections = maxConnections;
@@ -95,7 +91,6 @@ public class DatabaseConfig {
     return poolSize;
   }
 
-
   public void setPoolSize(int poolSize) {
     this.poolSize = poolSize;
     properties.setProperty("database.poolSize", String.valueOf(poolSize));
@@ -104,7 +99,6 @@ public class DatabaseConfig {
   public int getTimeout() {
     return timeout;
   }
-
 
   public void setTimeout(int timeout) {
     this.timeout = timeout;

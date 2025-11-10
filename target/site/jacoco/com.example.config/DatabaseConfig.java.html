@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DatabaseConfig.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Sistema Bancario</a> &gt; <a href="index.source.html" class="el_package">com.example.config</a> &gt; <span class="el_source">DatabaseConfig.java</span></div><h1>DatabaseConfig.java</h1><pre class="source lang-java linenums">package com.example.config;
 
-
 import java.util.Properties;
 
 public class DatabaseConfig {
+
+  private static final String DATABASE_USERNAME = &quot;database.username&quot;;
+  private static final String DATABASE_PASSWORD = &quot;database.password&quot;;
+  private static final String DATABASE_URL = &quot;database.url&quot;;
 
   private final Properties properties;
   private String url;
@@ -13,141 +16,132 @@ public class DatabaseConfig {
   private int poolSize;
   private int timeout;
 
-<span class="fc" id="L16">  public DatabaseConfig() {</span>
-<span class="fc" id="L17">    this.properties = new Properties();</span>
-    
-<span class="fc" id="L19">    this.url = &quot;jdbc:h2:mem:bankdb&quot;;</span>
-<span class="fc" id="L20">    this.username = &quot;sa&quot;;</span>
-<span class="fc" id="L21">    this.password = &quot;&quot;;</span>
-<span class="fc" id="L22">    this.maxConnections = 10;</span>
-<span class="fc" id="L23">    this.poolSize = 20;</span>
-<span class="fc" id="L24">    this.timeout = 30;</span>
+<span class="fc" id="L19">  public DatabaseConfig() {</span>
+<span class="fc" id="L20">    this.properties = new Properties();</span>
 
-<span class="fc" id="L26">    loadDefaultProperties();</span>
-<span class="fc" id="L27">  }</span>
+<span class="fc" id="L22">    this.url = &quot;jdbc:h2:mem:bankdb&quot;;</span>
+<span class="fc" id="L23">    this.username = &quot;sa&quot;;</span>
+<span class="fc" id="L24">    this.password = &quot;&quot;;</span>
+<span class="fc" id="L25">    this.maxConnections = 10;</span>
+<span class="fc" id="L26">    this.poolSize = 20;</span>
+<span class="fc" id="L27">    this.timeout = 30;</span>
+
+<span class="fc" id="L29">    loadDefaultProperties();</span>
+<span class="fc" id="L30">  }</span>
 
   private void loadDefaultProperties() {
-<span class="fc" id="L30">    properties.setProperty(&quot;database.driver&quot;, &quot;org.h2.Driver&quot;);</span>
-<span class="fc" id="L31">    properties.setProperty(&quot;database.url&quot;, url);</span>
-<span class="fc" id="L32">    properties.setProperty(&quot;database.username&quot;, username);</span>
-<span class="fc" id="L33">    properties.setProperty(&quot;database.password&quot;, password);</span>
-<span class="fc" id="L34">    properties.setProperty(&quot;database.maxConnections&quot;, String.valueOf(maxConnections));</span>
-<span class="fc" id="L35">    properties.setProperty(&quot;database.autoCommit&quot;, &quot;true&quot;);</span>
-<span class="fc" id="L36">    properties.setProperty(&quot;database.timeout&quot;, String.valueOf(timeout));</span>
-<span class="fc" id="L37">    properties.setProperty(&quot;database.poolSize&quot;, String.valueOf(poolSize));</span>
-<span class="fc" id="L38">  }</span>
-
-  
+<span class="fc" id="L33">    properties.setProperty(DATABASE_USERNAME, username);</span>
+<span class="fc" id="L34">    properties.setProperty(DATABASE_URL, url);</span>
+<span class="fc" id="L35">    properties.setProperty(DATABASE_PASSWORD, password);</span>
+<span class="fc" id="L36">    properties.setProperty(&quot;database.maxConnections&quot;, String.valueOf(maxConnections));</span>
+<span class="fc" id="L37">    properties.setProperty(&quot;database.autoCommit&quot;, &quot;true&quot;);</span>
+<span class="fc" id="L38">    properties.setProperty(&quot;database.timeout&quot;, String.valueOf(timeout));</span>
+<span class="fc" id="L39">    properties.setProperty(&quot;database.poolSize&quot;, String.valueOf(poolSize));</span>
+<span class="fc" id="L40">  }</span>
 
   public String getUrl() {
 <span class="fc" id="L43">    return url;</span>
   }
 
-
   public void setUrl(String url) {
-<span class="fc" id="L48">    this.url = url;</span>
-<span class="pc bpc" id="L49" title="1 of 2 branches missed.">    if (url != null) {</span>
-<span class="fc" id="L50">      properties.setProperty(&quot;database.url&quot;, url);</span>
+<span class="fc" id="L47">    this.url = url;</span>
+<span class="pc bpc" id="L48" title="1 of 2 branches missed.">    if (url != null) {</span>
+<span class="fc" id="L49">      properties.setProperty(DATABASE_URL, url);</span>
     } else {
-<span class="nc" id="L52">      properties.remove(&quot;database.url&quot;);</span>
+<span class="nc" id="L51">      properties.remove(DATABASE_URL);</span>
     }
-<span class="fc" id="L54">  }</span>
+<span class="fc" id="L53">  }</span>
 
   public String getUsername() {
-<span class="fc" id="L57">    return username;</span>
+<span class="fc" id="L56">    return username;</span>
   }
-
 
   public void setUsername(String username) {
-<span class="fc" id="L62">    this.username = username;</span>
-<span class="fc bfc" id="L63" title="All 2 branches covered.">    if (username != null) {</span>
-<span class="fc" id="L64">      properties.setProperty(&quot;database.username&quot;, username);</span>
+<span class="fc" id="L60">    this.username = username;</span>
+<span class="fc bfc" id="L61" title="All 2 branches covered.">    if (username != null) {</span>
+<span class="fc" id="L62">      properties.setProperty(DATABASE_USERNAME, username);</span>
     } else {
-<span class="fc" id="L66">      properties.remove(&quot;database.username&quot;);</span>
+<span class="fc" id="L64">      properties.remove(DATABASE_USERNAME);</span>
     }
-<span class="fc" id="L68">  }</span>
+<span class="fc" id="L66">  }</span>
 
   public String getPassword() {
-<span class="fc" id="L71">    return password;</span>
+<span class="fc" id="L69">    return password;</span>
   }
-
 
   public void setPassword(String password) {
-<span class="fc" id="L76">    this.password = password;</span>
-<span class="pc bpc" id="L77" title="1 of 2 branches missed.">    if (password != null) {</span>
-<span class="fc" id="L78">      properties.setProperty(&quot;database.password&quot;, password);</span>
+<span class="fc" id="L73">    this.password = password;</span>
+<span class="pc bpc" id="L74" title="1 of 2 branches missed.">    if (password != null) {</span>
+<span class="fc" id="L75">      properties.setProperty(DATABASE_PASSWORD, password);</span>
     } else {
-<span class="nc" id="L80">      properties.remove(&quot;database.password&quot;);</span>
+<span class="nc" id="L77">      properties.remove(DATABASE_PASSWORD);</span>
     }
-<span class="fc" id="L82">  }</span>
+<span class="fc" id="L79">  }</span>
 
   public int getMaxConnections() {
-<span class="fc" id="L85">    return maxConnections;</span>
+<span class="fc" id="L82">    return maxConnections;</span>
   }
-
 
   public void setMaxConnections(int maxConnections) {
-<span class="fc" id="L90">    this.maxConnections = maxConnections;</span>
-<span class="fc" id="L91">    properties.setProperty(&quot;database.maxConnections&quot;, String.valueOf(maxConnections));</span>
-<span class="fc" id="L92">  }</span>
+<span class="fc" id="L86">    this.maxConnections = maxConnections;</span>
+<span class="fc" id="L87">    properties.setProperty(&quot;database.maxConnections&quot;, String.valueOf(maxConnections));</span>
+<span class="fc" id="L88">  }</span>
 
   public int getPoolSize() {
-<span class="fc" id="L95">    return poolSize;</span>
+<span class="fc" id="L91">    return poolSize;</span>
   }
-
 
   public void setPoolSize(int poolSize) {
-<span class="fc" id="L100">    this.poolSize = poolSize;</span>
-<span class="fc" id="L101">    properties.setProperty(&quot;database.poolSize&quot;, String.valueOf(poolSize));</span>
-<span class="fc" id="L102">  }</span>
+<span class="fc" id="L95">    this.poolSize = poolSize;</span>
+<span class="fc" id="L96">    properties.setProperty(&quot;database.poolSize&quot;, String.valueOf(poolSize));</span>
+<span class="fc" id="L97">  }</span>
 
   public int getTimeout() {
-<span class="fc" id="L105">    return timeout;</span>
+<span class="fc" id="L100">    return timeout;</span>
   }
 
-
   public void setTimeout(int timeout) {
-<span class="fc" id="L110">    this.timeout = timeout;</span>
-<span class="fc" id="L111">    properties.setProperty(&quot;database.timeout&quot;, String.valueOf(timeout));</span>
-<span class="fc" id="L112">  }</span>
+<span class="fc" id="L104">    this.timeout = timeout;</span>
+<span class="fc" id="L105">    properties.setProperty(&quot;database.timeout&quot;, String.valueOf(timeout));</span>
+<span class="fc" id="L106">  }</span>
 
   public String getProperty(String key) {
-<span class="pc bpc" id="L115" title="1 of 2 branches missed.">    return key == null ? null : properties.getProperty(key);</span>
+<span class="pc bpc" id="L109" title="1 of 2 branches missed.">    return key == null ? null : properties.getProperty(key);</span>
   }
 
   public Properties getAllProperties() {
-<span class="fc" id="L119">    return new Properties(properties);</span>
+<span class="fc" id="L113">    return new Properties(properties);</span>
   }
 
   public void setProperty(String key, String value) {
-<span class="pc bpc" id="L123" title="1 of 2 branches missed.">    if (key != null) {</span>
-<span class="fc bfc" id="L124" title="All 2 branches covered.">      if (value != null) {</span>
-<span class="fc" id="L125">        properties.setProperty(key, value);</span>
+<span class="pc bpc" id="L117" title="1 of 2 branches missed.">    if (key != null) {</span>
+<span class="fc bfc" id="L118" title="All 2 branches covered.">      if (value != null) {</span>
+<span class="fc" id="L119">        properties.setProperty(key, value);</span>
       } else {
-<span class="fc" id="L127">        properties.remove(key);</span>
+<span class="fc" id="L121">        properties.remove(key);</span>
       }
     }
-<span class="fc" id="L130">  }</span>
+<span class="fc" id="L124">  }</span>
 
   public boolean isProductionEnvironment() {
-<span class="fc bfc" id="L133" title="All 2 branches covered.">    return !url.contains(&quot;h2:mem:&quot;);</span>
+<span class="fc bfc" id="L127" title="All 2 branches covered.">    return !url.contains(&quot;h2:mem:&quot;);</span>
   }
 
   public boolean isValidConfiguration() {
-<span class="pc bpc" id="L137" title="1 of 8 branches missed.">    return url != null &amp;&amp; !url.isEmpty() &amp;&amp;</span>
+<span class="pc bpc" id="L131" title="1 of 8 branches missed.">    return url != null &amp;&amp; !url.isEmpty() &amp;&amp;</span>
         username != null &amp;&amp;
         maxConnections &gt; 0;
   }
 
   public String getConnectionString() {
-<span class="fc" id="L143">    return String.format(&quot;%s;USER=%s;PASSWORD=%s;MAX_CONNECTIONS=%d&quot;,</span>
-<span class="fc" id="L144">        url, username, password, maxConnections);</span>
+<span class="fc" id="L137">    return String.format(&quot;%s;USER=%s;PASSWORD=%s;MAX_CONNECTIONS=%d&quot;,</span>
+<span class="fc" id="L138">        url, username, password, maxConnections);</span>
   }
 
   @Override
   public String toString() {
-<span class="fc" id="L149">    return String.format(&quot;DatabaseConfig{url='%s', username='%s', maxConnections=%d, poolSize=%d}&quot;,</span>
-<span class="fc" id="L150">        url, username, maxConnections, poolSize);</span>
+<span class="fc" id="L143">    return String.format(&quot;DatabaseConfig{url='%s', username='%s', maxConnections=%d, poolSize=%d}&quot;,</span>
+<span class="fc" id="L144">        url, username, maxConnections, poolSize);</span>
   }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

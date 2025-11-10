@@ -6,22 +6,16 @@ import com.example.strategy.core.InteresStrategyRegistry;
 import com.example.template.core.SolicitudCreditoTemplate;
 import com.example.config.BankConfig;
 import com.example.factory.common.FabricaProductosProvider;
-import com.example.factory.common.ProductoBancarioFactory;
 import com.example.model.cliente.Cliente;
 import com.example.model.credito.Credito;
-import com.example.model.score.Score;
 import com.example.adapter.score.ScoreProviderRegistry;
-import com.example.builder.credito.CreditoBuilder;
 import com.example.builder.credito.CreditoBuilderRegistry;
 import com.example.chain.core.ApprovalChainBuilder;
-import com.example.chain.core.ApprovalContext;
-import com.example.chain.core.ApprovalHandler;
 import com.example.observer.core.DomainEventPublisher;
 import com.example.observer.eventos.CreditoEstadoCambiadoEvent;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 public class CreditoService {
 
@@ -45,87 +39,87 @@ public class CreditoService {
             CreditoBuilderRegistry creditoBuilderRegistry,
             ApprovalChainBuilder approvalChainBuilder,
             DomainEventPublisher publisher,
-<span class="fc" id="L48">            SolicitudCreditoTemplate solicitudCreditoTemplate) {</span>
-<span class="fc" id="L49">        this.creditoRepository = creditoRepository;</span>
-<span class="fc" id="L50">        this.clienteRepository = clienteRepository;</span>
-<span class="fc" id="L51">        this.bankConfig = bankConfig;</span>
-<span class="fc" id="L52">        this.fabricaProductosProvider = fabricaProductosProvider;</span>
-<span class="fc" id="L53">        this.interesStrategyRegistry = interesStrategyRegistry;</span>
-<span class="fc" id="L54">        this.scoreProviderRegistry = scoreProviderRegistry;</span>
-<span class="fc" id="L55">        this.creditoBuilderRegistry = creditoBuilderRegistry;</span>
-<span class="fc" id="L56">        this.approvalChainBuilder = approvalChainBuilder;</span>
-<span class="fc" id="L57">        this.publisher = publisher;</span>
-<span class="fc" id="L58">        this.solicitudCreditoTemplate = solicitudCreditoTemplate;</span>
-<span class="fc" id="L59">    }</span>
+<span class="fc" id="L42">            SolicitudCreditoTemplate solicitudCreditoTemplate) {</span>
+<span class="fc" id="L43">        this.creditoRepository = creditoRepository;</span>
+<span class="fc" id="L44">        this.clienteRepository = clienteRepository;</span>
+<span class="fc" id="L45">        this.bankConfig = bankConfig;</span>
+<span class="fc" id="L46">        this.fabricaProductosProvider = fabricaProductosProvider;</span>
+<span class="fc" id="L47">        this.interesStrategyRegistry = interesStrategyRegistry;</span>
+<span class="fc" id="L48">        this.scoreProviderRegistry = scoreProviderRegistry;</span>
+<span class="fc" id="L49">        this.creditoBuilderRegistry = creditoBuilderRegistry;</span>
+<span class="fc" id="L50">        this.approvalChainBuilder = approvalChainBuilder;</span>
+<span class="fc" id="L51">        this.publisher = publisher;</span>
+<span class="fc" id="L52">        this.solicitudCreditoTemplate = solicitudCreditoTemplate;</span>
+<span class="fc" id="L53">    }</span>
 
     public Credito solicitarCredito(String clienteId, Credito.TipoCredito tipoCredito,
             double monto, int plazoMeses) {
-<span class="fc" id="L63">        Cliente cliente = clienteRepository.findById(clienteId)</span>
-<span class="fc" id="L64">                .orElseThrow(() -&gt; new IllegalArgumentException(&quot;Cliente no encontrado&quot;));</span>
-<span class="fc" id="L65">        return solicitudCreditoTemplate.solicitar(cliente, tipoCredito, monto, plazoMeses);</span>
+<span class="fc" id="L57">        Cliente cliente = clienteRepository.findById(clienteId)</span>
+<span class="fc" id="L58">                .orElseThrow(() -&gt; new IllegalArgumentException(&quot;Cliente no encontrado&quot;));</span>
+<span class="fc" id="L59">        return solicitudCreditoTemplate.solicitar(cliente, tipoCredito, monto, plazoMeses);</span>
     }
 
     public Optional&lt;Credito&gt; obtenerCredito(String id) {
-<span class="fc" id="L69">        return creditoRepository.findById(id);</span>
+<span class="fc" id="L63">        return creditoRepository.findById(id);</span>
     }
 
     public List&lt;Credito&gt; listarCreditosCliente(String clienteId) {
-<span class="fc" id="L73">        return creditoRepository.findByClienteId(clienteId);</span>
+<span class="fc" id="L67">        return creditoRepository.findByClienteId(clienteId);</span>
     }
 
     public Optional&lt;Credito&gt; obtenerCreditoPorCodigo(String codigo) {
-<span class="fc" id="L77">        return creditoRepository.findAll().stream()</span>
-<span class="fc" id="L78">                .filter(cr -&gt; codigo.equals(cr.getCodigo()))</span>
-<span class="fc" id="L79">                .findFirst();</span>
+<span class="fc" id="L71">        return creditoRepository.findAll().stream()</span>
+<span class="fc" id="L72">                .filter(cr -&gt; codigo.equals(cr.getCodigo()))</span>
+<span class="fc" id="L73">                .findFirst();</span>
     }
 
     public List&lt;Credito&gt; listarCreditosClientePorCodigo(String codigoCliente) {
-<span class="fc" id="L83">        var clienteOpt = clienteRepository.findAll().stream()</span>
-<span class="fc" id="L84">                .filter(c -&gt; codigoCliente.equals(c.getCodigo()))</span>
-<span class="fc" id="L85">                .findFirst();</span>
-<span class="fc bfc" id="L86" title="All 2 branches covered.">        if (clienteOpt.isEmpty())</span>
-<span class="fc" id="L87">            throw new IllegalArgumentException(&quot;Cliente no encontrado&quot;);</span>
-<span class="fc" id="L88">        String clienteId = clienteOpt.get().getId();</span>
-<span class="fc" id="L89">        return creditoRepository.findAll().stream()</span>
-<span class="fc" id="L90">                .filter(cr -&gt; clienteId.equals(cr.getClienteId()))</span>
-<span class="fc" id="L91">                .collect(Collectors.toList());</span>
+<span class="fc" id="L77">        var clienteOpt = clienteRepository.findAll().stream()</span>
+<span class="fc" id="L78">                .filter(c -&gt; codigoCliente.equals(c.getCodigo()))</span>
+<span class="fc" id="L79">                .findFirst();</span>
+<span class="fc bfc" id="L80" title="All 2 branches covered.">        if (clienteOpt.isEmpty())</span>
+<span class="fc" id="L81">            throw new IllegalArgumentException(&quot;Cliente no encontrado&quot;);</span>
+<span class="fc" id="L82">        String clienteId = clienteOpt.get().getId();</span>
+<span class="fc" id="L83">        return creditoRepository.findAll().stream()</span>
+<span class="fc" id="L84">                .filter(cr -&gt; clienteId.equals(cr.getClienteId()))</span>
+<span class="fc" id="L85">                .toList();</span>
     }
 
     public boolean pagarCuota(String creditoId, double montoPago) {
-<span class="fc" id="L95">        Credito credito = creditoRepository.findById(creditoId)</span>
-<span class="fc" id="L96">                .orElseThrow(() -&gt; new IllegalArgumentException(&quot;Crédito no encontrado&quot;));</span>
-<span class="fc" id="L97">        boolean ok = credito.pagarCuota(montoPago);</span>
-<span class="fc bfc" id="L98" title="All 2 branches covered.">        if (ok) {</span>
-<span class="fc" id="L99">            Credito saved = creditoRepository.save(credito);</span>
-<span class="fc" id="L100">            publisher.publish(new CreditoEstadoCambiadoEvent(saved));</span>
+<span class="fc" id="L89">        Credito credito = creditoRepository.findById(creditoId)</span>
+<span class="fc" id="L90">                .orElseThrow(() -&gt; new IllegalArgumentException(&quot;Crédito no encontrado&quot;));</span>
+<span class="fc" id="L91">        boolean ok = credito.pagarCuota(montoPago);</span>
+<span class="fc bfc" id="L92" title="All 2 branches covered.">        if (ok) {</span>
+<span class="fc" id="L93">            Credito saved = creditoRepository.save(credito);</span>
+<span class="fc" id="L94">            publisher.publish(new CreditoEstadoCambiadoEvent(saved));</span>
         }
-<span class="fc" id="L102">        return ok;</span>
+<span class="fc" id="L96">        return ok;</span>
     }
 
     public double consultarSaldo(String creditoId) {
-<span class="fc" id="L106">        return creditoRepository.findById(creditoId)</span>
-<span class="fc" id="L107">                .map(Credito::getSaldo)</span>
-<span class="fc" id="L108">                .orElse(0.0);</span>
+<span class="fc" id="L100">        return creditoRepository.findById(creditoId)</span>
+<span class="fc" id="L101">                .map(Credito::getSaldo)</span>
+<span class="fc" id="L102">                .orElse(0.0);</span>
     }
 
     public double getTotalEndeudamiento(String clienteId) {
-<span class="fc" id="L112">        return creditoRepository.getTotalSaldoByClienteId(clienteId);</span>
+<span class="fc" id="L106">        return creditoRepository.getTotalSaldoByClienteId(clienteId);</span>
     }
 
     public double calcularInteresMensual(String creditoId) {
-<span class="fc" id="L116">        Credito credito = creditoRepository.findById(creditoId)</span>
-<span class="fc" id="L117">                .orElseThrow(() -&gt; new IllegalArgumentException(&quot;Crédito no encontrado&quot;));</span>
-<span class="fc" id="L118">        return credito.getSaldo() * (credito.getTasaInteres() / 12.0) / 100.0;</span>
+<span class="fc" id="L110">        Credito credito = creditoRepository.findById(creditoId)</span>
+<span class="fc" id="L111">                .orElseThrow(() -&gt; new IllegalArgumentException(&quot;Crédito no encontrado&quot;));</span>
+<span class="fc" id="L112">        return credito.getSaldo() * (credito.getTasaInteres() / 12.0) / 100.0;</span>
     }
 
     public List&lt;Credito&gt; listarTodosCreditos() {
-<span class="fc" id="L122">        return creditoRepository.findAll();</span>
+<span class="fc" id="L116">        return creditoRepository.findAll();</span>
     }
 
     public Credito guardar(Credito credito) {
-<span class="fc" id="L126">        Credito saved = creditoRepository.save(credito);</span>
-<span class="fc" id="L127">        publisher.publish(new CreditoEstadoCambiadoEvent(saved));</span>
-<span class="fc" id="L128">        return saved;</span>
+<span class="fc" id="L120">        Credito saved = creditoRepository.save(credito);</span>
+<span class="fc" id="L121">        publisher.publish(new CreditoEstadoCambiadoEvent(saved));</span>
+<span class="fc" id="L122">        return saved;</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

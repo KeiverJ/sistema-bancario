@@ -4,9 +4,10 @@ import com.example.observer.core.DomainEvent;
 import com.example.observer.core.EventoObserver;
 
 public class LoggingObserver implements EventoObserver {
+    private static final org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(LoggingObserver.class);
     @Override
     public void onEvento(DomainEvent event) {
-        System.out.println("[LOG] Evento " + event.tipo() + " @ " + event.getTimestamp());
+    logger.info("[LOG] Evento {} @ {}", event.tipo(), event.getTimestamp());
     }
 
     @Override

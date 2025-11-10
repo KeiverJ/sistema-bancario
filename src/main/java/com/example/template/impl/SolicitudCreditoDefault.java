@@ -43,7 +43,7 @@ public class SolicitudCreditoDefault extends SolicitudCreditoTemplate {
         credito.setTipoCredito(tipo);
         credito.setMonto(monto);
         credito.setPlazoMeses(plazo);
-        credito.setSaldo(monto); 
+        credito.setSaldo(monto);
         credito.setEstadoActual(Credito.EstadoCredito.SOLICITADO);
 
         CreditoBuilder builder = builderRegistry.get(tipo);
@@ -59,15 +59,14 @@ public class SolicitudCreditoDefault extends SolicitudCreditoTemplate {
             case HIPOTECARIO:
                 credito.setGarantia("HIPOTECA");
                 credito.setSeguroVida(true);
-                credito.setCostoApertura(credito.getMonto() * 0.01); 
+                credito.setCostoApertura(credito.getMonto() * 0.01);
                 break;
             case VEHICULO:
                 credito.setGarantia("PRENDA");
                 credito.setSeguroVida(true);
                 credito.setCostoApertura(credito.getMonto() * 0.005);
                 break;
-            case CONSUMO:
-            case LIBRE_INVERSION:
+            case CONSUMO, LIBRE_INVERSION:
                 credito.setGarantia("SIN_GARANTIA");
                 credito.setCuotaAdministracion(10000.0);
                 break;

@@ -43,7 +43,7 @@ public class SolicitudCreditoDefault extends SolicitudCreditoTemplate {
 <span class="fc" id="L43">        credito.setTipoCredito(tipo);</span>
 <span class="fc" id="L44">        credito.setMonto(monto);</span>
 <span class="fc" id="L45">        credito.setPlazoMeses(plazo);</span>
-<span class="fc" id="L46">        credito.setSaldo(monto); </span>
+<span class="fc" id="L46">        credito.setSaldo(monto);</span>
 <span class="fc" id="L47">        credito.setEstadoActual(Credito.EstadoCredito.SOLICITADO);</span>
 
 <span class="fc" id="L49">        CreditoBuilder builder = builderRegistry.get(tipo);</span>
@@ -59,19 +59,18 @@ public class SolicitudCreditoDefault extends SolicitudCreditoTemplate {
             case HIPOTECARIO:
 <span class="nc" id="L60">                credito.setGarantia(&quot;HIPOTECA&quot;);</span>
 <span class="nc" id="L61">                credito.setSeguroVida(true);</span>
-<span class="nc" id="L62">                credito.setCostoApertura(credito.getMonto() * 0.01); </span>
+<span class="nc" id="L62">                credito.setCostoApertura(credito.getMonto() * 0.01);</span>
 <span class="nc" id="L63">                break;</span>
             case VEHICULO:
 <span class="nc" id="L65">                credito.setGarantia(&quot;PRENDA&quot;);</span>
 <span class="nc" id="L66">                credito.setSeguroVida(true);</span>
 <span class="nc" id="L67">                credito.setCostoApertura(credito.getMonto() * 0.005);</span>
 <span class="nc" id="L68">                break;</span>
-            case CONSUMO:
-            case LIBRE_INVERSION:
-<span class="fc" id="L71">                credito.setGarantia(&quot;SIN_GARANTIA&quot;);</span>
-<span class="fc" id="L72">                credito.setCuotaAdministracion(10000.0);</span>
+            case CONSUMO, LIBRE_INVERSION:
+<span class="fc" id="L70">                credito.setGarantia(&quot;SIN_GARANTIA&quot;);</span>
+<span class="fc" id="L71">                credito.setCuotaAdministracion(10000.0);</span>
                 break;
         }
-<span class="fc" id="L75">    }</span>
+<span class="fc" id="L74">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

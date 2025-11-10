@@ -2,37 +2,19 @@
 
 Una aplicación Java completa de terminal que demuestra el patrón Singleton, JUnit 5, Mockito y todos los tipos de Test Doubles, con pruebas unitarias, de integración y end-to-end.
 
-## 📋 Tabla de Contenidos
 
-- [Características](#características)
+# Sistema Bancario Java
+
+Aplicación de terminal para gestión bancaria, con arquitectura en capas, patrones de diseño, pruebas unitarias, integración y E2E usando JUnit 5 y Mockito. Incluye cuentas, clientes, créditos, transacciones y lógica de negocio realista.
 - [Arquitectura](#arquitectura)
 - [Patrones de Diseño](#patrones-de-diseño)
-- [Tipos de Pruebas](#tipos-de-pruebas)
-- [Test Doubles](#test-doubles)
-- [Configuración del Proyecto](#configuración-del-proyecto)
-- [Instalación y Ejecución](#instalación-y-ejecución)
-- [Estructura del Proyecto](#estructura-del-proyecto)
-- [Comandos Maven](#comandos-maven)
-- [Ejemplos de Uso](#ejemplos-de-uso)
-- [Tecnologías Utilizadas](#tecnologías-utilizadas)
-
-## ✨ Características
 
 ### Funcionalidades de la Aplicación
 - **Sistema de gestión de usuarios** completo (CRUD)
 - **Interfaz de terminal** interactiva y fácil de usar
 - **Validación de datos** robusta
-- **Manejo de errores** comprehensivo
-- **Persistencia en memoria** con simulación de base de datos
-
-### Características Técnicas
-- **Patrón Singleton** implementado en DatabaseConfig
 - **Inyección de dependencias** manual
 - **Arquitectura en capas** (Model, Repository, Service, App)
-- **Testing comprehensivo** con 100+ pruebas
-- **Documentación completa** con ejemplos
-
-## 🏗️ Arquitectura
 
 ```
 ┌─────────────────┐
@@ -63,10 +45,6 @@ Implementado en `DatabaseConfig` con las siguientes características:
 - **Thread-safe** con synchronization
 - **Lazy initialization**
 - **Double-checked locking** como alternativa
-- **Inmutable después de la inicialización**
-
-```java
-public class DatabaseConfig {
     private static DatabaseConfig instance;
     
     private DatabaseConfig() { /* Constructor privado */ }
@@ -85,15 +63,9 @@ Implementado en `UserRepository` para abstraer el acceso a datos:
 - Encapsula la lógica de acceso a datos
 - Proporciona una interfaz limpia para el servicio
 - Simula operaciones de base de datos en memoria
-
-### Service Layer Pattern
-Implementado en `UserService` para la lógica de negocio:
 - Valida reglas de negocio
 - Coordina operaciones entre repositorios
 - Maneja transacciones y errores
-
-## 🧪 Tipos de Pruebas
-
 ### 1. Pruebas Unitarias (Unit Tests)
 Prueban componentes individuales de forma aislada usando mocks.
 
@@ -103,16 +75,8 @@ Prueban componentes individuales de forma aislada usando mocks.
 - Usan Mockito para aislar dependencias
 - Prueban lógica de negocio específica
 - Ejecución rápida y determinística
-- Cobertura de casos edge y errores
-
-**Ejemplos**:
-- `UserUnitTest`: Pruebas del modelo User
 - `DatabaseConfigUnitTest`: Pruebas del patrón Singleton
 - `UserServiceUnitTest`: Pruebas de la lógica de negocio
-- `UserRepositoryUnitTest`: Pruebas con Test Doubles
-
-### 2. Pruebas de Integración (Integration Tests)
-Prueban la interacción entre componentes reales.
 
 **Ubicación**: `src/test/java/integration/`
 
@@ -120,13 +84,8 @@ Prueban la interacción entre componentes reales.
 - Usan implementaciones reales (sin mocks)
 - Prueban flujo de datos entre capas
 - Verifican persistencia y consistencia
-- Prueban escenarios de múltiples operaciones
-
-**Ejemplo**:
-- `UserServiceIntegrationTest`: Integración Service-Repository
 
 ### 3. Pruebas End-to-End (E2E Tests)
-Prueban el sistema completo desde la perspectiva del usuario.
 
 **Ubicación**: `src/test/java/e2e/`
 
@@ -134,13 +93,8 @@ Prueban el sistema completo desde la perspectiva del usuario.
 - Prueban flujos completos de usuario
 - Verifican el sistema como un todo
 - Incluyen inicialización y limpieza
-- Simulan casos de uso reales
-
-**Ejemplo**:
-- `TerminalAppE2ETest`: Flujos completos de la aplicación
 
 ## 🎭 Test Doubles
-
 La aplicación demuestra todos los tipos de Test Doubles:
 
 ### 1. MOCKS 🎭
@@ -225,9 +179,6 @@ public class DummyDatabaseConfig {
 - **Java 21** o superior
 - **Maven 3.6+**
 - **IDE** con soporte para JUnit 5 (IntelliJ IDEA, Eclipse, VS Code)
-
-### Dependencias Principales
-
 ```xml
 <dependencies>
     <!-- JUnit 5 -->
@@ -389,11 +340,6 @@ xdg-open target/site/jacoco/index.html # Linux
 - **Líneas verdes**: Código cubierto por las pruebas
 - **Líneas rojas**: Código no cubierto por las pruebas  
 - **Líneas amarillas**: Código parcialmente cubierto
-- **Porcentajes**: Indican el nivel de cobertura por paquete/clase
-- **Exclusiones**: La clase `TerminalApp` se excluye del análisis por ser punto de entrada
-
-## 💡 Ejemplos de Uso
-
 ### Uso de la Aplicación
 
 1. **Ejecutar la aplicación**:
@@ -477,27 +423,12 @@ void shouldCompleteUserLifecycle() {
 - **Text Blocks** para strings multilínea
 - **Switch Expressions** para lógica condicional
 - **Records** en las utilidades de testing
-- **Pattern Matching** en validaciones
-- **Var** para inferencia de tipos
-
-### Plugins Maven
-
 - **maven-compiler-plugin**: Compilación con Java 21
 - **maven-surefire-plugin**: Ejecución de pruebas unitarias
 - **maven-failsafe-plugin**: Ejecución de pruebas de integración
-- **exec-maven-plugin**: Ejecución de la aplicación
-
-## 📊 Estadísticas del Proyecto
-
 - **Clases principales**: 5
 - **Clases de test**: 7
 - **Total de pruebas**: 100+
-- **Tipos de Test Doubles**: 5 (Mocks, Stubs, Spies, Fakes, Dummies)
-- **Cobertura de líneas**: 95%+
-- **Patrones implementados**: Singleton, Repository, Service Layer
-
-## 🎯 Objetivos de Aprendizaje
-
 Este proyecto demuestra:
 
 1. **Patrón Singleton** thread-safe
@@ -530,7 +461,4 @@ Este proyecto está bajo la Licencia MIT. Ver el archivo `LICENSE` para más det
 - **Proyecto**: Java Testing Application
 - **Versión**: 1.0.0
 - **Última actualización**: Octubre 2025
-
----
-
 *Este proyecto fue creado como una demostración completa de testing en Java, incluyendo todos los tipos de Test Doubles y estrategias de testing modernas.*

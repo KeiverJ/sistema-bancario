@@ -6,22 +6,16 @@ import com.example.strategy.core.InteresStrategyRegistry;
 import com.example.template.core.SolicitudCreditoTemplate;
 import com.example.config.BankConfig;
 import com.example.factory.common.FabricaProductosProvider;
-import com.example.factory.common.ProductoBancarioFactory;
 import com.example.model.cliente.Cliente;
 import com.example.model.credito.Credito;
-import com.example.model.score.Score;
 import com.example.adapter.score.ScoreProviderRegistry;
-import com.example.builder.credito.CreditoBuilder;
 import com.example.builder.credito.CreditoBuilderRegistry;
 import com.example.chain.core.ApprovalChainBuilder;
-import com.example.chain.core.ApprovalContext;
-import com.example.chain.core.ApprovalHandler;
 import com.example.observer.core.DomainEventPublisher;
 import com.example.observer.eventos.CreditoEstadoCambiadoEvent;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 public class CreditoService {
 
@@ -88,7 +82,7 @@ public class CreditoService {
         String clienteId = clienteOpt.get().getId();
         return creditoRepository.findAll().stream()
                 .filter(cr -> clienteId.equals(cr.getClienteId()))
-                .collect(Collectors.toList());
+                .toList();
     }
 
     public boolean pagarCuota(String creditoId, double montoPago) {

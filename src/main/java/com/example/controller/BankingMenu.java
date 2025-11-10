@@ -1,15 +1,18 @@
 package com.example.controller;
 
-import com.example.service.cliente.ClienteService;
 import java.util.Scanner;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class BankingMenu {
+    private static final Logger logger = LoggerFactory.getLogger(BankingMenu.class);
     private final ClienteController clienteController;
     private final CuentaController cuentaController;
     private final CreditoController creditoController;
     private final TransaccionController transaccionController;
 
-    public BankingMenu(ClienteController clienteController, CuentaController cuentaController, CreditoController creditoController, TransaccionController transaccionController) {
+    public BankingMenu(ClienteController clienteController, CuentaController cuentaController,
+            CreditoController creditoController, TransaccionController transaccionController) {
         this.clienteController = clienteController;
         this.cuentaController = cuentaController;
         this.creditoController = creditoController;
@@ -20,12 +23,11 @@ public class BankingMenu {
         run(new Scanner(System.in));
     }
 
-    // Permite inyectar Scanner externo para pruebas
     public void run(Scanner sc) {
         boolean running = true;
         while (running) {
             mostrarMenu();
-            System.out.print("\nOpción: ");
+            logger.info("\nOpción: ");
             String opcion = sc.nextLine().trim();
             switch (opcion) {
                 case "1" -> clienteController.crearCliente(sc);
@@ -44,37 +46,37 @@ public class BankingMenu {
                 case "14" -> clienteController.cambiarScoreCliente(sc);
                 case "15" -> cuentaController.consultarScoreCliente(sc);
                 case "0" -> running = false;
-                default -> System.out.println("Opción inválida");
+                default -> logger.warn("Opción inválida");
             }
             if (running) {
-                System.out.println("\nPresione ENTER para continuar...");
+                logger.info("\nPresione ENTER para continuar...");
                 sc.nextLine();
             }
         }
-        System.out.println("\n¡Hasta pronto!");
+        logger.info("\n¡Hasta pronto!");
         sc.close();
     }
 
     private void mostrarMenu() {
-        System.out.println("\n==============================");
-        System.out.println("MENÚ PRINCIPAL");
-        System.out.println("==============================");
-        System.out.println("1. Crear cliente");
-        System.out.println("2. Listar clientes");
-        System.out.println("3. Abrir cuenta");
-        System.out.println("4. Listar cuentas de cliente");
-        System.out.println("5. Depósito en cuenta");
-        System.out.println("6. Retiro de cuenta");
-        System.out.println("7. Transferencia entre cuentas");
-        System.out.println("8. Consultar saldo");
-        System.out.println("9. Crear transacción");
-        System.out.println("10. Solicitar crédito");
-        System.out.println("11. Listar créditos de cliente");
-        System.out.println("12. Pagar cuota de crédito");
-        System.out.println("13. Listar transacciones de cuenta");
-    System.out.println("14. Cambiar score de cliente");
-    System.out.println("15. Consultar score de cliente");
-        System.out.println("0. Salir");
-        System.out.println("==============================");
+        logger.info("\n==============================");
+        logger.info("MENÚ PRINCIPAL");
+        logger.info("==============================");
+        logger.info("1. Crear cliente");
+        logger.info("2. Listar clientes");
+        logger.info("3. Abrir cuenta");
+        logger.info("4. Listar cuentas de cliente");
+        logger.info("5. Depósito en cuenta");
+        logger.info("6. Retiro de cuenta");
+        logger.info("7. Transferencia entre cuentas");
+        logger.info("8. Consultar saldo");
+        logger.info("9. Crear transacción");
+        logger.info("10. Solicitar crédito");
+        logger.info("11. Listar créditos de cliente");
+        logger.info("12. Pagar cuota de crédito");
+        logger.info("13. Listar transacciones de cuenta");
+        logger.info("14. Cambiar score de cliente");
+        logger.info("15. Consultar score de cliente");
+        logger.info("0. Salir");
+        logger.info("==============================");
     }
 }

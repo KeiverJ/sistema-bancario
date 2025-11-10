@@ -12,87 +12,99 @@ import com.example.service.cliente.ClienteService;
 import java.util.Optional;
 import java.util.Scanner;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class CuentaController {
+    private static final Logger logger = LoggerFactory.getLogger(CuentaController.class);
+    private static final String CODIGO_CLIENTE_LABEL = "Código de cliente";
+    private static final String CLIENTE_NO_ENCONTRADO_MSG = "Cliente no encontrado";
+    private static final String CLIENTE_SIN_CUENTAS_MSG = "El cliente no tiene cuentas";
+    private static final String CUENTA_NO_ENCONTRADA_MSG = "Cuenta no encontrada";
+    private static final String CODIGO_CUENTA_LABEL = "Código de cuenta";
+    private static final String ERROR_MSG = "Error: {}";
     private final CuentaService cuentaService;
     private final ClienteService clienteService;
     private final ScoreProviderRegistry scoreProviderRegistry;
 
-    public CuentaController(CuentaService cuentaService, ClienteService clienteService, ClienteRepository clienteRepository) {
+    public CuentaController(CuentaService cuentaService, ClienteService clienteService,
+            ClienteRepository clienteRepository) {
         this.cuentaService = cuentaService;
         this.clienteService = clienteService;
         this.scoreProviderRegistry = new ScoreProviderRegistry(
-            new BuroFinancieroAdapter(clienteRepository), new LegacyRiskApiAdapter()
-        );
+                new BuroFinancieroAdapter(clienteRepository), new LegacyRiskApiAdapter());
     }
+
     public void consultarScoreCliente(Scanner sc) {
-        System.out.println("\nCONSULTA DE SCORE DEL CLIENTE\n");
         String codigoCliente = clienteService.listarTodos().isEmpty() ? null
-                : InputUtils.solicitarTexto(sc, "Código de cliente", true);
+                : InputUtils.solicitarTexto(sc, CODIGO_CLIENTE_LABEL, true);
         if (codigoCliente == null)
             return;
         Optional<Cliente> clienteOpt = clienteService.obtenerClientePorCodigo(codigoCliente);
         if (clienteOpt.isEmpty()) {
-            System.err.println("Cliente no encontrado");
+            logger.error(CLIENTE_NO_ENCONTRADO_MSG);
             return;
         }
         Cliente cliente = clienteOpt.get();
         Score score = scoreProviderRegistry.obtenerScoreParaCliente(cliente);
-        System.out.println("Score actual: " + score.getValor() + " (Fuente: " + score.getFuente() + ")");
+        logger.info("Score actual: {} (Fuente: {})", score.getValor(), score.getFuente());
     }
 
-    // ...existing code...
-
     public void listarCuentasCliente(Scanner sc) {
-        System.out.println("\nCUENTAS DEL CLIENTE\n");
+        logger.info("\nCUENTAS DEL CLIENTE\n");
         String codigoCliente = clienteService.listarTodos().isEmpty() ? null
-                : InputUtils.solicitarTexto(sc, "Código de cliente", true);
+                : InputUtils.solicitarTexto(sc, CODIGO_CLIENTE_LABEL, true);
         if (codigoCliente == null)
             return;
         Optional<Cliente> clienteOpt = clienteService.obtenerClientePorCodigo(codigoCliente);
         if (clienteOpt.isEmpty()) {
-            System.err.println("Cliente no encontrado");
+            logger.error(CLIENTE_NO_ENCONTRADO_MSG);
             return;
         }
         Cliente cliente = clienteOpt.get();
         if (cliente.getCuentaIds().isEmpty()) {
-            System.out.println("El cliente no tiene cuentas");
+            logger.info(CLIENTE_SIN_CUENTAS_MSG);
             return;
         }
-        System.out.println("Cliente: " + cliente.getNombre() + "\n");
-        System.out
-                .println(String.format("%-12s %-20s %-12s %15s %-12s", "CÓDIGO", "NÚMERO", "TIPO", "SALDO", "ESTADO"));
-        System.out.println("-".repeat(75));
+
+        logger.info("Cliente: {}\n", cliente.getNombre());
+        if (logger.isInfoEnabled()) {
+            logger.info(String.format("%-12s %-20s %-12s %15s %-12s", "CÓDIGO", "NÚMERO", "TIPO", "SALDO", "ESTADO"));
+            logger.info("-".repeat(75));
+        }
         for (String cuentaId : cliente.getCuentaIds()) {
             cuentaService.obtenerCuenta(cuentaId)
-                    .ifPresent(cuenta -> System.out.println(String.format("%-12s %-20s %-12s $%,14.2f %-12s",
+                    .ifPresent(cuenta -> logger.info(String.format("%-12s %-20s %-12s $%,14.2f %-12s",
                             cuenta.getCodigo(), cuenta.getNumeroCuenta(), cuenta.getTipoCuenta(), cuenta.getSaldo(),
                             cuenta.getEstado())));
         }
-        System.out.println("-".repeat(75));
+        if (logger.isInfoEnabled()) {
+            logger.info("-".repeat(75));
+        }
     }
 
     public void depositar(Scanner sc) {
-        System.out.println("\nDEPÓSITO EN CUENTA\n");
+        logger.info("\nDEPÓSITO EN CUENTA\n");
         String codigoCliente = clienteService.listarTodos().isEmpty() ? null
-                : InputUtils.solicitarTexto(sc, "Código de cliente", true);
+                : InputUtils.solicitarTexto(sc, CODIGO_CLIENTE_LABEL, true);
         if (codigoCliente == null)
             return;
         Optional<Cliente> clienteOpt = clienteService.obtenerClientePorCodigo(codigoCliente);
         if (clienteOpt.isEmpty()) {
-            System.err.println("Cliente no encontrado");
+            logger.error(CLIENTE_NO_ENCONTRADO_MSG);
             return;
         }
         Cliente cliente = clienteOpt.get();
         if (cliente.getCuentaIds().isEmpty()) {
-            System.out.println("El cliente no tiene cuentas");
+            logger.info(CLIENTE_SIN_CUENTAS_MSG);
             return;
         }
-        String cuentaId = InputUtils.solicitarTexto(sc, "Código de cuenta", true);
+        String cuentaId = InputUtils.solicitarTexto(sc, CODIGO_CUENTA_LABEL, true);
         if (cuentaId == null)
             return;
         Optional<Cuenta> cuentaOpt = cuentaService.obtenerCuenta(cuentaId);
         if (cuentaOpt.isEmpty()) {
-            System.err.println("Cuenta no encontrada");
+            logger.error(CUENTA_NO_ENCONTRADA_MSG);
             return;
         }
         Double monto = InputUtils.solicitarMonto(sc, "Monto a depositar");
@@ -100,34 +112,34 @@ public class CuentaController {
             return;
         try {
             cuentaService.depositar(cuentaId, monto);
-            System.out.println("Depósito realizado correctamente");
+            logger.info("Depósito realizado correctamente");
         } catch (Exception e) {
-            System.err.println("Error: " + e.getMessage());
+            logger.error(ERROR_MSG, e.getMessage());
         }
     }
 
     public void retirar(Scanner sc) {
-        System.out.println("\nRETIRO DE CUENTA\n");
+        logger.info("\nRETIRO DE CUENTA\n");
         String codigoCliente = clienteService.listarTodos().isEmpty() ? null
-                : InputUtils.solicitarTexto(sc, "Código de cliente", true);
+                : InputUtils.solicitarTexto(sc, CODIGO_CLIENTE_LABEL, true);
         if (codigoCliente == null)
             return;
         Optional<Cliente> clienteOpt = clienteService.obtenerClientePorCodigo(codigoCliente);
         if (clienteOpt.isEmpty()) {
-            System.err.println("Cliente no encontrado");
+            logger.error(CLIENTE_NO_ENCONTRADO_MSG);
             return;
         }
         Cliente cliente = clienteOpt.get();
         if (cliente.getCuentaIds().isEmpty()) {
-            System.out.println("El cliente no tiene cuentas");
+            logger.info(CLIENTE_SIN_CUENTAS_MSG);
             return;
         }
-        String cuentaId = InputUtils.solicitarTexto(sc, "Código de cuenta", true);
+        String cuentaId = InputUtils.solicitarTexto(sc, CODIGO_CUENTA_LABEL, true);
         if (cuentaId == null)
             return;
         Optional<Cuenta> cuentaOpt = cuentaService.obtenerCuenta(cuentaId);
         if (cuentaOpt.isEmpty()) {
-            System.err.println("Cuenta no encontrada");
+            logger.error(CUENTA_NO_ENCONTRADA_MSG);
             return;
         }
         Double monto = InputUtils.solicitarMonto(sc, "Monto a retirar");
@@ -135,14 +147,14 @@ public class CuentaController {
             return;
         try {
             cuentaService.retirar(cuentaId, monto);
-            System.out.println("Retiro realizado correctamente");
+            logger.info("Retiro realizado correctamente");
         } catch (Exception e) {
-            System.err.println("Error: " + e.getMessage());
+            logger.error(ERROR_MSG, e.getMessage());
         }
     }
 
     public void transferir(Scanner sc) {
-        System.out.println("\nTRANSFERENCIA ENTRE CUENTAS\n");
+        logger.info("\nTRANSFERENCIA ENTRE CUENTAS\n");
         String cuentaOrigen = InputUtils.solicitarTexto(sc, "Código de cuenta origen", true);
         if (cuentaOrigen == null)
             return;
@@ -154,35 +166,36 @@ public class CuentaController {
             return;
         try {
             cuentaService.transferir(cuentaOrigen, cuentaDestino, monto);
-            System.out.println("Transferencia realizada correctamente");
+            logger.info("Transferencia realizada correctamente");
         } catch (Exception e) {
-            System.err.println("Error: " + e.getMessage());
+            logger.error(ERROR_MSG, e.getMessage());
         }
     }
 
     public void consultarSaldo(Scanner sc) {
-        System.out.println("\nCONSULTA DE SALDO\n");
-        String cuentaId = InputUtils.solicitarTexto(sc, "Código de cuenta", true);
+        String cuentaId = InputUtils.solicitarTexto(sc, CODIGO_CUENTA_LABEL, true);
         if (cuentaId == null)
             return;
         Optional<Cuenta> cuentaOpt = cuentaService.obtenerCuenta(cuentaId);
         if (cuentaOpt.isEmpty()) {
-            System.err.println("Cuenta no encontrada");
+            logger.error(CUENTA_NO_ENCONTRADA_MSG);
             return;
         }
         Cuenta cuenta = cuentaOpt.get();
-        System.out.println("Saldo actual: $" + String.format("%,.2f", cuenta.getSaldo()));
+        if (logger.isInfoEnabled()) {
+            logger.info("Saldo actual: ${}", String.format("%,.2f", cuenta.getSaldo()));
+        }
     }
 
     public void abrirCuenta(Scanner sc) {
-        System.out.println("\nAPERTURA DE CUENTA\n");
+        logger.info("\nAPERTURA DE CUENTA\n");
         String codigoCliente = clienteService.listarTodos().isEmpty() ? null
-                : InputUtils.solicitarTexto(sc, "Código de cliente", true);
+                : InputUtils.solicitarTexto(sc, CODIGO_CLIENTE_LABEL, true);
         if (codigoCliente == null)
             return;
         Optional<Cliente> clienteOpt = clienteService.obtenerClientePorCodigo(codigoCliente);
         if (clienteOpt.isEmpty()) {
-            System.err.println("Cliente no encontrado");
+            logger.error(CLIENTE_NO_ENCONTRADO_MSG);
             return;
         }
         Cuenta.TipoCuenta tipo = InputUtils.solicitarEnum(sc, "Tipo de cuenta", Cuenta.TipoCuenta.class);
@@ -193,12 +206,14 @@ public class CuentaController {
             return;
         try {
             Cuenta cuenta = cuentaService.abrirCuenta(clienteOpt.get().getId(), tipo, saldoInicial);
-            System.out.println("\nCuenta creada exitosamente");
-            System.out.println("Código: " + cuenta.getCodigo());
-            System.out.println("Número: " + cuenta.getNumeroCuenta());
-            System.out.println("Saldo: $" + String.format("%,.2f", cuenta.getSaldo()));
+            logger.info("\nCuenta creada exitosamente");
+            logger.info("Código: {}", cuenta.getCodigo());
+            logger.info("Número: {}", cuenta.getNumeroCuenta());
+            if (logger.isInfoEnabled()) {
+                logger.info("Saldo: ${}", String.format("%,.2f", cuenta.getSaldo()));
+            }
         } catch (Exception e) {
-            System.err.println("Error: " + e.getMessage());
+            logger.error(ERROR_MSG, e.getMessage());
         }
 
     }

@@ -6,94 +6,100 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Scanner;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class ClienteController {
+<span class="fc" id="L13">    private static final Logger logger = LoggerFactory.getLogger(ClienteController.class);</span>
     private final ClienteService clienteService;
 
-<span class="fc" id="L12">    public ClienteController(ClienteService clienteService) {</span>
-<span class="fc" id="L13">        this.clienteService = clienteService;</span>
-<span class="fc" id="L14">    }</span>
+<span class="fc" id="L16">    public ClienteController(ClienteService clienteService) {</span>
+<span class="fc" id="L17">        this.clienteService = clienteService;</span>
+<span class="fc" id="L18">    }</span>
 
     public void crearCliente(Scanner sc) {
-<span class="fc" id="L17">        System.out.println(&quot;\nCREAR NUEVO CLIENTE\n&quot;);</span>
-<span class="fc" id="L18">        String nombre = InputUtils.solicitarTexto(sc, &quot;Nombre completo&quot;, true);</span>
-<span class="fc bfc" id="L19" title="All 2 branches covered.">        if (nombre == null) return;</span>
-<span class="fc" id="L20">        String tipoDoc = InputUtils.solicitarOpcion(sc, &quot;Tipo de documento&quot;, new String[]{&quot;CC&quot;, &quot;NIT&quot;, &quot;PASAPORTE&quot;});</span>
-<span class="fc bfc" id="L21" title="All 2 branches covered.">        if (tipoDoc == null) return;</span>
-<span class="fc" id="L22">        String numDoc = InputUtils.solicitarTexto(sc, &quot;Número de documento&quot;, true);</span>
-<span class="fc bfc" id="L23" title="All 2 branches covered.">        if (numDoc == null) return;</span>
-<span class="fc" id="L24">        Cliente.TipoCliente tipoCliente = InputUtils.solicitarEnum(sc, &quot;Tipo de cliente&quot;, Cliente.TipoCliente.class);</span>
-<span class="fc bfc" id="L25" title="All 2 branches covered.">        if (tipoCliente == null) return;</span>
+<span class="fc" id="L21">    logger.info(&quot;\nCREAR NUEVO CLIENTE\n&quot;);</span>
+<span class="fc" id="L22">        String nombre = InputUtils.solicitarTexto(sc, &quot;Nombre completo&quot;, true);</span>
+<span class="fc bfc" id="L23" title="All 2 branches covered.">        if (nombre == null) return;</span>
+<span class="fc" id="L24">        String tipoDoc = InputUtils.solicitarOpcion(sc, &quot;Tipo de documento&quot;, new String[]{&quot;CC&quot;, &quot;NIT&quot;, &quot;PASAPORTE&quot;});</span>
+<span class="fc bfc" id="L25" title="All 2 branches covered.">        if (tipoDoc == null) return;</span>
+<span class="fc" id="L26">        String numDoc = InputUtils.solicitarTexto(sc, &quot;Número de documento&quot;, true);</span>
+<span class="fc bfc" id="L27" title="All 2 branches covered.">        if (numDoc == null) return;</span>
+<span class="fc" id="L28">        Cliente.TipoCliente tipoCliente = InputUtils.solicitarEnum(sc, &quot;Tipo de cliente&quot;, Cliente.TipoCliente.class);</span>
+<span class="fc bfc" id="L29" title="All 2 branches covered.">        if (tipoCliente == null) return;</span>
         try {
-<span class="fc" id="L27">            Cliente cliente = clienteService.crearCliente(nombre, tipoDoc, numDoc, tipoCliente);</span>
-<span class="fc" id="L28">            System.out.println(&quot;\nCliente creado exitosamente&quot;);</span>
-<span class="fc" id="L29">            System.out.println(&quot;Código: &quot; + cliente.getCodigo());</span>
-<span class="fc" id="L30">            System.out.println(&quot;Tipo: &quot; + cliente.getTipoCliente());</span>
-<span class="fc" id="L31">        } catch (Exception e) {</span>
-<span class="fc" id="L32">            System.err.println(&quot;Error: &quot; + e.getMessage());</span>
-<span class="fc" id="L33">        }</span>
-<span class="fc" id="L34">    }</span>
+<span class="fc" id="L31">            Cliente cliente = clienteService.crearCliente(nombre, tipoDoc, numDoc, tipoCliente);</span>
+<span class="fc" id="L32">            logger.info(&quot;\nCliente creado exitosamente&quot;);</span>
+<span class="fc" id="L33">            logger.info(&quot;Código: {}&quot;, cliente.getCodigo());</span>
+<span class="fc" id="L34">            logger.info(&quot;Tipo: {}&quot;, cliente.getTipoCliente());</span>
+<span class="fc" id="L35">        } catch (Exception e) {</span>
+<span class="fc" id="L36">            logger.error(&quot;Error: {}&quot;, e.getMessage());</span>
+<span class="fc" id="L37">        }</span>
+<span class="fc" id="L38">    }</span>
 
     public void listarClientes() {
-<span class="fc" id="L37">        System.out.println(&quot;\nLISTADO DE CLIENTES\n&quot;);</span>
-<span class="fc" id="L38">        List&lt;Cliente&gt; clientes = clienteService.listarTodos();</span>
-<span class="fc bfc" id="L39" title="All 2 branches covered.">        if (clientes.isEmpty()) {</span>
-<span class="fc" id="L40">            System.out.println(&quot;No hay clientes registrados&quot;);</span>
-<span class="fc" id="L41">            return;</span>
+<span class="fc" id="L41">    logger.info(&quot;\nLISTADO DE CLIENTES\n&quot;);</span>
+<span class="fc" id="L42">        List&lt;Cliente&gt; clientes = clienteService.listarTodos();</span>
+<span class="fc bfc" id="L43" title="All 2 branches covered.">        if (clientes.isEmpty()) {</span>
+<span class="fc" id="L44">            logger.info(&quot;No hay clientes registrados&quot;);</span>
+<span class="fc" id="L45">            return;</span>
         }
-<span class="fc" id="L43">        System.out.println(String.format(&quot;%-12s %-30s %-20s %-15s&quot;, &quot;CÓDIGO&quot;, &quot;NOMBRE&quot;, &quot;TIPO&quot;, &quot;DOCUMENTO&quot;));</span>
-<span class="fc" id="L44">        System.out.println(&quot;-&quot;.repeat(80));</span>
-<span class="fc" id="L45">        clientes.forEach(c -&gt; System.out.println(</span>
-<span class="fc" id="L46">            String.format(&quot;%-12s %-30s %-20s %-15s&quot;, c.getCodigo(), truncar(c.getNombre(), 30), c.getTipoCliente(), c.getNumeroDocumento())));</span>
-<span class="fc" id="L47">        System.out.println(&quot;-&quot;.repeat(80));</span>
-<span class="fc" id="L48">        System.out.println(&quot;Total: &quot; + clientes.size() + &quot; cliente(s)&quot;);</span>
-<span class="fc" id="L49">    }</span>
+<span class="pc bpc" id="L47" title="1 of 2 branches missed.">        if (logger.isInfoEnabled()) {</span>
+<span class="fc" id="L48">            logger.info(String.format(&quot;%-12s %-30s %-20s %-15s&quot;, &quot;CÓDIGO&quot;, &quot;NOMBRE&quot;, &quot;TIPO&quot;, &quot;DOCUMENTO&quot;));</span>
+<span class="fc" id="L49">            logger.info(&quot;-&quot;.repeat(80));</span>
+<span class="fc" id="L50">            clientes.forEach(c -&gt; logger.info(String.format(&quot;%-12s %-30s %-20s %-15s&quot;, c.getCodigo(), truncar(c.getNombre(), 30), c.getTipoCliente(), c.getNumeroDocumento())));</span>
+<span class="fc" id="L51">            logger.info(&quot;-&quot;.repeat(80));</span>
+        }
+<span class="fc" id="L53">        logger.info(&quot;Total: {} cliente(s)&quot;, clientes.size());</span>
+<span class="fc" id="L54">    }</span>
 
     public String seleccionarCliente(Scanner sc) {
-<span class="fc" id="L52">        List&lt;Cliente&gt; clientes = clienteService.listarTodos();</span>
-<span class="fc bfc" id="L53" title="All 2 branches covered.">        if (clientes.isEmpty()) {</span>
-<span class="fc" id="L54">            System.err.println(&quot;No hay clientes. Cree un cliente primero&quot;);</span>
-<span class="fc" id="L55">            return null;</span>
+<span class="fc" id="L57">        List&lt;Cliente&gt; clientes = clienteService.listarTodos();</span>
+<span class="fc bfc" id="L58" title="All 2 branches covered.">        if (clientes.isEmpty()) {</span>
+<span class="fc" id="L59">            logger.error(&quot;No hay clientes. Cree un cliente primero&quot;);</span>
+<span class="fc" id="L60">            return null;</span>
         }
-<span class="fc" id="L57">        System.out.println(&quot;\nClientes:&quot;);</span>
-<span class="fc" id="L58">        System.out.println(String.format(&quot;%-12s %-30s&quot;, &quot;CÓDIGO&quot;, &quot;NOMBRE&quot;));</span>
-<span class="fc" id="L59">        System.out.println(&quot;-&quot;.repeat(45));</span>
-<span class="fc" id="L60">        clientes.forEach(c -&gt; System.out.println(</span>
-<span class="fc" id="L61">            String.format(&quot;%-12s %-30s&quot;, c.getCodigo(), truncar(c.getNombre(), 30))));</span>
-<span class="fc" id="L62">        System.out.println(&quot;-&quot;.repeat(45));</span>
-<span class="fc" id="L63">        String codigo = InputUtils.solicitarTexto(sc, &quot;\nCódigo del cliente&quot;, true);</span>
-<span class="pc bpc" id="L64" title="1 of 4 branches missed.">        if (codigo != null &amp;&amp; clienteService.obtenerClientePorCodigo(codigo).isEmpty()) {</span>
-<span class="fc" id="L65">            System.err.println(&quot;Cliente no encontrado&quot;);</span>
-<span class="fc" id="L66">            return null;</span>
+<span class="fc" id="L62">        logger.info(&quot;\nClientes:&quot;);</span>
+<span class="pc bpc" id="L63" title="1 of 2 branches missed.">        if (logger.isInfoEnabled()) {</span>
+<span class="fc" id="L64">            logger.info(String.format(&quot;%-12s %-30s&quot;, &quot;CÓDIGO&quot;, &quot;NOMBRE&quot;));</span>
+<span class="fc" id="L65">            logger.info(&quot;-&quot;.repeat(45));</span>
+<span class="fc" id="L66">            clientes.forEach(c -&gt; logger.info(String.format(&quot;%-12s %-30s&quot;, c.getCodigo(), truncar(c.getNombre(), 30))));</span>
+<span class="fc" id="L67">            logger.info(&quot;-&quot;.repeat(45));</span>
         }
-<span class="fc" id="L68">        return codigo;</span>
+<span class="fc" id="L69">        String codigo = InputUtils.solicitarTexto(sc, &quot;\nCódigo del cliente&quot;, true);</span>
+<span class="pc bpc" id="L70" title="1 of 4 branches missed.">        if (codigo != null &amp;&amp; clienteService.obtenerClientePorCodigo(codigo).isEmpty()) {</span>
+<span class="fc" id="L71">            logger.error(&quot;Cliente no encontrado&quot;);</span>
+<span class="fc" id="L72">            return null;</span>
+        }
+<span class="fc" id="L74">        return codigo;</span>
     }
 
     public Optional&lt;Cliente&gt; obtenerClientePorCodigo(String codigo) {
-<span class="nc" id="L72">        return clienteService.obtenerClientePorCodigo(codigo);</span>
+<span class="nc" id="L78">        return clienteService.obtenerClientePorCodigo(codigo);</span>
     }
 
     private String truncar(String texto, int longitud) {
-<span class="fc bfc" id="L76" title="All 2 branches covered.">        if (texto == null) return &quot;&quot;;</span>
-<span class="pc bpc" id="L77" title="1 of 2 branches missed.">        return texto.length() &gt; longitud ? texto.substring(0, longitud - 3) + &quot;...&quot; : texto;</span>
+<span class="fc bfc" id="L82" title="All 2 branches covered.">        if (texto == null) return &quot;&quot;;</span>
+<span class="pc bpc" id="L83" title="1 of 2 branches missed.">        return texto.length() &gt; longitud ? texto.substring(0, longitud - 3) + &quot;...&quot; : texto;</span>
     }
 
     public void cambiarScoreCliente(Scanner sc) {
-<span class="fc" id="L81">        System.out.println(&quot;\nCAMBIAR SCORE DE CLIENTE\n&quot;);</span>
-<span class="fc" id="L82">        String codigo = InputUtils.solicitarTexto(sc, &quot;Código de cliente&quot;, true);</span>
-<span class="fc bfc" id="L83" title="All 2 branches covered.">        if (codigo == null) return;</span>
-<span class="fc" id="L84">        Optional&lt;Cliente&gt; clienteOpt = clienteService.obtenerClientePorCodigo(codigo);</span>
-<span class="pc bpc" id="L85" title="1 of 2 branches missed.">        if (clienteOpt.isEmpty()) {</span>
-<span class="nc" id="L86">            System.err.println(&quot;Cliente no encontrado&quot;);</span>
-<span class="nc" id="L87">            return;</span>
+<span class="fc" id="L87">    logger.info(&quot;\nCAMBIAR SCORE DE CLIENTE\n&quot;);</span>
+<span class="fc" id="L88">        String codigo = InputUtils.solicitarTexto(sc, &quot;Código de cliente&quot;, true);</span>
+<span class="fc bfc" id="L89" title="All 2 branches covered.">        if (codigo == null) return;</span>
+<span class="fc" id="L90">        Optional&lt;Cliente&gt; clienteOpt = clienteService.obtenerClientePorCodigo(codigo);</span>
+<span class="pc bpc" id="L91" title="1 of 2 branches missed.">        if (clienteOpt.isEmpty()) {</span>
+<span class="nc" id="L92">            logger.error(&quot;Cliente no encontrado&quot;);</span>
+<span class="nc" id="L93">            return;</span>
         }
-<span class="fc" id="L89">        Integer nuevoScore = InputUtils.solicitarEnteroPositivo(sc, &quot;Nuevo score (300-850)&quot;);</span>
-<span class="pc bpc" id="L90" title="1 of 2 branches missed.">        if (nuevoScore == null) return;</span>
+<span class="fc" id="L95">        Integer nuevoScore = InputUtils.solicitarEnteroPositivo(sc, &quot;Nuevo score (300-850)&quot;);</span>
+<span class="pc bpc" id="L96" title="1 of 2 branches missed.">        if (nuevoScore == null) return;</span>
         try {
-<span class="fc" id="L92">            Cliente actualizado = clienteService.actualizarScorePorCodigo(codigo, nuevoScore);</span>
-<span class="nc" id="L93">            System.out.println(&quot;Score actualizado correctamente. Nuevo score: &quot; + actualizado.getScoreActual());</span>
-<span class="fc" id="L94">        } catch (Exception e) {</span>
-<span class="fc" id="L95">            System.err.println(&quot;Error: &quot; + e.getMessage());</span>
-<span class="nc" id="L96">        }</span>
-<span class="fc" id="L97">    }</span>
+<span class="fc" id="L98">            Cliente actualizado = clienteService.actualizarScorePorCodigo(codigo, nuevoScore);</span>
+<span class="nc" id="L99">            logger.info(&quot;Score actualizado correctamente. Nuevo score: {}&quot;, actualizado.getScoreActual());</span>
+<span class="fc" id="L100">        } catch (Exception e) {</span>
+<span class="fc" id="L101">            logger.error(&quot;Error: {}&quot;, e.getMessage());</span>
+<span class="nc" id="L102">        }</span>
+<span class="fc" id="L103">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

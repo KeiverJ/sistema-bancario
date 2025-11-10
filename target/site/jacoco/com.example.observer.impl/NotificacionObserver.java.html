@@ -5,11 +5,11 @@ import com.example.observer.core.EventoObserver;
 import com.example.observer.eventos.CreditoEstadoCambiadoEvent;
 
 <span class="fc" id="L7">public class NotificacionObserver implements EventoObserver {</span>
+<span class="fc" id="L8">    private static final org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(NotificacionObserver.class);</span>
     @Override
     public void onEvento(DomainEvent event) {
-<span class="pc bpc" id="L10" title="1 of 2 branches missed.">        if (event instanceof CreditoEstadoCambiadoEvent ce) {</span>
-<span class="fc" id="L11">            System.out.println(&quot;[NOTIFY] Crédito &quot; + ce.getCredito().getId() +</span>
-<span class="fc" id="L12">                    &quot; nuevo estado: &quot; + ce.getCredito().getEstadoActual());</span>
+<span class="pc bpc" id="L11" title="1 of 2 branches missed.">        if (event instanceof CreditoEstadoCambiadoEvent ce) {</span>
+<span class="fc" id="L12">        logger.info(&quot;[NOTIFY] Crédito {} nuevo estado: {}&quot;, ce.getCredito().getId(), ce.getCredito().getEstadoActual());</span>
         }
 <span class="fc" id="L14">    }</span>
 

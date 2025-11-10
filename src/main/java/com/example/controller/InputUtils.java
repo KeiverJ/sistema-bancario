@@ -2,30 +2,40 @@ package com.example.controller;
 
 import java.util.Scanner;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class InputUtils {
+    private static final Logger logger = LoggerFactory.getLogger(InputUtils.class);
     private static final String ABORTAR = "0";
+    private static final String OPERACION_CANCELADA = "Operación cancelada";
+
+    private InputUtils() {
+        throw new UnsupportedOperationException("Utility class");
+    }
 
     public static String solicitarTexto(Scanner sc, String mensaje, boolean obligatorio) {
         while (true) {
-            System.out.print(mensaje + (obligatorio ? "" : " (opcional)") + " [0=cancelar]: ");
+            logger.info("{}{} [0=cancelar]: ", mensaje, (obligatorio ? "" : " (opcional)"));
             String valor = sc.nextLine().trim();
             if (valor.equals(ABORTAR)) {
-                System.out.println("Operación cancelada");
+                logger.info(OPERACION_CANCELADA);
+                logger.info(OPERACION_CANCELADA);
                 return null;
             }
             if (!valor.isEmpty() || !obligatorio) {
                 return valor;
             }
-            System.err.println("Campo obligatorio");
+            logger.error("Campo obligatorio");
         }
     }
 
     public static Double solicitarMonto(Scanner sc, String mensaje) {
         while (true) {
-            System.out.print(mensaje + " [0=cancelar]: $");
+            logger.info("{} [0=cancelar]: $", mensaje);
             String entrada = sc.nextLine().trim();
             if (entrada.equals(ABORTAR)) {
-                System.out.println("Operación cancelada");
+                logger.info(OPERACION_CANCELADA);
                 return null;
             }
             try {
@@ -33,19 +43,19 @@ public class InputUtils {
                 if (monto > 0) {
                     return monto;
                 }
-                System.err.println("Debe ser mayor a cero");
+                logger.error("Debe ser mayor a cero");
             } catch (NumberFormatException e) {
-                System.err.println("Monto inválido");
+                logger.error("Monto inválido");
             }
         }
     }
 
     public static Integer solicitarEnteroPositivo(Scanner sc, String mensaje) {
         while (true) {
-            System.out.print(mensaje + " [0=cancelar]: ");
+            logger.info("{} [0=cancelar]: ", mensaje);
             String entrada = sc.nextLine().trim();
             if (entrada.equals(ABORTAR)) {
-                System.out.println("Operación cancelada");
+                logger.info(OPERACION_CANCELADA);
                 return null;
             }
             try {
@@ -53,25 +63,25 @@ public class InputUtils {
                 if (valor > 0) {
                     return valor;
                 }
-                System.err.println("Debe ser mayor a cero");
+                logger.error("Debe ser mayor a cero");
             } catch (NumberFormatException e) {
-                System.err.println("Valor inválido");
+                logger.error("Valor inválido");
             }
         }
     }
 
     public static <E extends Enum<E>> E solicitarEnum(Scanner sc, String mensaje, Class<E> enumClass) {
         E[] valores = enumClass.getEnumConstants();
-        System.out.println("\n" + mensaje + ":");
+    logger.info("\n{}:", mensaje);
         for (int i = 0; i < valores.length; i++) {
-            System.out.println("  " + (i + 1) + ". " + valores[i]);
+            logger.info("  {}. {}", (i + 1), valores[i]);
         }
-        System.out.println("  0. Cancelar");
+    logger.info("  0. Cancelar");
         while (true) {
-            System.out.print("\nOpción: ");
+            logger.info("\nOpción: ");
             String entrada = sc.nextLine().trim();
             if (entrada.equals(ABORTAR)) {
-                System.out.println("Operación cancelada");
+                logger.info(OPERACION_CANCELADA);
                 return null;
             }
             try {
@@ -79,20 +89,20 @@ public class InputUtils {
                 if (opcion > 0 && opcion <= valores.length) {
                     return valores[opcion - 1];
                 }
-                System.err.println("Opción inválida");
+                logger.error("Opción inválida");
             } catch (NumberFormatException e) {
-                System.err.println("Ingrese un número");
+                logger.error("Ingrese un número");
             }
         }
     }
 
     public static String solicitarOpcion(Scanner sc, String mensaje, String[] opciones) {
-        System.out.println("\n" + mensaje);
+    logger.info("\n{}", mensaje);
         while (true) {
-            System.out.print("→ ");
+            logger.info("→ ");
             String entrada = sc.nextLine().trim().toUpperCase();
             if (entrada.equals(ABORTAR)) {
-                System.out.println("Operación cancelada");
+                logger.info(OPERACION_CANCELADA);
                 return null;
             }
             for (String opcion : opciones) {
@@ -100,7 +110,7 @@ public class InputUtils {
                     return entrada;
                 }
             }
-            System.err.println("Opción inválida");
+            logger.error("Opción inválida");
         }
     }
 }

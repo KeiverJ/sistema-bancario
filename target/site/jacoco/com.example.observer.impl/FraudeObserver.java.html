@@ -5,17 +5,18 @@ import com.example.observer.core.EventoObserver;
 import com.example.observer.eventos.TransaccionRegistradaEvent;
 
 <span class="fc" id="L7">public class FraudeObserver implements EventoObserver {</span>
+<span class="fc" id="L8">    private static final org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(FraudeObserver.class);</span>
     @Override
     public void onEvento(DomainEvent event) {
-<span class="fc" id="L10">        TransaccionRegistradaEvent e = (TransaccionRegistradaEvent) event;</span>
-<span class="pc bpc" id="L11" title="1 of 2 branches missed.">        if (e.getTransaccion().getMonto() &gt; 50_000_000) {</span>
-<span class="fc" id="L12">            System.out.println(&quot;[FRAUDE] Monto alto detectado: &quot; + e.getTransaccion().getMonto());</span>
+<span class="fc" id="L11">        TransaccionRegistradaEvent e = (TransaccionRegistradaEvent) event;</span>
+<span class="pc bpc" id="L12" title="1 of 2 branches missed.">        if (e.getTransaccion().getMonto() &gt; 50_000_000) {</span>
+<span class="fc" id="L13">            logger.warn(&quot;[FRAUDE] Monto alto detectado: {}&quot;, e.getTransaccion().getMonto());</span>
         }
-<span class="fc" id="L14">    }</span>
+<span class="fc" id="L15">    }</span>
 
     @Override
     public boolean soporta(String tipo) {
-<span class="fc" id="L18">        return &quot;TRANSACCION_REGISTRADA&quot;.equals(tipo);</span>
+<span class="fc" id="L19">        return &quot;TRANSACCION_REGISTRADA&quot;.equals(tipo);</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

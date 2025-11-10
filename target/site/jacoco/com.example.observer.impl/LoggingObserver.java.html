@@ -4,14 +4,15 @@ import com.example.observer.core.DomainEvent;
 import com.example.observer.core.EventoObserver;
 
 <span class="fc" id="L6">public class LoggingObserver implements EventoObserver {</span>
+<span class="fc" id="L7">    private static final org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(LoggingObserver.class);</span>
     @Override
     public void onEvento(DomainEvent event) {
-<span class="fc" id="L9">        System.out.println(&quot;[LOG] Evento &quot; + event.tipo() + &quot; @ &quot; + event.getTimestamp());</span>
-<span class="fc" id="L10">    }</span>
+<span class="fc" id="L10">    logger.info(&quot;[LOG] Evento {} @ {}&quot;, event.tipo(), event.getTimestamp());</span>
+<span class="fc" id="L11">    }</span>
 
     @Override
     public boolean soporta(String tipo) {
-<span class="fc" id="L14">        return true;</span>
+<span class="fc" id="L15">        return true;</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>
